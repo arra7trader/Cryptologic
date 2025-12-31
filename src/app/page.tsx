@@ -422,7 +422,7 @@ export default function LandingPage() {
               margin: "0 auto 40px",
             }}
           >
-            Institutional-grade crypto analytics like <strong style={{ color: colors.textPrimary }}>Nansen</strong> at a fraction of the price.
+            Institutional-grade crypto analytics present by <strong style={{ color: colors.textPrimary }}>Nansen.AI</strong> at a fraction of the price.
             Track Smart Money, discover hidden gems, and make data-driven decisions.
           </p>
 
@@ -545,7 +545,7 @@ export default function LandingPage() {
           <FeatureCard
             icon={IconBarChart}
             title="15,000+ Cryptocurrencies"
-            description="Search and analyze any cryptocurrency in the market. Real-time data from CoinGecko with Cosmic Score™ analysis."
+            description="Search and analyze any cryptocurrency in the market. Real-time data from Nansen.AI with Cosmic Score™ analysis."
           />
           <FeatureCard
             icon={IconStar}
