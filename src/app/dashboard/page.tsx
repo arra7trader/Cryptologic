@@ -836,25 +836,23 @@ export default function Home() {
             <p style={{ color: colors.textSecondary, marginBottom: "24px" }}>
               {t("dashboard.modal_desc")}
             </p>
-            <button
-              onClick={() => {
-                setIsPro(true);
-                setShowUpgradeModal(false);
-              }}
-              style={{
-                padding: "12px 32px",
-                background: colors.purple,
-                border: "none",
-                borderRadius: "10px",
-                color: "white",
-                fontSize: "14px",
-                fontWeight: 600,
-                cursor: "pointer",
-                marginRight: "12px",
-              }}
-            >
-              {t("dashboard.modal_upgrade_btn")}
-            </button>
+            <Link href="/checkout">
+              <button
+                style={{
+                  padding: "12px 32px",
+                  background: colors.purple,
+                  border: "none",
+                  borderRadius: "10px",
+                  color: "white",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  marginRight: "12px",
+                }}
+              >
+                {t("dashboard.modal_upgrade_btn")}
+              </button>
+            </Link>
             <button
               onClick={() => setShowUpgradeModal(false)}
               style={{
