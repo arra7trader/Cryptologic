@@ -207,6 +207,7 @@ export default function RegisterPage() {
                                     </>
                                 )}
                             </button>
+                        </div>
                     </form>
 
                     <div style={{ marginTop: "24px", textAlign: "center", fontSize: "13px", color: colors.textSecondary }}>
