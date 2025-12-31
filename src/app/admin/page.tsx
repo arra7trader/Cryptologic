@@ -543,13 +543,13 @@ export default function AdminPage() {
                             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
                                 <div style={{ background: colors.bgCard, border: `1px solid ${colors.border}`, borderRadius: "16px", padding: "28px" }}>
                                     <div style={{ fontSize: "13px", color: colors.textDim, marginBottom: "8px" }}>Total Revenue (Estimasi)</div>
-                                    <div style={{ fontSize: "36px", fontWeight: 700, color: colors.accent }}>{formatCurrency(stats.totalRevenue)}</div>
-                                    <div style={{ fontSize: "12px", color: colors.textDim, marginTop: "8px" }}>{stats.proUsers} Pro × Rp99.000</div>
+                                    <div style={{ fontSize: "36px", fontWeight: 700, color: colors.accent }}>${(stats.totalRevenue / 15000).toLocaleString()}</div>
+                                    <div style={{ fontSize: "12px", color: colors.textDim, marginTop: "8px" }}>{stats.proUsers} Pro × $14 (Manual USDT)</div>
                                 </div>
 
                                 <div style={{ background: colors.bgCard, border: `1px solid ${colors.border}`, borderRadius: "16px", padding: "28px" }}>
                                     <div style={{ fontSize: "13px", color: colors.textDim, marginBottom: "8px" }}>Monthly Recurring</div>
-                                    <div style={{ fontSize: "36px", fontWeight: 700, color: colors.purple }}>{formatCurrency(stats.proUsers * 99000)}</div>
+                                    <div style={{ fontSize: "36px", fontWeight: 700, color: colors.purple }}>${(stats.proUsers * 14).toLocaleString()}</div>
                                     <div style={{ fontSize: "12px", color: colors.textDim, marginTop: "8px" }}>MRR dari Pro subscriptions</div>
                                 </div>
 
@@ -562,11 +562,11 @@ export default function AdminPage() {
 
                             <div style={{ marginTop: "32px", background: colors.bgCard, border: `1px solid ${colors.border}`, borderRadius: "12px", padding: "24px" }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
-                                    <AlertCircle size={18} style={{ color: colors.amber }} />
-                                    <span style={{ fontSize: "14px", color: colors.textPrimary }}>Payment Integration</span>
+                                    <AlertCircle size={18} style={{ color: colors.accent }} />
+                                    <span style={{ fontSize: "14px", color: colors.textPrimary }}>Payment System Active</span>
                                 </div>
                                 <p style={{ fontSize: "13px", color: colors.textSecondary }}>
-                                    Payment gateway (Midtrans/Xendit) belum terintegrasi. Data revenue saat ini adalah estimasi berdasarkan jumlah Pro users.
+                                    <strong>Manual USDT Payment</strong> aktif. User melakukan transfer USDT $14 dan konfirmasi via Telegram. Admin melakukan upgrade manual melalui tab "Users".
                                 </p>
                             </div>
                         </div>
