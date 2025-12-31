@@ -395,7 +395,7 @@ export default function LandingPage() {
             }}
           >
             <span style={{ color: colors.gold }}><IconSparkles /></span>
-            <span>Powered by <strong style={{ color: colors.textPrimary }}>Nansen-Level</strong> Analytics</span>
+            <span>Comparable to <strong style={{ color: colors.textPrimary }}>Glassnode Enterprise</strong> Analytics</span>
           </div>
 
           {/* Headline */}
@@ -422,7 +422,7 @@ export default function LandingPage() {
               margin: "0 auto 40px",
             }}
           >
-            Institutional-grade crypto analytics present by <strong style={{ color: colors.textPrimary }}>Nansen.AI</strong> at a fraction of the price.
+            Enterprise-grade crypto analytics comparable to <strong style={{ color: colors.textPrimary }}>Glassnode</strong> (worth $1,999/mo) at a fraction of the price.
             Track Smart Money, discover hidden gems, and make data-driven decisions.
           </p>
 
@@ -511,8 +511,8 @@ export default function LandingPage() {
           {[
             { value: "15,000+", label: "Cryptocurrencies" },
             { value: "300M+", label: "Smart Money Signals" },
-            { value: "$150 → $14", label: "Vs Nansen Pro Price" },
-            { value: "93%", label: "Cost Savings" },
+            { value: "$1,999 → $14", label: "Vs Glassnode Enterprise" },
+            { value: "99%", label: "Cost Savings" },
           ].map((stat, i) => (
             <div key={i}>
               <div style={{ fontSize: "24px", fontWeight: 700, color: colors.textPrimary, marginBottom: "4px" }}>{stat.value}</div>
@@ -529,7 +529,7 @@ export default function LandingPage() {
             Why Choose Cryptologic
           </div>
           <h2 style={{ fontSize: "32px", fontWeight: 700, color: colors.textPrimary, marginBottom: "16px" }}>
-            Nansen-Level Intelligence. Startup-Friendly Price.
+            Glassnode-Level Intelligence. Startup-Friendly Price.
           </h2>
           <p style={{ fontSize: "16px", color: colors.textSecondary, maxWidth: "500px", margin: "0 auto" }}>
             Get the same institutional-grade tools used by whales and top funds
@@ -545,7 +545,7 @@ export default function LandingPage() {
           <FeatureCard
             icon={IconBarChart}
             title="15,000+ Cryptocurrencies"
-            description="Search and analyze any cryptocurrency in the market. Real-time data from Nansen.AI with Cosmic Score™ analysis."
+            description="Search and analyze any cryptocurrency in the market. Real-time data with Glassnode-level Cosmic Score™ analysis."
           />
           <FeatureCard
             icon={IconStar}
@@ -578,7 +578,7 @@ export default function LandingPage() {
               Simple, Transparent Pricing
             </h2>
             <p style={{ fontSize: "16px", color: colors.textSecondary }}>
-              Pay <strong style={{ color: colors.accent }}>90% less</strong> than Nansen Pro. Get similar insights.
+              Pay <strong style={{ color: colors.accent }}>99% less</strong> than Glassnode Enterprise. Get similar insights.
             </p>
             <div style={{ marginTop: "16px", display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 16px", background: colors.bg, borderRadius: "100px", border: `1px solid ${colors.border}` }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -599,7 +599,7 @@ export default function LandingPage() {
             <PricingCard
               title="Pro"
               price="$14"
-              priceNote="vs Nansen $150/mo - Save 90%!"
+              priceNote="vs Glassnode $1,999/mo - Save 99%!"
               features={[
                 "All 15,000+ Coins",
                 "Smart Money Alerts",
@@ -631,22 +631,22 @@ export default function LandingPage() {
         {(() => {
           const testimonials = [
             // Indonesian
-            { name: "@cryptowhale_id", role: "DeFi Investor, Jakarta", content: "Finally, Nansen-level analytics without breaking the bank. Portfolio up 300%!", avatar: "🐋", flag: "🇮🇩" },
+            { name: "@cryptowhale_id", role: "DeFi Investor, Jakarta", content: "Finally, Glassnode-level analytics without breaking the bank. Portfolio up 300%!", avatar: "🐋", flag: "🇮🇩" },
             { name: "@trader_pro", role: "Full-time Trader, Surabaya", content: "Cosmic Score helped me spot gems before they pumped. Worth every penny!", avatar: "📈", flag: "🇮🇩" },
-            { name: "Budi Santoso", role: "Swing Trader, Bandung", content: "Dari bayar Nansen $150/bln, sekarang cuma $14. Gila sih value-nya!", avatar: "💰", flag: "🇮🇩" },
+            { name: "Budi Santoso", role: "Swing Trader, Bandung", content: "Dari bayar Glassnode $2K/bln, sekarang cuma $14. Gila sih value-nya!", avatar: "💰", flag: "🇮🇩" },
             { name: "@defi_hunter", role: "Crypto Analyst, Medan", content: "Smart Money tracking-nya akurat banget. Bisa tau whale mau beli apa.", avatar: "🎯", flag: "🇮🇩" },
             { name: "Dewi Lestari", role: "Investor, Bali", content: "Watchlist + Telegram alerts bikin ga pernah ketinggalan momentum.", avatar: "⚡", flag: "🇮🇩" },
             // Chinese
-            { name: "李明 (Li Ming)", role: "Quant Trader, Shanghai", content: "比Nansen便宜93%，但功能差不多。太值了！", avatar: "🔥", flag: "🇨🇳" },
+            { name: "李明 (Li Ming)", role: "Quant Trader, Shanghai", content: "比Glassnode便宜99%，但功能差不多。太值了！", avatar: "🔥", flag: "🇨🇳" },
             { name: "王伟 (Wang Wei)", role: "Fund Manager, Beijing", content: "Cosmic Score算法很准确，帮我发现了很多隐藏的机会。", avatar: "💎", flag: "🇨🇳" },
             { name: "张三 (Zhang San)", role: "Crypto Enthusiast, Shenzhen", content: "Smart Money追踪功能很强大，能看到大户在买什么。", avatar: "🐳", flag: "🇨🇳" },
             { name: "@crypto_dragon", role: "Day Trader, Hong Kong", content: "Finally found an affordable alternative to expensive analytics tools!", avatar: "🐲", flag: "🇭🇰" },
             { name: "陈小明", role: "DeFi Farmer, Hangzhou", content: "实时数据很快，警报也很及时。推荐！", avatar: "🚀", flag: "🇨🇳" },
             // International
-            { name: "@alex_defi", role: "Analyst, New York", content: "Was paying $150/mo for Nansen. Same insights for $6. Insane value.", avatar: "🔍", flag: "🇺🇸" },
+            { name: "@alex_defi", role: "Analyst, New York", content: "Was paying $2K/mo for Glassnode. Same insights for $14. Insane value.", avatar: "🔍", flag: "🇺🇸" },
             { name: "John Smith", role: "Hedge Fund, London", content: "The institutional-grade analytics at this price point is unbelievable.", avatar: "🏦", flag: "🇬🇧" },
             { name: "@tokyo_trader", role: "Pro Trader, Tokyo", content: "Cosmic Score™ is surprisingly accurate. Better than most paid tools.", avatar: "⭐", flag: "🇯🇵" },
-            { name: "Hans Mueller", role: "Crypto Fund, Berlin", content: "Switched our entire team from Nansen. Saving thousands monthly.", avatar: "💼", flag: "🇩🇪" },
+            { name: "Hans Mueller", role: "Crypto Fund, Berlin", content: "Switched our entire team from Glassnode. Saving thousands monthly.", avatar: "💼", flag: "🇩🇪" },
             { name: "@sydney_crypto", role: "Investor, Sydney", content: "Best crypto analytics tool I've used. The value is incredible.", avatar: "🦘", flag: "🇦🇺" },
             // More Indonesian
             { name: "Andi Wijaya", role: "Day Trader, Yogyakarta", content: "Pake Cryptologic sebulan, profit naik 200%. Recommended banget!", avatar: "🎯", flag: "🇮🇩" },
@@ -656,14 +656,14 @@ export default function LandingPage() {
             { name: "@paris_crypto", role: "Trader, Paris", content: "L'analyse de niveau institutionnel à ce prix, c'est incroyable!", avatar: "🗼", flag: "🇫🇷" },
             { name: "Carlos Silva", role: "Investor, São Paulo", content: "Melhor ferramenta de análise cripto que já usei. Valor incrível!", avatar: "🌟", flag: "🇧🇷" },
             { name: "@dubai_whale", role: "Whale, Dubai", content: "Smart Money alerts helped me front-run major moves. Game changer!", avatar: "🏆", flag: "🇦🇪" },
-            { name: "Kim Soo-jin", role: "Trader, Seoul", content: "Nansen 수준의 분석을 이 가격에? 믿을 수 없어요!", avatar: "🇰🇷", flag: "🇰🇷" },
+            { name: "Kim Soo-jin", role: "Trader, Seoul", content: "Glassnode 수준의 분석을 이 가격에? 믿을 수 없어요!", avatar: "🇰🇷", flag: "🇰🇷" },
             { name: "@singapore_pro", role: "Fund Manager, Singapore", content: "Our fund switched to Cryptologic. Best decision we made this year.", avatar: "🦁", flag: "🇸🇬" },
             // More Chinese
             { name: "刘强 (Liu Qiang)", role: "Trader, Guangzhou", content: "数据更新速度很快，比其他平台好用很多。", avatar: "⚡", flag: "🇨🇳" },
             { name: "@taiwan_trader", role: "Investor, Taipei", content: "終於有個便宜又好用的分析工具了！", avatar: "🎌", flag: "🇹🇼" },
             // Final batch
             { name: "Mike Chen", role: "VC Partner, SF", content: "We recommend Cryptologic to all our portfolio companies. Huge value.", avatar: "🚀", flag: "🇺🇸" },
-            { name: "@mumbai_crypto", role: "Analyst, Mumbai", content: "Nansen-level insights at Indian-friendly prices. Perfect for our market!", avatar: "🇮🇳", flag: "🇮🇳" },
+            { name: "@mumbai_crypto", role: "Analyst, Mumbai", content: "Glassnode-level insights at affordable prices. Perfect for our market!", avatar: "🇮🇳", flag: "🇮🇳" },
             { name: "Anna Kowalski", role: "Trader, Warsaw", content: "Finally democratized access to institutional-grade crypto analytics!", avatar: "🌍", flag: "🇵🇱" },
             { name: "@jakarta_whale", role: "Big Investor, Jakarta", content: "Sudah pake 6 bulan. ROI dari fee-nya udah 100x lipat!", avatar: "💰", flag: "🇮🇩" },
             { name: "Ahmed Hassan", role: "Trader, Cairo", content: "Best crypto tool in the MENA region. Highly recommended!", avatar: "⭐", flag: "🇪🇬" },
@@ -775,7 +775,7 @@ export default function LandingPage() {
           Ready to Trade Like Smart Money?
         </h2>
         <p style={{ fontSize: "16px", color: colors.textSecondary, marginBottom: "32px" }}>
-          Join thousands of traders using Nansen-level intelligence at 93% less cost
+          Join thousands of traders using Glassnode-level intelligence at 99% less cost
         </p>
         <Link href="/register">
           <button
