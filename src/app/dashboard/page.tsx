@@ -795,12 +795,10 @@ export default function Home() {
           >
             <Crown size={32} style={{ color: colors.purple, marginBottom: "16px" }} />
             <h3 style={{ fontSize: "20px", fontWeight: 600, color: colors.textPrimary, marginBottom: "8px" }}>
-              {lang === "id" ? "Upgrade ke PRO" : "Upgrade to PRO"}
+              {t("dashboard.upgrade_cta")}
             </h3>
             <p style={{ color: colors.textSecondary, marginBottom: "20px", maxWidth: "400px", margin: "0 auto 20px" }}>
-              {lang === "id"
-                ? "Akses 100+ cryptocurrency, watchlist personal, dan alert Telegram"
-                : "Access 100+ cryptocurrencies, personal watchlist, and Telegram alerts"}
+              {t("dashboard.upgrade_desc")}
             </p>
             <button
               onClick={() => setIsPro(true)}
@@ -815,7 +813,7 @@ export default function Home() {
                 cursor: "pointer",
               }}
             >
-              {lang === "id" ? "Mulai PRO - 99K/bulan" : "Start PRO - $6/month"}
+              {t("dashboard.upgrade_btn")}
             </button>
           </div>
         )}
@@ -863,12 +861,10 @@ export default function Home() {
           >
             <Lock size={40} style={{ color: colors.purple, marginBottom: "16px" }} />
             <h3 style={{ fontSize: "18px", fontWeight: 600, color: colors.textPrimary, marginBottom: "8px" }}>
-              {lang === "id" ? "Fitur PRO" : "PRO Feature"}
+              {t("dashboard.modal_title")}
             </h3>
             <p style={{ color: colors.textSecondary, marginBottom: "24px" }}>
-              {lang === "id"
-                ? "Upgrade ke PRO untuk mengakses watchlist dan semua koin"
-                : "Upgrade to PRO to access watchlist and all coins"}
+              {t("dashboard.modal_desc")}
             </p>
             <button
               onClick={() => {
@@ -887,7 +883,7 @@ export default function Home() {
                 marginRight: "12px",
               }}
             >
-              {text.upgradeNow}
+              {t("dashboard.modal_upgrade_btn")}
             </button>
             <button
               onClick={() => setShowUpgradeModal(false)}
@@ -901,7 +897,7 @@ export default function Home() {
                 cursor: "pointer",
               }}
             >
-              {lang === "id" ? "Nanti" : "Later"}
+              {t("dashboard.modal_later_btn")}
             </button>
           </div>
         </div>

@@ -26,6 +26,12 @@ export default function CheckoutPage() {
     const { t } = useLanguage();
     const [copied, setCopied] = useState(false);
 
+    const monthText = t("checkout.month");
+    const sendText = t("checkout.send");
+    const toAddressText = t("checkout.to_address");
+    const copiedText = t("checkout.copied");
+    const copyText = t("checkout.copy");
+
     const copyAddress = () => {
         navigator.clipboard.writeText(WALLET_ADDRESS);
         setCopied(true);
@@ -58,7 +64,9 @@ export default function CheckoutPage() {
                 <div style={{ background: colors.bgCard, border: `1px solid ${colors.border}`, borderRadius: "16px", padding: "32px", marginBottom: "24px" }}>
                     <div style={{ textAlign: "center", marginBottom: "24px" }}>
                         <div style={{ fontSize: "48px", fontWeight: 800, color: colors.textPrimary }}>$14</div>
-                        <div style={{ color: colors.textSecondary }}>{t("checkout.month")}</div>
+                        <div style={{ color: colors.textSecondary }}>
+                            {monthText}
+                        </div>
                     </div>
 
                     {/* Network Badge */}
@@ -74,7 +82,9 @@ export default function CheckoutPage() {
                     {/* Wallet Address */}
                     <div style={{ marginBottom: "24px" }}>
                         <label style={{ display: "block", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>
-                            {t("checkout.send")} <strong style={{ color: colors.usdt }}>14 USDT</strong> {t("checkout.to_address")}:
+                            <span>{sendText}</span>{" "}
+                            <strong style={{ color: colors.usdt }}>14 USDT</strong>{" "}
+                            <span>{toAddressText}:</span>
                         </label>
                         <div style={{ display: "flex", gap: "8px" }}>
                             <input
@@ -99,84 +109,62 @@ export default function CheckoutPage() {
                                     background: copied ? colors.accent : colors.bsc,
                                     border: "none",
                                     borderRadius: "8px",
-                                    color: "#000",
+                                    color: copied ? "#000" : "#000",
+                                    fontSize: "13px",
                                     fontWeight: 600,
                                     cursor: "pointer",
                                     transition: "all 0.2s",
                                 }}
                             >
-                                {copied ? `✓ ${t("checkout.copied")}` : t("checkout.copy")}
+                                {copied ? copiedText : copyText}
                             </button>
                         </div>
                     </div>
 
-                    {/* Amount Display */}
-                    <div style={{ background: colors.bg, borderRadius: "12px", padding: "20px", marginBottom: "24px", textAlign: "center" }}>
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                                <circle cx="12" cy="12" r="10" fill={colors.usdt} />
-                                <path d="M12.5 6.5h-1v3h-3v1h3v5.5h1v-5.5h3v-1h-3v-3z" fill="white" />
-                            </svg>
-                            <span style={{ fontSize: "28px", fontWeight: 700, color: colors.textPrimary }}>14.00 USDT</span>
-                        </div>
-                        <div style={{ fontSize: "12px", color: colors.textDim, marginTop: "8px" }}>on Binance Smart Chain (BEP20)</div>
-                    </div>
-
                     {/* Instructions */}
-                    <div style={{ fontSize: "13px", color: colors.textSecondary, lineHeight: 1.8 }}>
-                        <p style={{ marginBottom: "12px", fontWeight: 600, color: colors.textPrimary }}>
-                            📋 {t("checkout.instructions")}:
-                        </p>
-                        <ol style={{ paddingLeft: "20px", margin: 0 }}>
-                            <li>{t("checkout.steps.1")}</li>
-                            <li>{t("checkout.steps.2")}</li>
-                            <li>{t("checkout.steps.3")}</li>
-                            <li>{t("checkout.steps.4")}</li>
-                            <li>{t("checkout.steps.5")}</li>
+                    <div style={{ background: colors.bgHover, borderRadius: "12px", padding: "16px", marginBottom: "24px" }}>
+                        <div style={{ fontSize: "13px", fontWeight: 600, color: colors.textPrimary, marginBottom: "12px" }}>
+                            {t("checkout.instructions")}
+                        </div>
+                        <ol style={{ margin: 0, paddingLeft: "20px", color: colors.textSecondary, fontSize: "13px", lineHeight: 1.6 }}>
+                            <li>{t("checkout.step1")}</li>
+                            <li>{t("checkout.step2")}</li>
+                            <li>{t("checkout.step3")}</li>
                         </ol>
                     </div>
-                </div>
 
-                {/* Telegram Contact */}
-                <div style={{ background: colors.bgCard, border: `1px solid ${colors.border}`, borderRadius: "16px", padding: "24px", textAlign: "center" }}>
-                    <p style={{ color: colors.textSecondary, fontSize: "14px", marginBottom: "16px" }}>
-                        {t("checkout.confirm")}
-                    </p>
                     <a
-                        href="https://t.me/cryptologic_support"
+                        href="https://t.me/arra7trader"
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
-                            display: "inline-flex",
+                            display: "flex",
                             alignItems: "center",
+                            justifyContent: "center",
                             gap: "8px",
-                            padding: "14px 28px",
-                            background: "#0088cc",
-                            borderRadius: "10px",
+                            width: "100%",
+                            padding: "16px",
+                            background: colors.usdt,
                             color: "#fff",
-                            textDecoration: "none",
-                            fontWeight: 600,
+                            border: "none",
+                            borderRadius: "12px",
                             fontSize: "15px",
+                            fontWeight: 600,
+                            cursor: "pointer",
+                            textDecoration: "none",
+                            transition: "all 0.2s",
                         }}
                     >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 3.816 1.177l.176.055c.289.09.577.161.864.218.47.093.842.203 1.129.637l.42 1.55c.08.303.16.607.245.908.19.673.385 1.36.634 1.956.326.78.868 1.488 1.642 1.733.923.292 1.71-.161 2.296-.688.58-.52 1.15-1.047 1.72-1.579a.747.747 0 0 0 .093-.1c.36-.312.723-.623 1.085-.935.597.545 1.203 1.08 1.83 1.597.356.294.72.576 1.11.815.753.46 1.636.568 2.46.22 1.17-.492 1.69-1.635 1.967-2.73 1.129-4.5 2.295-8.995 3.39-13.493.07-.282.128-.567.168-.853a2.212 2.212 0 0 0-.49-1.844 2.19 2.19 0 0 0-1.397-.534Z" />
                         </svg>
-                        {t("checkout.contact_support")}
+                        {t("checkout.confirm_btn")}
                     </a>
                 </div>
 
-                {/* Warning */}
-                <div style={{ marginTop: "24px", padding: "16px", background: "rgba(240,185,11,0.1)", border: "1px solid rgba(240,185,11,0.3)", borderRadius: "12px" }}>
-                    <p style={{ fontSize: "12px", color: colors.bsc, margin: 0 }}>
-                        ⚠️ <strong>{t("checkout.important")}</strong> {t("checkout.warning")}
-                    </p>
-                </div>
-
-                {/* Back Link */}
-                <div style={{ textAlign: "center", marginTop: "32px" }}>
-                    <Link href="/" style={{ color: colors.textSecondary, fontSize: "14px", textDecoration: "none" }}>
-                        ← {t("checkout.back")}
+                <div style={{ textAlign: "center" }}>
+                    <Link href="/" style={{ color: colors.textDim, fontSize: "14px", textDecoration: "none" }}>
+                        {t("checkout.back")}
                     </Link>
                 </div>
             </div>

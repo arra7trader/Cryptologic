@@ -60,9 +60,9 @@ export const eventIcons: Record<string, string> = {
 };
 
 // Event names
-export const eventNames: Record<string, { id: string; en: string }> = {
-    jupiter_saturn_conjunction: { id: "Konjungsi Jupiter-Saturnus", en: "Jupiter-Saturn Conjunction" },
-    mercury_retrograde: { id: "Merkurius Retrograde", en: "Mercury Retrograde" },
-    full_moon: { id: "Bulan Purnama", en: "Full Moon" },
-    new_moon: { id: "Bulan Baru", en: "New Moon" },
+export const eventNames: Record<string, { id: string; en: string; cn: string }> = {
+    jupiter_saturn_conjunction: { id: "Konjungsi Jupiter-Saturnus", en: "Jupiter-Saturn Conjunction", cn: "木星-土星合相" },
+    mercury_retrograde: { id: "Merkurius Retrograde", en: "Mercury Retrograde", cn: "水星逆行" },
+    full_moon: { id: "Bulan Purnama", en: "Full Moon", cn: "满月" },
+    new_moon: { id: "Bulan Baru", en: "New Moon", cn: "新月" },
 };
