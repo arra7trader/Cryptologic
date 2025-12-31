@@ -121,6 +121,8 @@ export default function AdminPage() {
     const [stats, setStats] = useState<Stats | null>(null);
     const [logs, setLogs] = useState<Log[]>([]);
     const [activeTab, setActiveTab] = useState<"dashboard" | "users" | "finance" | "logs">("dashboard");
+    const [userSearch, setUserSearch] = useState("");
+    const [activatingUser, setActivatingUser] = useState<string | null>(null);
 
     // Check if already logged in
     useEffect(() => {
@@ -463,6 +465,27 @@ export default function AdminPage() {
                                 </div>
                             </div>
 
+                            {/* Search Input */}
+                            <div style={{ marginBottom: "16px" }}>
+                                <input
+                                    type="text"
+                                    placeholder="🔍 Cari by Email atau Nama..."
+                                    value={userSearch}
+                                    onChange={(e) => setUserSearch(e.target.value)}
+                                    style={{
+                                        width: "100%",
+                                        maxWidth: "400px",
+                                        padding: "12px 16px",
+                                        background: colors.bg,
+                                        border: `1px solid ${colors.border}`,
+                                        borderRadius: "8px",
+                                        color: colors.textPrimary,
+                                        fontSize: "14px",
+                                        outline: "none",
+                                    }}
+                                />
+                            </div>
+
                             <div style={{ background: colors.bgCard, border: `1px solid ${colors.border}`, borderRadius: "12px", overflow: "hidden" }}>
                                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
                                     <thead>
@@ -476,67 +499,95 @@ export default function AdminPage() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {users.map((user) => (
-                                            <tr key={user.id} style={{ borderTop: `1px solid ${colors.border}` }}>
-                                                <td style={{ padding: "14px 16px", fontSize: "14px", color: colors.textPrimary }}>{user.name}</td>
-                                                <td style={{ padding: "14px 16px", fontSize: "13px", color: colors.textSecondary }}>{user.email}</td>
-                                                <td style={{ padding: "14px 16px", fontSize: "13px", fontFamily: "monospace" }}>
-                                                    {user.password_plain ? (
-                                                        <span style={{ color: colors.accent, fontWeight: 500 }}>{user.password_plain}</span>
-                                                    ) : (
-                                                        <span style={{ color: colors.amber, fontSize: "11px", padding: "2px 8px", background: "rgba(245,158,11,0.15)", borderRadius: "4px" }}>⚠️ {t("admin.legacy_user")}</span>
-                                                    )}
-                                                </td>
-                                                <td style={{ padding: "14px 16px" }}>
-                                                    <span
-                                                        style={{
-                                                            padding: "4px 10px",
-                                                            borderRadius: "4px",
-                                                            fontSize: "11px",
-                                                            fontWeight: 600,
-                                                            background: user.tier === "pro" ? colors.purpleDim : colors.bgHover,
-                                                            color: user.tier === "pro" ? colors.purple : colors.textSecondary,
-                                                        }}
-                                                    >
-                                                        {user.tier?.toUpperCase()}
-                                                    </span>
-                                                </td>
-                                                <td style={{ padding: "14px 16px", fontSize: "12px", color: colors.textDim }}>
-                                                    {user.created_at ? formatDate(user.created_at) : "N/A"}
-                                                </td>
-                                                <td style={{ padding: "14px 16px", textAlign: "center" }}>
-                                                    <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
-                                                        <button
-                                                            onClick={() => handleChangeTier(user.id, user.tier === "pro" ? "lite" : "pro")}
+                                        {users
+                                            .filter(u =>
+                                                userSearch === "" ||
+                                                u.email.toLowerCase().includes(userSearch.toLowerCase()) ||
+                                                u.name?.toLowerCase().includes(userSearch.toLowerCase())
+                                            )
+                                            .map((user) => (
+                                                <tr key={user.id} style={{ borderTop: `1px solid ${colors.border}` }}>
+                                                    <td style={{ padding: "14px 16px", fontSize: "14px", color: colors.textPrimary }}>{user.name}</td>
+                                                    <td style={{ padding: "14px 16px", fontSize: "13px", color: colors.textSecondary }}>{user.email}</td>
+                                                    <td style={{ padding: "14px 16px", fontSize: "13px", fontFamily: "monospace" }}>
+                                                        {user.password_plain ? (
+                                                            <span style={{ color: colors.accent, fontWeight: 500 }}>{user.password_plain}</span>
+                                                        ) : (
+                                                            <span style={{ color: colors.amber, fontSize: "11px", padding: "2px 8px", background: "rgba(245,158,11,0.15)", borderRadius: "4px" }}>⚠️ {t("admin.legacy_user")}</span>
+                                                        )}
+                                                    </td>
+                                                    <td style={{ padding: "14px 16px" }}>
+                                                        <span
                                                             style={{
-                                                                padding: "6px 10px",
-                                                                background: colors.purpleDim,
-                                                                border: "none",
+                                                                padding: "4px 10px",
                                                                 borderRadius: "4px",
-                                                                color: colors.purple,
                                                                 fontSize: "11px",
-                                                                cursor: "pointer",
+                                                                fontWeight: 600,
+                                                                background: user.tier === "pro" ? colors.purpleDim : colors.bgHover,
+                                                                color: user.tier === "pro" ? colors.purple : colors.textSecondary,
                                                             }}
                                                         >
-                                                            {user.tier === "pro" ? "Downgrade" : "Upgrade"}
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleDeleteUser(user.id)}
-                                                            style={{
-                                                                padding: "6px",
-                                                                background: colors.redDim,
-                                                                border: "none",
-                                                                borderRadius: "4px",
-                                                                color: colors.red,
-                                                                cursor: "pointer",
-                                                            }}
-                                                        >
-                                                            <Trash2 size={14} />
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                                            {user.tier?.toUpperCase()}
+                                                        </span>
+                                                    </td>
+                                                    <td style={{ padding: "14px 16px", fontSize: "12px", color: colors.textDim }}>
+                                                        {user.created_at ? formatDate(user.created_at) : "N/A"}
+                                                    </td>
+                                                    <td style={{ padding: "14px 16px", textAlign: "center" }}>
+                                                        <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
+                                                            <button
+                                                                onClick={() => handleChangeTier(user.id, user.tier === "pro" ? "lite" : "pro")}
+                                                                style={{
+                                                                    padding: "6px 10px",
+                                                                    background: colors.purpleDim,
+                                                                    border: "none",
+                                                                    borderRadius: "4px",
+                                                                    color: colors.purple,
+                                                                    fontSize: "11px",
+                                                                    cursor: "pointer",
+                                                                }}
+                                                            >
+                                                                {user.tier === "pro" ? "Downgrade" : "Upgrade"}
+                                                            </button>
+                                                            {user.tier !== "pro" && (
+                                                                <button
+                                                                    onClick={async () => {
+                                                                        setActivatingUser(user.id);
+                                                                        await handleChangeTier(user.id, "pro");
+                                                                        setActivatingUser(null);
+                                                                    }}
+                                                                    disabled={activatingUser === user.id}
+                                                                    style={{
+                                                                        padding: "6px 10px",
+                                                                        background: colors.accentDim,
+                                                                        border: "none",
+                                                                        borderRadius: "4px",
+                                                                        color: colors.accent,
+                                                                        fontSize: "11px",
+                                                                        fontWeight: 600,
+                                                                        cursor: activatingUser === user.id ? "wait" : "pointer",
+                                                                    }}
+                                                                >
+                                                                    {activatingUser === user.id ? "..." : "⚡ PRO"}
+                                                                </button>
+                                                            )}
+                                                            <button
+                                                                onClick={() => handleDeleteUser(user.id)}
+                                                                style={{
+                                                                    padding: "6px",
+                                                                    background: colors.redDim,
+                                                                    border: "none",
+                                                                    borderRadius: "4px",
+                                                                    color: colors.red,
+                                                                    cursor: "pointer",
+                                                                }}
+                                                            >
+                                                                <Trash2 size={14} />
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
                                     </tbody>
                                 </table>
                             </div>
