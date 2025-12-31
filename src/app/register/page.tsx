@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Globe, ArrowRight, Loader2, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const colors = {
     bg: "#0a0a0b",
@@ -19,6 +21,7 @@ const colors = {
 };
 
 export default function RegisterPage() {
+    const { t } = useLanguage();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -55,7 +58,7 @@ export default function RegisterPage() {
     return (
         <div style={{ minHeight: "100vh", background: colors.bg, fontFamily: "'Inter', -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
             {/* Navbar Minimal */}
-            <nav style={{ padding: "24px", display: "flex", justifyContent: "center" }}>
+            <nav style={{ padding: "24px", display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
                 <Link href="/" style={{ textDecoration: "none" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                         <div
@@ -72,6 +75,7 @@ export default function RegisterPage() {
                         </span>
                     </div>
                 </Link>
+                <LanguageSwitcher />
             </nav>
 
             {/* Content */}
@@ -87,8 +91,8 @@ export default function RegisterPage() {
                     }}
                 >
                     <div style={{ textAlign: "center", marginBottom: "32px" }}>
-                        <h1 style={{ fontSize: "24px", fontWeight: 600, color: colors.textPrimary, marginBottom: "8px" }}>Create Account</h1>
-                        <p style={{ color: colors.textSecondary, fontSize: "14px" }}>Join Cryptologic for superior market analysis</p>
+                        <h1 style={{ fontSize: "24px", fontWeight: 600, color: colors.textPrimary, marginBottom: "8px" }}>{t("auth.register.title")}</h1>
+                        <p style={{ color: colors.textSecondary, fontSize: "14px" }}>{t("auth.register.subtitle")}</p>
                     </div>
 
                     {error && (
@@ -113,101 +117,102 @@ export default function RegisterPage() {
 
                     <form onSubmit={handleSubmit}>
                         <div style={{ marginBottom: "16px" }}>
-                            <label style={{ display: "block", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>Full Name</label>
-                            <input
-                                type="text"
-                                required
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                style={{
-                                    width: "100%",
-                                    padding: "10px 12px",
-                                    background: colors.bg,
-                                    border: `1px solid ${colors.border}`,
-                                    borderRadius: "8px",
-                                    color: colors.textPrimary,
-                                    fontSize: "14px",
-                                    outline: "none",
-                                }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: "16px" }}>
-                            <label style={{ display: "block", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>Email</label>
-                            <input
-                                type="email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                style={{
-                                    width: "100%",
-                                    padding: "10px 12px",
-                                    background: colors.bg,
-                                    border: `1px solid ${colors.border}`,
-                                    borderRadius: "8px",
-                                    color: colors.textPrimary,
-                                    fontSize: "14px",
-                                    outline: "none",
-                                }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: "24px" }}>
-                            <label style={{ display: "block", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>Password</label>
-                            <input
-                                type="password"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                style={{
-                                    width: "100%",
-                                    padding: "10px 12px",
-                                    background: colors.bg,
-                                    border: `1px solid ${colors.border}`,
-                                    borderRadius: "8px",
-                                    color: colors.textPrimary,
-                                    fontSize: "14px",
-                                    outline: "none",
-                                }}
-                            />
-                        </div>
+                            <div style={{ marginBottom: "16px" }}>
+                                <label style={{ display: "block", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>{t("auth.name")}</label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    style={{
+                                        width: "100%",
+                                        padding: "10px 12px",
+                                        background: colors.bg,
+                                        border: `1px solid ${colors.border}`,
+                                        borderRadius: "8px",
+                                        color: colors.textPrimary,
+                                        fontSize: "14px",
+                                        outline: "none",
+                                    }}
+                                />
+                            </div>
+                            <div style={{ marginBottom: "16px" }}>
+                                <label style={{ display: "block", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>{t("auth.email")}</label>
+                                <input
+                                    type="email"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    style={{
+                                        width: "100%",
+                                        padding: "10px 12px",
+                                        background: colors.bg,
+                                        border: `1px solid ${colors.border}`,
+                                        borderRadius: "8px",
+                                        color: colors.textPrimary,
+                                        fontSize: "14px",
+                                        outline: "none",
+                                    }}
+                                />
+                            </div>
+                            <div style={{ marginBottom: "24px" }}>
+                                <label style={{ display: "block", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>{t("auth.password")}</label>
+                                <input
+                                    type="password"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    style={{
+                                        width: "100%",
+                                        padding: "10px 12px",
+                                        background: colors.bg,
+                                        border: `1px solid ${colors.border}`,
+                                        borderRadius: "8px",
+                                        color: colors.textPrimary,
+                                        fontSize: "14px",
+                                        outline: "none",
+                                    }}
+                                />
+                            </div>
 
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            style={{
-                                width: "100%",
-                                padding: "12px",
-                                background: colors.textPrimary,
-                                color: colors.bg,
-                                border: "none",
-                                borderRadius: "8px",
-                                fontSize: "14px",
-                                fontWeight: 600,
-                                cursor: loading ? "not-allowed" : "pointer",
-                                opacity: loading ? 0.7 : 1,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                gap: "8px",
-                            }}
-                        >
-                            {loading ? (
-                                <>
-                                    <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} />
-                                    Creating Account...
-                                </>
-                            ) : (
-                                <>
-                                    Create Account
-                                    <ArrowRight size={16} />
-                                </>
-                            )}
-                        </button>
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                style={{
+                                    width: "100%",
+                                    padding: "12px",
+                                    background: colors.textPrimary,
+                                    color: colors.bg,
+                                    border: "none",
+                                    borderRadius: "8px",
+                                    fontSize: "14px",
+                                    fontWeight: 600,
+                                    cursor: loading ? "not-allowed" : "pointer",
+                                    opacity: loading ? 0.7 : 1,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    gap: "8px",
+                                }}
+                            >
+                                {loading ? (
+                                    <>
+                                        <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} />
+                                        {t("auth.creating")}
+                                    </>
+                                ) : (
+                                    <>
+                                        {t("auth.create")}
+                                        <ArrowRight size={16} />
+                                    </>
+                                )}
+                            </button>
                     </form>
 
                     <div style={{ marginTop: "24px", textAlign: "center", fontSize: "13px", color: colors.textSecondary }}>
-                        Already have an account?{" "}
+                        {t("auth.have_account")}{" "}
                         <Link href="/login" style={{ color: colors.textPrimary, textDecoration: "none", fontWeight: 500 }}>
-                            Sign In
+                            {t("auth.signin")}
                         </Link>
                     </div>
                 </div>

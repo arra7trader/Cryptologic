@@ -19,6 +19,7 @@ import {
 import { Coin } from "@/types";
 import { formatCurrency, formatPercentage } from "@/lib/coingecko";
 import { generateCosmicScore, getScoreColor, getTrendColor, eventIcons, eventNames } from "@/lib/cosmic";
+import { useLanguage } from "@/lib/LanguageContext";
 
 // ============================================
 // STYLES
@@ -53,47 +54,19 @@ const EVENTS_TODAY = [
 // TRANSLATIONS
 // ============================================
 
-const t = {
-  id: {
-    search: "Cari cryptocurrency...",
-    featured: "Koin Unggulan",
-    watchlist: "Watchlist",
-    events: "Event Hari Ini",
-    cosmicScore: "Cosmic Score",
-    addToWatchlist: "Tambah ke Watchlist",
-    proOnly: "Fitur PRO",
-    upgradeNow: "Upgrade ke PRO",
-    freeTierLimit: "Gratis hanya BTC",
-    viewAll: "Lihat Semua",
-    emptyWatchlist: "Watchlist kosong",
-    addCoins: "Tambah koin favorit",
-  },
-  en: {
-    search: "Search cryptocurrency...",
-    featured: "Featured Coins",
-    watchlist: "Watchlist",
-    events: "Today's Events",
-    cosmicScore: "Cosmic Score",
-    addToWatchlist: "Add to Watchlist",
-    proOnly: "PRO Feature",
-    upgradeNow: "Upgrade to PRO",
-    freeTierLimit: "Free tier: BTC only",
-    viewAll: "View All",
-    emptyWatchlist: "Watchlist is empty",
-    addCoins: "Add your favorite coins",
-  },
-};
+// Local translations removed in favor of global i18n
+
 
 // ============================================
 // COMPONENTS
 // ============================================
 
-function CoinCard({ coin, isPro, lang, onAddWatchlist }: {
+function CoinCard({ coin, isPro, onAddWatchlist }: {
   coin: Coin;
   isPro: boolean;
-  lang: "id" | "en";
   onAddWatchlist?: (coinId: string) => void;
 }) {
+  const { t } = useLanguage();
   const cosmicScore = generateCosmicScore(coin.id);
   const isLocked = !isPro && coin.id !== "bitcoin";
   const TrendIcon = cosmicScore.trend === "Bullish" ? TrendingUp : cosmicScore.trend === "Bearish" ? TrendingDown : Minus;
@@ -128,7 +101,7 @@ function CoinCard({ coin, isPro, lang, onAddWatchlist }: {
         >
           <div style={{ textAlign: "center" }}>
             <Lock size={24} style={{ color: colors.purple, marginBottom: "8px" }} />
-            <div style={{ fontSize: "12px", color: colors.textSecondary }}>{t[lang].proOnly}</div>
+            <div style={{ fontSize: "12px", color: colors.textSecondary }}>{t("dashboard.pro_only")}</div>
           </div>
         </div>
       )}
@@ -263,7 +236,8 @@ function CoinCard({ coin, isPro, lang, onAddWatchlist }: {
   );
 }
 
-function EventBadge({ type, impact, lang }: { type: string; impact: string; lang: "id" | "en" }) {
+function EventBadge({ type, impact }: { type: string; impact: string }) {
+  const { language } = useLanguage();
   return (
     <div
       style={{
@@ -279,7 +253,7 @@ function EventBadge({ type, impact, lang }: { type: string; impact: string; lang
       <span style={{ fontSize: "24px" }}>{eventIcons[type]}</span>
       <div>
         <div style={{ fontSize: "13px", fontWeight: 500, color: colors.textPrimary }}>
-          {eventNames[type]?.[lang] || type}
+          {eventNames[type]?.[language] || type}
         </div>
         <div
           style={{
@@ -302,7 +276,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [coinsLoading, setCoinsLoading] = useState(true);
   const [isPro, setIsPro] = useState(false);
-  const [lang, setLang] = useState<"id" | "en">("id");
+  const { t, language, setLanguage } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [coins, setCoins] = useState<Coin[]>([]);
   const [searchResults, setSearchResults] = useState<Coin[]>([]);
@@ -415,7 +389,7 @@ export default function Home() {
     setIsPro(value);
   };
 
-  const text = t[lang];
+  // const text = t[lang]; // Removed local text reference
 
   // Use search results if searching, otherwise filter default coins
   const displayCoins = searchQuery && searchResults.length > 0
@@ -513,7 +487,7 @@ export default function Home() {
           {/* Controls */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <button
-              onClick={() => setLang(lang === "id" ? "en" : "id")}
+              onClick={() => setLanguage(language === "id" ? "en" : language === "en" ? "cn" : "id")}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -529,7 +503,7 @@ export default function Home() {
               }}
             >
               <Globe size={14} />
-              {lang.toUpperCase()}
+              {language.toUpperCase()}
             </button>
 
             {/* Auth Buttons */}
@@ -651,7 +625,7 @@ export default function Home() {
             <Search size={18} style={{ color: colors.textDim }} />
             <input
               type="text"
-              placeholder={text.search}
+              placeholder={t("dashboard.search")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{
@@ -666,7 +640,7 @@ export default function Home() {
             {!isPro && (
               <span style={{ fontSize: "11px", color: colors.amber, display: "flex", alignItems: "center", gap: "4px" }}>
                 <Lock size={12} />
-                {text.freeTierLimit}
+                {t("dashboard.free_tier_limit")}
               </span>
             )}
           </div>
@@ -688,11 +662,11 @@ export default function Home() {
             }}
           >
             <Calendar size={14} />
-            {text.events}
+            {t("dashboard.events")}
           </div>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             {EVENTS_TODAY.map((event, i) => (
-              <EventBadge key={i} type={event.type} impact={event.impact} lang={lang} />
+              <EventBadge key={i} type={event.type} impact={event.impact} />
             ))}
           </div>
         </div>
@@ -721,7 +695,7 @@ export default function Home() {
                 }}
               >
                 <Star size={14} />
-                {text.watchlist}
+                {t("dashboard.watchlist")}
               </div>
             </div>
 
@@ -729,7 +703,7 @@ export default function Home() {
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "16px" }}>
                 {watchlistCoins.map((coin) => (
                   <div key={coin.id} style={{ position: "relative" }}>
-                    <CoinCard coin={coin} isPro={isPro} lang={lang} />
+                    <CoinCard coin={coin} isPro={isPro} />
                     <button
                       onClick={() => handleRemoveWatchlist(coin.id)}
                       style={{
@@ -761,8 +735,8 @@ export default function Home() {
                 }}
               >
                 <Star size={32} style={{ color: colors.textDim, marginBottom: "12px" }} />
-                <div style={{ color: colors.textSecondary, marginBottom: "4px" }}>{text.emptyWatchlist}</div>
-                <div style={{ color: colors.textDim, fontSize: "13px" }}>{text.addCoins}</div>
+                <div style={{ color: colors.textSecondary, marginBottom: "4px" }}>{t("dashboard.empty_watchlist")}</div>
+                <div style={{ color: colors.textDim, fontSize: "13px" }}>{t("dashboard.add_coins")}</div>
               </div>
             )}
           </div>
@@ -791,7 +765,7 @@ export default function Home() {
               }}
             >
               <Sparkles size={14} />
-              {text.featured}
+              {t("dashboard.featured")}
             </div>
           </div>
 
@@ -801,7 +775,6 @@ export default function Home() {
                 key={coin.id}
                 coin={coin}
                 isPro={isPro}
-                lang={lang}
                 onAddWatchlist={handleAddWatchlist}
               />
             ))}

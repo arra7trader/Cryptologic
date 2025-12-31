@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Loader2, AlertCircle, RefreshCw, Shield } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const colors = {
     bg: "#0a0a0b",
@@ -37,6 +39,7 @@ function generateCaptcha() {
 }
 
 export default function LoginPage() {
+    const { t } = useLanguage();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -96,7 +99,7 @@ export default function LoginPage() {
     return (
         <div style={{ minHeight: "100vh", background: colors.bg, fontFamily: "'Inter', -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
             {/* Navbar Minimal */}
-            <nav style={{ padding: "24px", display: "flex", justifyContent: "center" }}>
+            <nav style={{ padding: "24px", display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
                 <Link href="/" style={{ textDecoration: "none" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                         <div
@@ -113,6 +116,7 @@ export default function LoginPage() {
                         </span>
                     </div>
                 </Link>
+                <LanguageSwitcher />
             </nav>
 
             {/* Content */}
@@ -128,8 +132,8 @@ export default function LoginPage() {
                     }}
                 >
                     <div style={{ textAlign: "center", marginBottom: "32px" }}>
-                        <h1 style={{ fontSize: "24px", fontWeight: 600, color: colors.textPrimary, marginBottom: "8px" }}>Welcome Back</h1>
-                        <p style={{ color: colors.textSecondary, fontSize: "14px" }}>Enter your credentials to access your account</p>
+                        <h1 style={{ fontSize: "24px", fontWeight: 600, color: colors.textPrimary, marginBottom: "8px" }}>{t("auth.login.title")}</h1>
+                        <p style={{ color: colors.textSecondary, fontSize: "14px" }}>{t("auth.login.subtitle")}</p>
                     </div>
 
                     {error && (
@@ -154,7 +158,7 @@ export default function LoginPage() {
 
                     <form onSubmit={handleSubmit}>
                         <div style={{ marginBottom: "16px" }}>
-                            <label style={{ display: "block", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>Email</label>
+                            <label style={{ display: "block", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>{t("auth.email")}</label>
                             <input
                                 type="email"
                                 required
@@ -174,8 +178,8 @@ export default function LoginPage() {
                         </div>
                         <div style={{ marginBottom: "16px" }}>
                             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
-                                <label style={{ fontSize: "12px", color: colors.textSecondary }}>Password</label>
-                                <Link href="/forgot-password" style={{ fontSize: "12px", color: colors.purple, textDecoration: "none" }}>Forgot?</Link>
+                                <label style={{ fontSize: "12px", color: colors.textSecondary }}>{t("auth.password")}</label>
+                                <Link href="/forgot-password" style={{ fontSize: "12px", color: colors.purple, textDecoration: "none" }}>{t("auth.forgot")}</Link>
                             </div>
                             <input
                                 type="password"
@@ -267,7 +271,7 @@ export default function LoginPage() {
                                         cursor: "pointer",
                                     }}
                                 />
-                                <span style={{ fontSize: "13px", color: colors.textSecondary }}>Remember me for 30 days</span>
+                                <span style={{ fontSize: "13px", color: colors.textSecondary }}>{t("auth.remember")}</span>
                             </label>
                         </div>
 
@@ -294,11 +298,11 @@ export default function LoginPage() {
                             {loading ? (
                                 <>
                                     <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} />
-                                    Signing In...
+                                    {t("auth.signing")}
                                 </>
                             ) : (
                                 <>
-                                    Sign In
+                                    {t("auth.signin")}
                                     <ArrowRight size={16} />
                                 </>
                             )}
@@ -306,9 +310,9 @@ export default function LoginPage() {
                     </form>
 
                     <div style={{ marginTop: "24px", textAlign: "center", fontSize: "13px", color: colors.textSecondary }}>
-                        Don't have an account?{" "}
+                        {t("auth.no_account")}{" "}
                         <Link href="/register" style={{ color: colors.textPrimary, textDecoration: "none", fontWeight: 500 }}>
-                            Create Account
+                            {t("auth.create")}
                         </Link>
                     </div>
                 </div>

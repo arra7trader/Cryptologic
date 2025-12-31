@@ -1,0 +1,380 @@
+export const translations = {
+    en: {
+        // Navbar
+        "nav.login": "Login",
+        "nav.getStarted": "Get Started",
+        "nav.dashboard": "Dashboard",
+        "nav.logout": "Logout",
+
+        // Landing Hero
+        "hero.badge": "Comparable to Glassnode Enterprise Analytics",
+        "hero.headline.1": "Surface the Signal.",
+        "hero.headline.2": "Create Winners.",
+        "hero.desc": "Enterprise-grade crypto analytics comparable to Glassnode (worth $1,999/mo) at a fraction of the price. Track Smart Money, discover hidden gems, and make data-driven decisions.",
+        "hero.cta.start": "Start Free Trial",
+        "hero.cta.demo": "View Demo",
+        "hero.cosmic_score": "Live Cosmic Score™",
+        "hero.signal": "Bullish Signal",
+
+        // Stats
+        "stats.cryptos": "Cryptocurrencies",
+        "stats.signals": "Smart Money Signals",
+        "stats.price": "Vs Glassnode Enterprise",
+        "stats.savings": "Cost Savings",
+
+        // Features
+        "features.title.1": "Why Choose Cryptologic",
+        "features.title.2": "Glassnode-Level Intelligence. Startup-Friendly Price.",
+        "features.desc": "Get the same institutional-grade tools used by whales and top funds",
+        "features.card.1.title": "Smart Money Tracking",
+        "features.card.1.desc": "Follow institutional wallets, whales, and top performers. Know what the pros are buying before everyone else.",
+        "features.card.2.title": "15,000+ Cryptocurrencies",
+        "features.card.2.desc": "Search and analyze any cryptocurrency in the market. Real-time data with Glassnode-level Cosmic Score™ analysis.",
+        "features.card.3.title": "Personal Watchlist",
+        "features.card.3.desc": "Save your favorite coins and track their signals. Get notified when opportunities arise.",
+        "features.card.4.title": "Telegram Alerts",
+        "features.card.4.desc": "Receive instant notifications for significant movements and Smart Money signals.",
+        "features.card.5.title": "Historical Analysis",
+        "features.card.5.desc": "See how signals correlated with past price movements. Data-backed insights you can trust.",
+        "features.card.6.title": "Real-Time Updates",
+        "features.card.6.desc": "Live price updates and signal calculations. Never miss a trading opportunity.",
+
+        // Pricing
+        "pricing.title": "Simple, Transparent Pricing",
+        "pricing.subtitle": "Pay 99% less than Glassnode Enterprise. Get similar insights.",
+        "pricing.pay_usdt": "Pay with USDT BEP20 (BSC Network)",
+        "pricing.lite.title": "Lite",
+        "pricing.lite.price": "Free",
+        "pricing.lite.cta": "Start Free",
+        "pricing.pro.title": "Pro",
+        "pricing.pro.price": "$14",
+        "pricing.pro.note": "vs Glassnode $1,999/mo - Save 99%!",
+        "pricing.pro.cta": "Upgrade to Pro",
+        "pricing.month": "/month",
+        "pricing.feat.1": "Bitcoin Cosmic Score",
+        "pricing.feat.2": "Basic Market Signals",
+        "pricing.feat.3": "Community Access",
+        "pricing.feat.4": "All 15,000+ Coins",
+        "pricing.feat.5": "Smart Money Alerts",
+        "pricing.feat.6": "Personal Watchlist (20)",
+        "pricing.feat.7": "Telegram Alerts",
+        "pricing.feat.8": "Historical Data",
+        "pricing.feat.9": "Priority Support",
+        "pricing.feat.10": "Pay with USDT",
+
+        // Testimonials
+        "testimonials.title": "Trusted by 10,000+ Global Traders",
+        "testimonials.subtitle": "From Indonesia to China, traders worldwide love Cryptologic",
+
+        // CTA
+        "cta.title": "Ready to Trade Like Smart Money?",
+        "cta.subtitle": "Join thousands of traders using Glassnode-level intelligence at 99% less cost",
+        "cta.btn": "Get Started Free",
+
+        // Footer
+        "footer.rights": "© 2024 Cryptologic. Glassnode-Level Analytics at Startup-Friendly Prices.",
+        "footer.disclaimer": "Disclaimer: This is not financial advice. Trade at your own risk.",
+
+        // Auth
+        "auth.login.title": "Welcome Back",
+        "auth.login.subtitle": "Enter your credentials to access your account",
+        "auth.email": "Email Address",
+        "auth.password": "Password",
+        "auth.remember": "Remember me for 30 days",
+        "auth.forgot": "Forgot?",
+        "auth.signin": "Sign In",
+        "auth.signing": "Signing In...",
+        "auth.no_account": "Don't have an account?",
+        "auth.register": "Register",
+        "auth.register.title": "Create an Account",
+        "auth.register.subtitle": "Start your journey with institutional-grade analytics",
+        "auth.name": "Full Name",
+        "auth.create": "Create Account",
+        "auth.creating": "Creating Account...",
+        "auth.have_account": "Already have an account?",
+
+        // Dashboard
+        "dash.search_placeholder": "Search coin (e.g. BTC, ETH, PEPE)...",
+        "dash.upgrade": "Upgrade to PRO",
+        "dash.market_overview": "Market Overview",
+        "dash.watchlist": "My Watchlist",
+        "dash.top_signals": "Top Signals",
+        "dash.cosmic_score": "Cosmic Score",
+        "dash.price": "Price",
+        "dash.change": "24h Change",
+        "dash.analysis": "AI Analysis",
+
+        // Upgrade Modal
+        "modal.upgrade.title": "Upgrade to Professional",
+        "modal.upgrade.subtitle": "Unlock the full power of Cryptologic Analysis",
+        "modal.upgrade.pay_usdt": "Pay with USDT",
+
+        // Checkout
+        "checkout.title": "Upgrade to Pro",
+        "checkout.subtitle": "Pay with USDT for instant activation",
+        "checkout.per_month": "per month",
+        "checkout.be_aware": "Select Network",
+        "checkout.send_exact": "Send exactly",
+        "checkout.instructions": "Instructions",
+        "checkout.step.1": "Copy the wallet address above",
+        "checkout.step.2": "Open your crypto wallet (Trust Wallet, MetaMask, Binance, etc.)",
+        "checkout.step.3": "Send exactly 14 USDT via BEP20 network",
+        "checkout.step.4": "After payment, send transaction screenshot to our Telegram",
+        "checkout.back": "Back to Home",
+        "checkout.copied": "Copied!",
+        "checkout.copy": "Copy",
+    },
+    id: {
+        // Navbar
+        "nav.login": "Masuk",
+        "nav.getStarted": "Mulai Sekarang",
+        "nav.dashboard": "Dashboard",
+        "nav.logout": "Keluar",
+
+        // Landing Hero
+        "hero.badge": "Setara dengan Glassnode Enterprise Analytics",
+        "hero.headline.1": "Temukan Sinyal.",
+        "hero.headline.2": "Ciptakan Profit.",
+        "hero.desc": "Analitik kripto tingkat Enterprise setara Glassnode (seharga $1,999/bln) dengan harga terjangkau. Lacak Smart Money, temukan permata tersembunyi, dan buat keputusan berbasis data.",
+        "hero.cta.start": "Coba Gratis",
+        "hero.cta.demo": "Lihat Demo",
+        "hero.cosmic_score": "Live Cosmic Score™",
+        "hero.signal": "Sinyal Bullish",
+
+        // Stats
+        "stats.cryptos": "Mata Uang Kripto",
+        "stats.signals": "Sinyal Smart Money",
+        "stats.price": "Vs Glassnode Enterprise",
+        "stats.savings": "Hemat Biaya",
+
+        // Features
+        "features.title.1": "Kenapa Memilih Cryptologic",
+        "features.title.2": "Kecerdasan Level Glassnode. Harga Sahabat Startup.",
+        "features.desc": "Dapatkan alat tingkat institusi yang sama yang digunakan oleh whale dan dana besar",
+        "features.card.1.title": "Pelacakan Smart Money",
+        "features.card.1.desc": "Ikuti dompet institusi, whale, dan top performer. Ketahui apa yang dibeli para pro sebelum orang lain.",
+        "features.card.2.title": "15,000+ Kripto",
+        "features.card.2.desc": "Cari dan analisis kripto apa pun di pasar. Data real-time dengan analisis Cosmic Score™ setara Glassnode.",
+        "features.card.3.title": "Watchlist Pribadi",
+        "features.card.3.desc": "Simpan koin favorit Anda dan lacak sinyalnya. Dapatkan notifikasi saat peluang muncul.",
+        "features.card.4.title": "Notifikasi Telegram",
+        "features.card.4.desc": "Terima notifikasi instan untuk pergerakan signifikan dan sinyal Smart Money.",
+        "features.card.5.title": "Analisis Historis",
+        "features.card.5.desc": "Lihat korelasi sinyal dengan pergerakan harga masa lalu. Wawasan berbasis data yang bisa Anda percaya.",
+        "features.card.6.title": "Update Real-Time",
+        "features.card.6.desc": "Update harga langsung dan perhitungan sinyal. Jangan pernah lewatkan peluang trading.",
+
+        // Pricing
+        "pricing.title": "Harga Simpel & Transparan",
+        "pricing.subtitle": "Bayar 99% lebih murah dari Glassnode Enterprise. Dapatkan wawasan serupa.",
+        "pricing.pay_usdt": "Bayar dengan USDT BEP20 (Jaringan BSC)",
+        "pricing.lite.title": "Lite",
+        "pricing.lite.price": "Gratis",
+        "pricing.lite.cta": "Mulai Gratis",
+        "pricing.pro.title": "Pro",
+        "pricing.pro.price": "$14",
+        "pricing.pro.note": "vs Glassnode $1,999/bln - Hemat 99%!",
+        "pricing.pro.cta": "Upgrade ke Pro",
+        "pricing.month": "/bulan",
+        "pricing.feat.1": "Bitcoin Cosmic Score",
+        "pricing.feat.2": "Sinyal Pasar Dasar",
+        "pricing.feat.3": "Akses Komunitas",
+        "pricing.feat.4": "Semua 15,000+ Koin",
+        "pricing.feat.5": "Peringatan Smart Money",
+        "pricing.feat.6": "Watchlist Pribadi (20)",
+        "pricing.feat.7": "Notifikasi Telegram",
+        "pricing.feat.8": "Data Historis",
+        "pricing.feat.9": "Dukungan Prioritas",
+        "pricing.feat.10": "Bayar dengan USDT",
+
+        // Testimonials
+        "testimonials.title": "Dipercaya 10,000+ Trader Global",
+        "testimonials.subtitle": "Dari Indonesia hingga China, trader di seluruh dunia mencintai Cryptologic",
+
+        // CTA
+        "cta.title": "Siap Trading Seperti Smart Money?",
+        "cta.subtitle": "Bergabunglah dengan ribuan trader menggunakan kecerdasan level Glassnode dengan biaya 99% lebih hemat",
+        "cta.btn": "Mulai Gratis Sekarang",
+
+        // Footer
+        "footer.rights": "© 2024 Cryptologic. Analitik Level Glassnode dengan Harga Terjangkau.",
+        "footer.disclaimer": "Disclaimer: Ini bukan saran keuangan. Trading dengan risiko Anda sendiri.",
+
+        // Auth
+        "auth.login.title": "Selamat Datang Kembali",
+        "auth.login.subtitle": "Masukkan kredensial Anda untuk mengakses akun",
+        "auth.email": "Alamat Email",
+        "auth.password": "Kata Sandi",
+        "auth.remember": "Ingat saya selama 30 hari",
+        "auth.forgot": "Lupa?",
+        "auth.signin": "Masuk",
+        "auth.signing": "Sedang Masuk...",
+        "auth.no_account": "Belum punya akun?",
+        "auth.register": "Daftar",
+        "auth.register.title": "Buat Akun",
+        "auth.register.subtitle": "Mulai perjalanan Anda dengan analitik tingkat institusi",
+        "auth.name": "Nama Lengkap",
+        "auth.create": "Buat Akun",
+        "auth.creating": "Membuat Akun...",
+        "auth.have_account": "Sudah punya akun?",
+
+        // Dashboard
+        "dash.search_placeholder": "Cari koin (cth. BTC, ETH, PEPE)...",
+        "dash.upgrade": "Upgrade ke PRO",
+        "dash.market_overview": "Ringkasan Pasar",
+        "dash.watchlist": "Watchlist Saya",
+        "dash.top_signals": "Sinyal Teratas",
+        "dash.cosmic_score": "Skor Cosmic",
+        "dash.price": "Harga",
+        "dash.change": "Perubahan 24j",
+        "dash.analysis": "Analisis AI",
+
+        // Upgrade Modal
+        "modal.upgrade.title": "Upgrade ke Profesional",
+        "modal.upgrade.subtitle": "Buka kekuatan penuh Analisis Cryptologic",
+        "modal.upgrade.pay_usdt": "Bayar dengan USDT",
+
+        // Checkout
+        "checkout.title": "Upgrade ke Pro",
+        "checkout.subtitle": "Bayar dengan USDT untuk aktivasi instan",
+        "checkout.per_month": "per bulan",
+        "checkout.be_aware": "Pilih Jaringan",
+        "checkout.send_exact": "Kirim tepat",
+        "checkout.instructions": "Instruksi",
+        "checkout.step.1": "Salin alamat dompet di atas",
+        "checkout.step.2": "Buka dompet crypto Anda (Trust Wallet, MetaMask, Binance, dll.)",
+        "checkout.step.3": "Kirim tepat 14 USDT via jaringan BEP20",
+        "checkout.step.4": "Setelah bayar, kirim bukti transaksi ke Telegram kami",
+        "checkout.back": "Kembali ke Beranda",
+        "checkout.copied": "Disalin!",
+        "checkout.copy": "Salin",
+    },
+    cn: {
+        // Navbar
+        "nav.login": "登录",
+        "nav.getStarted": "开始使用",
+        "nav.dashboard": "仪表板",
+        "nav.logout": "退出",
+
+        // Landing Hero
+        "hero.badge": "堪比 Glassnode 企业级分析",
+        "hero.headline.1": "发现信号。",
+        "hero.headline.2": "创造赢家。",
+        "hero.desc": "企业级加密分析，堪比 Glassnode（价值 $1,999/月），价格仅为其零头。追踪聪明钱，发现隐藏宝石，做出数据驱动的决策。",
+        "hero.cta.start": "免费试用",
+        "hero.cta.demo": "观看演示",
+        "hero.cosmic_score": "实时 Cosmic Score™",
+        "hero.signal": "看涨信号",
+
+        // Stats
+        "stats.cryptos": "种加密货币",
+        "stats.signals": "聪明钱信号",
+        "stats.price": "对比 Glassnode 企业版",
+        "stats.savings": "节省成本",
+
+        // Features
+        "features.title.1": "为什么选择 Cryptologic",
+        "features.title.2": "Glassnode 级智能。初创友好的价格。",
+        "features.desc": "获得鲸鱼和顶级基金使用的相同机构级工具",
+        "features.card.1.title": "聪明钱追踪",
+        "features.card.1.desc": "关注机构钱包、鲸鱼和顶级表现者。在其他人之前知道专业人士在买什么。",
+        "features.card.2.title": "15,000+ 加密货币",
+        "features.card.2.desc": "搜索和分析市场上的任何加密货币。具有 Glassnode 级 Cosmic Score™ 分析的实时数据。",
+        "features.card.3.title": "个人关注列表",
+        "features.card.3.desc": "保存您最喜欢的硬币并跟踪它们的信号。机会出现时获得通知。",
+        "features.card.4.title": "Telegram 警报",
+        "features.card.4.desc": "接收重大变动和聪明钱信号的即时通知。",
+        "features.card.5.title": "历史分析",
+        "features.card.5.desc": "查看信号与过去价格走势的相关性。您可以信任的数据支持的见解。",
+        "features.card.6.title": "实时更新",
+        "features.card.6.desc": "实时价格更新和信号计算。绝不错过交易机会。",
+
+        // Pricing
+        "pricing.title": "简单、透明的定价",
+        "pricing.subtitle": "比 Glassnode 企业版便宜 99%。获得类似的见解。",
+        "pricing.pay_usdt": "使用 USDT BEP20 (BSC 网络) 支付",
+        "pricing.lite.title": "精简版",
+        "pricing.lite.price": "免费",
+        "pricing.lite.cta": "免费开始",
+        "pricing.pro.title": "专业版",
+        "pricing.pro.price": "$14",
+        "pricing.pro.note": "对比 Glassnode $1,999/月 - 节省 99%！",
+        "pricing.pro.cta": "升级到专业版",
+        "pricing.month": "/月",
+        "pricing.feat.1": "比特币 Cosmic Score",
+        "pricing.feat.2": "基本市场信号",
+        "pricing.feat.3": "社区访问",
+        "pricing.feat.4": "所有 15,000+ 硬币",
+        "pricing.feat.5": "聪明钱警报",
+        "pricing.feat.6": "个人关注列表 (20)",
+        "pricing.feat.7": "Telegram 警报",
+        "pricing.feat.8": "历史数据",
+        "pricing.feat.9": "优先支持",
+        "pricing.feat.10": "使用 USDT 支付",
+
+        // Testimonials
+        "testimonials.title": "被 10,000+ 全球交易者信任",
+        "testimonials.subtitle": "从印度尼西亚到中国，全世界的交易者都喜爱 Cryptologic",
+
+        // CTA
+        "cta.title": "准备好像聪明钱一样交易了吗？",
+        "cta.subtitle": "加入成千上万使用 Glassnode 级智能的交易者，成本降低 99%",
+        "cta.btn": "立即免费开始",
+
+        // Footer
+        "footer.rights": "© 2024 Cryptologic。初创友好价格的 Glassnode 级分析。",
+        "footer.disclaimer": "免责声明：这不是财务建议。交易风险自负。",
+
+        // Auth
+        "auth.login.title": "欢迎回来",
+        "auth.login.subtitle": "输入您的凭据以访问您的帐户",
+        "auth.email": "电子邮件地址",
+        "auth.password": "密码",
+        "auth.remember": "记住我 30 天",
+        "auth.forgot": "忘记密码？",
+        "auth.signin": "登录",
+        "auth.signing": "正在登录...",
+        "auth.no_account": "还没有帐户？",
+        "auth.register": "注册",
+        "auth.register.title": "创建帐户",
+        "auth.register.subtitle": "开始您的机构级分析之旅",
+        "auth.name": "全名",
+        "auth.create": "创建帐户",
+        "auth.creating": "正在创建...",
+        "auth.have_account": "已有帐户？",
+
+        // Dashboard
+        "dash.search_placeholder": "搜索硬币 (例如 BTC, ETH, PEPE)...",
+        "dash.upgrade": "升级到 PRO",
+        "dash.market_overview": "市场概览",
+        "dash.watchlist": "我的关注列表",
+        "dash.top_signals": "顶级信号",
+        "dash.cosmic_score": "Cosmic 得分",
+        "dash.price": "价格",
+        "dash.change": "24小时涨跌",
+        "dash.analysis": "AI 分析",
+
+        // Upgrade Modal
+        "modal.upgrade.title": "升级到专业版",
+        "modal.upgrade.subtitle": "解锁 Cryptologic 分析的全部力量",
+        "modal.upgrade.pay_usdt": "使用 USDT 支付",
+
+        // Checkout
+        "checkout.title": "升级到专业版",
+        "checkout.subtitle": "使用 USDT 支付以即时激活",
+        "checkout.per_month": "每月",
+        "checkout.be_aware": "选择网络",
+        "checkout.send_exact": "准确发送",
+        "checkout.instructions": "说明",
+        "checkout.step.1": "复制上方的钱包地址",
+        "checkout.step.2": "打开您的加密钱包 (Trust Wallet, MetaMask, Binance 等)",
+        "checkout.step.3": "通过 BEP20 网络发送正好 14 USDT",
+        "checkout.step.4": "付款后，将交易截图发送到我们的 Telegram",
+        "checkout.back": "返回首页",
+        "checkout.copied": "已复制！",
+        "checkout.copy": "复制",
+    }
+};
+
+export type Language = "en" | "id" | "cn";
+export type TranslationKey = keyof typeof translations.en;

@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 // ============================================
 // SVG ICONS - Premium Custom Icons
@@ -264,6 +266,7 @@ function TestimonialCard({ name, role, content, avatar }: { name: string; role: 
 // ============================================
 
 export default function LandingPage() {
+  const { t } = useLanguage();
   const [cosmicScore, setCosmicScore] = useState(78);
 
   // Animate cosmic score
@@ -319,7 +322,8 @@ export default function LandingPage() {
             </span>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+            <LanguageSwitcher />
             <Link href="/login">
               <button
                 style={{
@@ -331,7 +335,7 @@ export default function LandingPage() {
                   cursor: "pointer",
                 }}
               >
-                Login
+                {t("nav.login")}
               </button>
             </Link>
             <Link href="/register">
@@ -347,7 +351,7 @@ export default function LandingPage() {
                   cursor: "pointer",
                 }}
               >
-                Get Started
+                {t("nav.getStarted")}
               </button>
             </Link>
           </div>
@@ -395,7 +399,7 @@ export default function LandingPage() {
             }}
           >
             <span style={{ color: colors.gold }}><IconSparkles /></span>
-            <span>Comparable to <strong style={{ color: colors.textPrimary }}>Glassnode Enterprise</strong> Analytics</span>
+            <span>{t("hero.badge")}</span>
           </div>
 
           {/* Headline */}
@@ -408,8 +412,8 @@ export default function LandingPage() {
               marginBottom: "24px",
             }}
           >
-            Surface the Signal.{" "}
-            <span style={{ color: colors.accent }}>Create Winners.</span>
+            {t("hero.headline.1")}{" "}
+            <span style={{ color: colors.accent }}>{t("hero.headline.2")}</span>
           </h1>
 
           <p
@@ -422,8 +426,7 @@ export default function LandingPage() {
               margin: "0 auto 40px",
             }}
           >
-            Enterprise-grade crypto analytics comparable to <strong style={{ color: colors.textPrimary }}>Glassnode</strong> (worth $1,999/mo) at a fraction of the price.
-            Track Smart Money, discover hidden gems, and make data-driven decisions.
+            {t("hero.desc")}
           </p>
 
           {/* CTA Buttons */}
@@ -444,7 +447,7 @@ export default function LandingPage() {
                   gap: "8px",
                 }}
               >
-                Start Free Trial
+                {t("hero.cta.start")}
                 <IconChevronRight />
               </button>
             </Link>
@@ -461,7 +464,7 @@ export default function LandingPage() {
                   cursor: "pointer",
                 }}
               >
-                View Demo
+                {t("hero.cta.demo")}
               </button>
             </Link>
           </div>
@@ -485,7 +488,7 @@ export default function LandingPage() {
             }}
           >
             <div style={{ fontSize: "12px", color: colors.textDim, textTransform: "uppercase", marginBottom: "12px" }}>
-              Live Cosmic Score™
+              {t("hero.cosmic_score")}
             </div>
             <div
               style={{
@@ -499,7 +502,7 @@ export default function LandingPage() {
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "6px", justifyContent: "center", marginTop: "12px", color: colors.accent }}>
               <IconTrendingUp />
-              <span style={{ fontSize: "14px", fontWeight: 500 }}>Bullish Signal</span>
+              <span style={{ fontSize: "14px", fontWeight: 500 }}>{t("hero.signal")}</span>
             </div>
           </div>
         </div>
@@ -509,10 +512,10 @@ export default function LandingPage() {
       <section style={{ padding: "40px 24px", background: colors.bgCard }}>
         <div style={{ maxWidth: "900px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "24px", textAlign: "center" }}>
           {[
-            { value: "15,000+", label: "Cryptocurrencies" },
-            { value: "300M+", label: "Smart Money Signals" },
-            { value: "$1,999 → $14", label: "Vs Glassnode Enterprise" },
-            { value: "99%", label: "Cost Savings" },
+            { value: "15,000+", label: t("stats.cryptos") },
+            { value: "300M+", label: t("stats.signals") },
+            { value: "$1,999 → $14", label: t("stats.price") },
+            { value: "99%", label: t("stats.savings") },
           ].map((stat, i) => (
             <div key={i}>
               <div style={{ fontSize: "24px", fontWeight: 700, color: colors.textPrimary, marginBottom: "4px" }}>{stat.value}</div>
@@ -526,46 +529,46 @@ export default function LandingPage() {
       <section style={{ padding: "80px 24px", maxWidth: "1200px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "60px" }}>
           <div style={{ fontSize: "13px", color: colors.accent, fontWeight: 600, marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-            Why Choose Cryptologic
+            {t("features.title.1")}
           </div>
           <h2 style={{ fontSize: "32px", fontWeight: 700, color: colors.textPrimary, marginBottom: "16px" }}>
-            Glassnode-Level Intelligence. Startup-Friendly Price.
+            {t("features.title.2")}
           </h2>
           <p style={{ fontSize: "16px", color: colors.textSecondary, maxWidth: "500px", margin: "0 auto" }}>
-            Get the same institutional-grade tools used by whales and top funds
+            {t("features.desc")}
           </p>
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
           <FeatureCard
             icon={IconBrain}
-            title="Smart Money Tracking"
-            description="Follow institutional wallets, whales, and top performers. Know what the pros are buying before everyone else."
+            title={t("features.card.1.title")}
+            description={t("features.card.1.desc")}
           />
           <FeatureCard
             icon={IconBarChart}
-            title="15,000+ Cryptocurrencies"
-            description="Search and analyze any cryptocurrency in the market. Real-time data with Glassnode-level Cosmic Score™ analysis."
+            title={t("features.card.2.title")}
+            description={t("features.card.2.desc")}
           />
           <FeatureCard
             icon={IconStar}
-            title="Personal Watchlist"
-            description="Save your favorite coins and track their signals. Get notified when opportunities arise."
+            title={t("features.card.3.title")}
+            description={t("features.card.3.desc")}
           />
           <FeatureCard
             icon={IconBell}
-            title="Telegram Alerts"
-            description="Receive instant notifications for significant movements and Smart Money signals."
+            title={t("features.card.4.title")}
+            description={t("features.card.4.desc")}
           />
           <FeatureCard
             icon={IconShield}
-            title="Historical Analysis"
-            description="See how signals correlated with past price movements. Data-backed insights you can trust."
+            title={t("features.card.5.title")}
+            description={t("features.card.5.desc")}
           />
           <FeatureCard
             icon={IconZap}
-            title="Real-Time Updates"
-            description="Live price updates and signal calculations. Never miss a trading opportunity."
+            title={t("features.card.6.title")}
+            description={t("features.card.6.desc")}
           />
         </div>
       </section>
@@ -575,42 +578,42 @@ export default function LandingPage() {
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "60px" }}>
             <h2 style={{ fontSize: "32px", fontWeight: 700, color: colors.textPrimary, marginBottom: "16px" }}>
-              Simple, Transparent Pricing
+              {t("pricing.title")}
             </h2>
             <p style={{ fontSize: "16px", color: colors.textSecondary }}>
-              Pay <strong style={{ color: colors.accent }}>99% less</strong> than Glassnode Enterprise. Get similar insights.
+              {t("pricing.subtitle")}
             </p>
             <div style={{ marginTop: "16px", display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 16px", background: colors.bg, borderRadius: "100px", border: `1px solid ${colors.border}` }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="10" fill="#26A17B" />
                 <path d="M12.5 6.5h-1v3h-3v1h3v5.5h1v-5.5h3v-1h-3v-3z" fill="white" />
               </svg>
-              <span style={{ fontSize: "12px", color: colors.textSecondary }}>Pay with <strong style={{ color: "#F0B90B" }}>USDT BEP20</strong> (BSC Network)</span>
+              <span style={{ fontSize: "12px", color: colors.textSecondary }}>{t("pricing.pay_usdt")}</span>
             </div>
           </div>
 
           <div style={{ display: "flex", gap: "24px", justifyContent: "center", flexWrap: "wrap" }}>
             <PricingCard
-              title="Lite"
-              price="Free"
-              features={["Bitcoin Cosmic Score", "Basic Market Signals", "Community Access"]}
-              cta="Start Free"
+              title={t("pricing.lite.title")}
+              price={t("pricing.lite.price")}
+              features={[t("pricing.feat.1"), t("pricing.feat.2"), t("pricing.feat.3")]}
+              cta={t("pricing.lite.cta")}
             />
             <PricingCard
-              title="Pro"
-              price="$14"
-              priceNote="vs Glassnode $1,999/mo - Save 99%!"
+              title={t("pricing.pro.title")}
+              price={t("pricing.pro.price")}
+              priceNote={t("pricing.pro.note")}
               features={[
-                "All 15,000+ Coins",
-                "Smart Money Alerts",
-                "Personal Watchlist (20)",
-                "Telegram Alerts",
-                "Historical Data",
-                "Priority Support",
-                "Pay with USDT",
+                t("pricing.feat.4"),
+                t("pricing.feat.5"),
+                t("pricing.feat.6"),
+                t("pricing.feat.7"),
+                t("pricing.feat.8"),
+                t("pricing.feat.9"),
+                t("pricing.feat.10"),
               ]}
               popular
-              cta="Upgrade to Pro"
+              cta={t("pricing.pro.cta")}
             />
           </div>
         </div>
@@ -620,10 +623,10 @@ export default function LandingPage() {
       <section style={{ padding: "80px 0", overflow: "hidden" }}>
         <div style={{ textAlign: "center", marginBottom: "60px", padding: "0 24px" }}>
           <h2 style={{ fontSize: "32px", fontWeight: 700, color: colors.textPrimary, marginBottom: "16px" }}>
-            Trusted by 10,000+ Global Traders
+            {t("testimonials.title")}
           </h2>
           <p style={{ fontSize: "16px", color: colors.textSecondary }}>
-            From Indonesia to China, traders worldwide love Cryptologic
+            {t("testimonials.subtitle")}
           </p>
         </div>
 
@@ -772,10 +775,10 @@ export default function LandingPage() {
         }}
       >
         <h2 style={{ fontSize: "36px", fontWeight: 700, color: colors.textPrimary, marginBottom: "16px" }}>
-          Ready to Trade Like Smart Money?
+          {t("cta.title")}
         </h2>
         <p style={{ fontSize: "16px", color: colors.textSecondary, marginBottom: "32px" }}>
-          Join thousands of traders using Glassnode-level intelligence at 99% less cost
+          {t("cta.subtitle")}
         </p>
         <Link href="/register">
           <button
@@ -790,7 +793,7 @@ export default function LandingPage() {
               cursor: "pointer",
             }}
           >
-            Get Started Free
+            {t("cta.btn")}
           </button>
         </Link>
       </section>
