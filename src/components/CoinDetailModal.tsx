@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { X, TrendingUp, TrendingDown, Minus, Loader2 } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
-import { getScoreBreakdown, getInterpretation, calculateAstrology } from "@/lib/astrology";
 import { formatCurrency, formatPercentage } from "@/lib/coingecko";
 
 const colors = {
@@ -36,6 +35,20 @@ interface CoinDetail {
         low_24h: number;
     };
     sparkline_7d: number[];
+}
+
+interface AstrologyInfo {
+    breakdown: {
+        factors: Array<{ name: string; value: number; description: string }>;
+        total: number;
+        trend: string;
+    };
+    interpretation: string;
+    astroData: {
+        moonPhaseName: string;
+        mercuryRetrograde: boolean;
+        keyEvent: string;
+    };
 }
 
 interface CoinDetailModalProps {
@@ -75,29 +88,37 @@ export default function CoinDetailModal({ coinId, onClose }: CoinDetailModalProp
     const { language } = useLanguage();
     const [loading, setLoading] = useState(true);
     const [coin, setCoin] = useState<CoinDetail | null>(null);
+    const [astrology, setAstrology] = useState<AstrologyInfo | null>(null);
     const [error, setError] = useState("");
 
-    // Get astrology data
-    const breakdown = getScoreBreakdown(coinId);
-    const interpretation = getInterpretation(coinId, language as 'en' | 'id' | 'cn');
-    const astroData = calculateAstrology();
-
     useEffect(() => {
-        fetchCoinDetail();
+        fetchData();
     }, [coinId]);
 
-    const fetchCoinDetail = async () => {
+    const fetchData = async () => {
         try {
             setLoading(true);
-            const res = await fetch(`/api/coins/${coinId}`);
-            const data = await res.json();
-            if (data.coin) {
-                setCoin(data.coin);
+
+            // Fetch both coin details and astrology data in parallel
+            const [coinRes, astroRes] = await Promise.all([
+                fetch(`/api/coins/${coinId}`),
+                fetch(`/api/astrology/${coinId}?lang=${language}`)
+            ]);
+
+            const coinData = await coinRes.json();
+            const astroData = await astroRes.json();
+
+            if (coinData.coin) {
+                setCoin(coinData.coin);
             } else {
                 setError("Failed to load coin details");
             }
+
+            if (astroData.breakdown) {
+                setAstrology(astroData);
+            }
         } catch (e) {
-            setError("Failed to load coin details");
+            setError("Failed to load data");
         } finally {
             setLoading(false);
         }
@@ -110,8 +131,9 @@ export default function CoinDetailModal({ coinId, onClose }: CoinDetailModalProp
     };
 
     const getTrendIcon = () => {
-        if (breakdown.trend === "Bullish") return <TrendingUp size={16} />;
-        if (breakdown.trend === "Bearish") return <TrendingDown size={16} />;
+        if (!astrology) return <Minus size={16} />;
+        if (astrology.breakdown.trend === "Bullish") return <TrendingUp size={16} />;
+        if (astrology.breakdown.trend === "Bearish") return <TrendingDown size={16} />;
         return <Minus size={16} />;
     };
 
@@ -211,66 +233,68 @@ export default function CoinDetailModal({ coinId, onClose }: CoinDetailModalProp
                         </div>
 
                         {/* Cosmic Score */}
-                        <div style={{
-                            background: colors.bg,
-                            border: `1px solid ${colors.border}`,
-                            borderRadius: "12px",
-                            padding: "20px",
-                            marginBottom: "16px",
-                        }}>
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
-                                <span style={{ fontSize: "12px", fontWeight: 600, color: colors.textDim, textTransform: "uppercase" }}>
-                                    Cosmic Score™
-                                </span>
-                                <div style={{ display: "flex", alignItems: "center", gap: "6px", color: getScoreColor(breakdown.total) }}>
-                                    {getTrendIcon()}
-                                    <span style={{ fontSize: "13px", fontWeight: 600 }}>{breakdown.trend}</span>
-                                </div>
-                            </div>
-
-                            {/* Score Bar */}
-                            <div style={{ marginBottom: "20px" }}>
-                                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
-                                    <span style={{ fontSize: "24px", fontWeight: 700, color: getScoreColor(breakdown.total) }}>
-                                        {breakdown.total}
+                        {astrology && (
+                            <div style={{
+                                background: colors.bg,
+                                border: `1px solid ${colors.border}`,
+                                borderRadius: "12px",
+                                padding: "20px",
+                                marginBottom: "16px",
+                            }}>
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+                                    <span style={{ fontSize: "12px", fontWeight: 600, color: colors.textDim, textTransform: "uppercase" }}>
+                                        Cosmic Score™
                                     </span>
-                                    <span style={{ fontSize: "14px", color: colors.textDim }}>/100</span>
-                                </div>
-                                <div style={{ height: "6px", background: colors.bgHover, borderRadius: "3px", overflow: "hidden" }}>
-                                    <div
-                                        style={{
-                                            width: `${breakdown.total}%`,
-                                            height: "100%",
-                                            background: getScoreColor(breakdown.total),
-                                            borderRadius: "3px",
-                                        }}
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Factor Breakdown */}
-                            <div style={{ fontSize: "12px" }}>
-                                <div style={{ color: colors.textDim, marginBottom: "8px", fontWeight: 600 }}>Score Breakdown:</div>
-                                {breakdown.factors.map((factor, i) => (
-                                    <div key={i} style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        padding: "6px 0",
-                                        borderBottom: i < breakdown.factors.length - 1 ? `1px solid ${colors.border}` : "none",
-                                    }}>
-                                        <span style={{ color: colors.textSecondary }}>
-                                            {factor.name}: <span style={{ color: colors.textDim }}>{factor.description}</span>
-                                        </span>
-                                        <span style={{
-                                            color: factor.value > 0 ? colors.accent : factor.value < 0 ? colors.red : colors.textDim,
-                                            fontWeight: 600,
-                                        }}>
-                                            {factor.value > 0 ? `+${factor.value}` : factor.value}
-                                        </span>
+                                    <div style={{ display: "flex", alignItems: "center", gap: "6px", color: getScoreColor(astrology.breakdown.total) }}>
+                                        {getTrendIcon()}
+                                        <span style={{ fontSize: "13px", fontWeight: 600 }}>{astrology.breakdown.trend}</span>
                                     </div>
-                                ))}
+                                </div>
+
+                                {/* Score Bar */}
+                                <div style={{ marginBottom: "20px" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
+                                        <span style={{ fontSize: "24px", fontWeight: 700, color: getScoreColor(astrology.breakdown.total) }}>
+                                            {astrology.breakdown.total}
+                                        </span>
+                                        <span style={{ fontSize: "14px", color: colors.textDim }}>/100</span>
+                                    </div>
+                                    <div style={{ height: "6px", background: colors.bgHover, borderRadius: "3px", overflow: "hidden" }}>
+                                        <div
+                                            style={{
+                                                width: `${astrology.breakdown.total}%`,
+                                                height: "100%",
+                                                background: getScoreColor(astrology.breakdown.total),
+                                                borderRadius: "3px",
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Factor Breakdown */}
+                                <div style={{ fontSize: "12px" }}>
+                                    <div style={{ color: colors.textDim, marginBottom: "8px", fontWeight: 600 }}>Score Breakdown:</div>
+                                    {astrology.breakdown.factors.map((factor, i) => (
+                                        <div key={i} style={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            padding: "6px 0",
+                                            borderBottom: i < astrology.breakdown.factors.length - 1 ? `1px solid ${colors.border}` : "none",
+                                        }}>
+                                            <span style={{ color: colors.textSecondary }}>
+                                                {factor.name}: <span style={{ color: colors.textDim }}>{factor.description}</span>
+                                            </span>
+                                            <span style={{
+                                                color: factor.value > 0 ? colors.accent : factor.value < 0 ? colors.red : colors.textDim,
+                                                fontWeight: 600,
+                                            }}>
+                                                {factor.value > 0 ? `+${factor.value}` : factor.value}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
+                        )}
 
                         {/* Technical Analysis */}
                         <div style={{
@@ -312,32 +336,34 @@ export default function CoinDetailModal({ coinId, onClose }: CoinDetailModalProp
                         </div>
 
                         {/* Astrological Interpretation */}
-                        <div style={{
-                            background: colors.bg,
-                            border: `1px solid ${colors.border}`,
-                            borderRadius: "12px",
-                            padding: "20px",
-                        }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
-                                <span style={{ fontSize: "16px" }}>🔮</span>
-                                <span style={{ fontSize: "12px", fontWeight: 600, color: colors.textDim, textTransform: "uppercase" }}>
-                                    Astrological Interpretation
-                                </span>
+                        {astrology && (
+                            <div style={{
+                                background: colors.bg,
+                                border: `1px solid ${colors.border}`,
+                                borderRadius: "12px",
+                                padding: "20px",
+                            }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+                                    <span style={{ fontSize: "16px" }}>🔮</span>
+                                    <span style={{ fontSize: "12px", fontWeight: 600, color: colors.textDim, textTransform: "uppercase" }}>
+                                        Astrological Interpretation
+                                    </span>
+                                </div>
+                                <p style={{ fontSize: "13px", color: colors.textSecondary, lineHeight: 1.7 }}>
+                                    {astrology.interpretation}
+                                </p>
+                                <div style={{ marginTop: "16px", padding: "10px 12px", background: colors.bgHover, borderRadius: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
+                                    <span style={{ fontSize: "16px" }}>
+                                        {astrology.astroData.moonPhaseName === "New Moon" ? "🌑" :
+                                            astrology.astroData.moonPhaseName === "Full Moon" ? "🌕" :
+                                                astrology.astroData.mercuryRetrograde ? "🌪️" : "🌙"}
+                                    </span>
+                                    <span style={{ fontSize: "12px", color: colors.textSecondary }}>
+                                        Today: {astrology.astroData.keyEvent}
+                                    </span>
+                                </div>
                             </div>
-                            <p style={{ fontSize: "13px", color: colors.textSecondary, lineHeight: 1.7 }}>
-                                {interpretation}
-                            </p>
-                            <div style={{ marginTop: "16px", padding: "10px 12px", background: colors.bgHover, borderRadius: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
-                                <span style={{ fontSize: "16px" }}>
-                                    {astroData.moonPhaseName === "New Moon" ? "🌑" :
-                                        astroData.moonPhaseName === "Full Moon" ? "🌕" :
-                                            astroData.mercuryRetrograde ? "🌪️" : "🌙"}
-                                </span>
-                                <span style={{ fontSize: "12px", color: colors.textSecondary }}>
-                                    Today: {astroData.keyEvent}
-                                </span>
-                            </div>
-                        </div>
+                        )}
                     </div>
                 )}
             </div>
