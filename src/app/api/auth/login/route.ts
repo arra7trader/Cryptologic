@@ -53,10 +53,10 @@ export async function POST(req: Request) {
             }
         });
 
-        // Set cookie - 30 days if remember me, otherwise 7 days
+        // Set cookie - 30 days if remember me, otherwise 1 hour
         const maxAge = rememberMe
             ? 60 * 60 * 24 * 30  // 30 days
-            : 60 * 60 * 24 * 7;  // 7 days
+            : 60 * 60;           // 1 hour
 
         response.cookies.set("token", token, {
             httpOnly: true,
