@@ -20,6 +20,7 @@ import { Coin } from "@/types";
 import { formatCurrency, formatPercentage } from "@/lib/coingecko";
 import { generateCosmicScore, getScoreColor, getTrendColor, eventIcons, eventNames } from "@/lib/cosmic";
 import { useLanguage } from "@/lib/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 // ============================================
 // STYLES
@@ -486,25 +487,7 @@ export default function Home() {
 
           {/* Controls */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <button
-              onClick={() => setLanguage(language === "id" ? "en" : language === "en" ? "cn" : "id")}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                padding: "6px 12px",
-                background: "transparent",
-                border: `1px solid ${colors.border}`,
-                borderRadius: "6px",
-                color: colors.textSecondary,
-                fontSize: "12px",
-                fontWeight: 500,
-                cursor: "pointer",
-              }}
-            >
-              <Globe size={14} />
-              {language.toUpperCase()}
-            </button>
+            <LanguageSwitcher />
 
             {/* Auth Buttons */}
             {user ? (

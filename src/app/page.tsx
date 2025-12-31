@@ -150,6 +150,7 @@ function FeatureCard({ icon: Icon, title, description }: { icon: any; title: str
 }
 
 function PricingCard({ title, price, priceNote, features, popular, cta }: { title: string; price: string; priceNote?: string; features: string[]; popular?: boolean; cta: string }) {
+  const { t } = useLanguage();
   return (
     <div
       style={{
@@ -183,7 +184,7 @@ function PricingCard({ title, price, priceNote, features, popular, cta }: { titl
       <h3 style={{ fontSize: "20px", fontWeight: 600, color: colors.textPrimary, marginBottom: "8px" }}>{title}</h3>
       <div style={{ marginBottom: "8px" }}>
         <span style={{ fontSize: "40px", fontWeight: 700, color: colors.textPrimary }}>{price}</span>
-        {price !== "Free" && <span style={{ fontSize: "14px", color: colors.textSecondary }}>/bulan</span>}
+        {price !== "Free" && <span style={{ fontSize: "14px", color: colors.textSecondary }}>{t("pricing.month")}</span>}
       </div>
       {priceNote && (
         <div style={{ fontSize: "12px", color: colors.accent, marginBottom: "16px" }}>{priceNote}</div>

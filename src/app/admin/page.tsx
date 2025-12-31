@@ -17,6 +17,7 @@ import {
     AlertCircle,
 } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 // ============================================
 // STYLES
@@ -337,6 +338,7 @@ export default function AdminPage() {
                     <span style={{ fontSize: "16px", fontWeight: 600, color: colors.textPrimary }}>Cryptologic Admin</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <LanguageSwitcher />
                     <button
                         onClick={loadData}
                         style={{
