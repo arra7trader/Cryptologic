@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { ArrowLeft, Mail, Shield, Loader2, CheckCircle } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const colors = {
     bg: "#0a0a0b",
@@ -18,6 +20,7 @@ const colors = {
 };
 
 export default function ForgotPasswordPage() {
+    const { t } = useLanguage();
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [sent, setSent] = useState(false);
@@ -36,7 +39,7 @@ export default function ForgotPasswordPage() {
     return (
         <div style={{ minHeight: "100vh", background: colors.bg, fontFamily: "'Inter', -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
             {/* Navbar Minimal */}
-            <nav style={{ padding: "24px", display: "flex", justifyContent: "center" }}>
+            <nav style={{ padding: "24px", display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
                 <Link href="/" style={{ textDecoration: "none" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                         <div
@@ -53,6 +56,7 @@ export default function ForgotPasswordPage() {
                         </span>
                     </div>
                 </Link>
+                <LanguageSwitcher />
             </nav>
 
             {/* Content */}
@@ -71,7 +75,7 @@ export default function ForgotPasswordPage() {
                     <Link href="/login" style={{ textDecoration: "none" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "6px", color: colors.textSecondary, fontSize: "13px", marginBottom: "24px" }}>
                             <ArrowLeft size={14} />
-                            Kembali ke Login
+                            {t("forgot.back_login")}
                         </div>
                     </Link>
 
@@ -92,9 +96,9 @@ export default function ForgotPasswordPage() {
                                 >
                                     <Shield size={24} style={{ color: colors.purple }} />
                                 </div>
-                                <h1 style={{ fontSize: "24px", fontWeight: 600, color: colors.textPrimary, marginBottom: "8px" }}>Lupa Password?</h1>
+                                <h1 style={{ fontSize: "24px", fontWeight: 600, color: colors.textPrimary, marginBottom: "8px" }}>{t("forgot.title")}</h1>
                                 <p style={{ color: colors.textSecondary, fontSize: "14px" }}>
-                                    Masukkan email Anda dan kami akan mengirimkan link untuk reset password
+                                    {t("forgot.subtitle")}
                                 </p>
                             </div>
 
@@ -102,12 +106,12 @@ export default function ForgotPasswordPage() {
                                 <div style={{ marginBottom: "24px" }}>
                                     <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>
                                         <Mail size={12} />
-                                        Email Address
+                                        {t("forgot.email_label")}
                                     </label>
                                     <input
                                         type="email"
                                         required
-                                        placeholder="nama@email.com"
+                                        placeholder={t("forgot.email_placeholder")}
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         style={{
@@ -146,10 +150,10 @@ export default function ForgotPasswordPage() {
                                     {loading ? (
                                         <>
                                             <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} />
-                                            Mengirim...
+                                            {t("forgot.btn_sending")}
                                         </>
                                     ) : (
-                                        "Kirim Link Reset"
+                                        t("forgot.btn_send")
                                     )}
                                 </button>
                             </form>
@@ -170,26 +174,26 @@ export default function ForgotPasswordPage() {
                             >
                                 <CheckCircle size={32} style={{ color: colors.accent }} />
                             </div>
-                            <h2 style={{ fontSize: "20px", fontWeight: 600, color: colors.textPrimary, marginBottom: "12px" }}>Email Terkirim!</h2>
+                            <h2 style={{ fontSize: "20px", fontWeight: 600, color: colors.textPrimary, marginBottom: "12px" }}>{t("forgot.sent_title")}</h2>
                             <p style={{ color: colors.textSecondary, fontSize: "14px", marginBottom: "24px", lineHeight: 1.6 }}>
-                                Jika email <strong style={{ color: colors.textPrimary }}>{email}</strong> terdaftar di sistem kami, Anda akan menerima link untuk reset password.
+                                {t("forgot.sent_desc")}
                             </p>
                             <p style={{ color: colors.textDim, fontSize: "12px" }}>
-                                Tidak menerima email? Cek folder spam atau{" "}
+                                {t("forgot.spam_check")}{" "}
                                 <button
                                     onClick={() => setSent(false)}
                                     style={{ background: "none", border: "none", color: colors.purple, cursor: "pointer", fontSize: "12px" }}
                                 >
-                                    coba lagi
+                                    {t("forgot.try_again")}
                                 </button>
                             </p>
                         </div>
                     )}
 
                     <div style={{ marginTop: "24px", textAlign: "center", fontSize: "13px", color: colors.textSecondary }}>
-                        Sudah ingat password?{" "}
+                        {t("forgot.remember")}{" "}
                         <Link href="/login" style={{ color: colors.textPrimary, textDecoration: "none", fontWeight: 500 }}>
-                            Login Sekarang
+                            {t("forgot.login_now")}
                         </Link>
                     </div>
                 </div>
