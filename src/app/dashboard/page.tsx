@@ -550,46 +550,22 @@ export default function Home() {
               </div>
             )}
 
-            {/* Mode Toggle (Visual Only) */}
+            {/* Tier Badge (Read-only) */}
             <div
               style={{
                 display: "flex",
-                background: colors.bgCard,
-                border: `1px solid ${colors.border}`,
+                alignItems: "center",
+                gap: "6px",
+                padding: "6px 12px",
+                background: isPro ? colors.purpleDim : colors.bgCard,
+                border: `1px solid ${isPro ? colors.purple : colors.border}`,
                 borderRadius: "8px",
-                padding: "3px",
               }}
             >
-              <button
-                onClick={() => togglePro(false)}
-                style={{
-                  padding: "6px 16px",
-                  fontSize: "12px",
-                  fontWeight: 500,
-                  background: !isPro ? colors.bgHover : "transparent",
-                  color: !isPro ? colors.textPrimary : colors.textDim,
-                  border: "none",
-                  borderRadius: "6px",
-                  cursor: "pointer",
-                }}
-              >
-                Lite
-              </button>
-              <button
-                onClick={() => togglePro(true)}
-                style={{
-                  padding: "6px 16px",
-                  fontSize: "12px",
-                  fontWeight: 500,
-                  background: isPro ? colors.bgHover : "transparent",
-                  color: isPro ? colors.textPrimary : colors.textDim,
-                  border: "none",
-                  borderRadius: "6px",
-                  cursor: "pointer",
-                }}
-              >
-                Pro
-              </button>
+              {isPro ? <Crown size={14} style={{ color: colors.purple }} /> : <Lock size={14} style={{ color: colors.textDim }} />}
+              <span style={{ fontSize: "12px", fontWeight: 600, color: isPro ? colors.purple : colors.textDim }}>
+                {isPro ? "PRO" : "LITE"}
+              </span>
             </div>
           </div>
         </div>
