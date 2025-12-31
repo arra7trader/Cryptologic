@@ -173,6 +173,9 @@ export default function RegisterPage() {
                                         outline: "none",
                                     }}
                                 />
+                                <p style={{ fontSize: "11px", color: colors.textDim, marginTop: "8px", lineHeight: 1.5 }}>
+                                    Min 8 chars, uppercase, lowercase, number, special (!@#$%^&*)
+                                </p>
                             </div>
 
                             <button

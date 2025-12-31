@@ -14,6 +14,21 @@ export async function POST(req: Request) {
             );
         }
 
+        // Password validation
+        const passwordErrors: string[] = [];
+        if (password.length < 8) passwordErrors.push("min 8 characters");
+        if (!/[A-Z]/.test(password)) passwordErrors.push("uppercase letter");
+        if (!/[a-z]/.test(password)) passwordErrors.push("lowercase letter");
+        if (!/[0-9]/.test(password)) passwordErrors.push("number");
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) passwordErrors.push("special character");
+
+        if (passwordErrors.length > 0) {
+            return NextResponse.json(
+                { error: `Password must contain: ${passwordErrors.join(", ")}` },
+                { status: 400 }
+            );
+        }
+
         // Check existing user
         const existing = await db.execute({
             sql: "SELECT * FROM users WHERE email = ?",
