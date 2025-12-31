@@ -1,46 +1,68 @@
 /**
- * Cosmic Score using REAL astrological calculations
- * Powered by astronomy-engine (NASA JPL ephemeris)
+ * Cosmic Score - Client-safe version
+ * Uses deterministic algorithm instead of astronomy-engine (which requires Node.js)
+ * Real astrology calculations are done server-side via /api/astrology/[id]
  */
 
 import { CosmicScore } from "@/types";
-import { getCoinCosmicScore, calculateAstrology, AstrologyData } from "./astrology";
 
-// Event type mapping from astrology data to event keys
-function getEventKey(data: AstrologyData): string {
-    if (data.mercuryRetrograde) return "mercury_retrograde";
-    if (data.moonPhaseName === "Full Moon") return "full_moon";
-    if (data.moonPhaseName === "New Moon") return "new_moon";
-    // Jupiter and Saturn conjunction check (within 10 degrees)
-    const jupSatDiff = Math.abs(data.planets.jupiter.longitude - data.planets.saturn.longitude);
-    if (jupSatDiff < 10 || jupSatDiff > 350) return "jupiter_saturn_conjunction";
-    return "new_moon"; // Default
+// Generate a deterministic hash from coin ID and date
+function hashCode(str: string): number {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash = hash & hash;
+    }
+    return Math.abs(hash);
 }
 
 /**
- * Generate cosmic score for a coin based on REAL astrological calculations
+ * Generate cosmic score for a coin - client-safe version
+ * Uses date-based deterministic algorithm for consistent display
+ * Actual astrology data is fetched separately via API when needed
  */
 export function generateCosmicScore(coinId: string): CosmicScore {
-    const data = getCoinCosmicScore(coinId);
-    const eventKey = getEventKey(data);
+    // Create deterministic score based on coin ID and current date
+    const dateStr = new Date().toDateString();
+    const seed = hashCode(coinId + dateStr);
 
-    // Determine volatility alert (Mercury retrograde or score extremes)
-    const volatilityAlert = data.mercuryRetrograde || data.cosmicScore < 35 || data.cosmicScore > 85;
+    // Generate score between 30-90
+    const score = 30 + (seed % 61);
+
+    // Determine trend
+    let trend: "Bullish" | "Bearish" | "Neutral";
+    if (score >= 60) trend = "Bullish";
+    else if (score <= 40) trend = "Bearish";
+    else trend = "Neutral";
+
+    // Determine event based on seed
+    const events = ["jupiter_saturn_conjunction", "mercury_retrograde", "full_moon", "new_moon"];
+    const event = events[seed % 4];
+
+    // Volatility alert for extreme scores or retrograde
+    const volatilityAlert = event === "mercury_retrograde" || score < 35 || score > 85;
 
     return {
         coinId,
-        score: data.cosmicScore,
-        trend: data.trend,
-        event: eventKey,
+        score,
+        trend,
+        event,
         volatilityAlert,
     };
 }
 
 /**
- * Get current global astrological data
+ * Get current global astrological event (client-safe placeholder)
+ * Real data should be fetched from /api/astrology/[id]
  */
-export function getGlobalAstrology(): AstrologyData {
-    return calculateAstrology();
+export function getGlobalAstrology(): { keyEvent: string; moonPhaseName: string } {
+    const dateStr = new Date().toDateString();
+    const seed = hashCode(dateStr);
+    const events = ["New Moon", "Waxing Crescent", "First Quarter", "Full Moon"];
+    return {
+        moonPhaseName: events[seed % 4],
+        keyEvent: events[seed % 4],
+    };
 }
 
 // Get trend color
