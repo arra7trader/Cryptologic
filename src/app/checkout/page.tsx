@@ -133,8 +133,28 @@ export default function CheckoutPage() {
                         </ol>
                     </div>
 
+                    {/* Confirmation Template */}
+                    <div style={{ background: colors.bg, borderRadius: "12px", padding: "16px", marginBottom: "24px", border: `1px solid ${colors.border}` }}>
+                        <div style={{ fontSize: "13px", fontWeight: 600, color: colors.textPrimary, marginBottom: "12px" }}>
+                            {t("checkout.template_title")}
+                        </div>
+                        <pre style={{
+                            margin: 0,
+                            padding: "12px",
+                            background: colors.bgHover,
+                            borderRadius: "8px",
+                            fontSize: "12px",
+                            color: colors.textSecondary,
+                            whiteSpace: "pre-wrap",
+                            fontFamily: "inherit",
+                            lineHeight: 1.6
+                        }}>
+                            {t("checkout.template_body")}
+                        </pre>
+                    </div>
+
                     <a
-                        href="https://t.me/arra7trader"
+                        href="https://t.me/cryptologicarra7"
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
@@ -144,7 +164,7 @@ export default function CheckoutPage() {
                             gap: "8px",
                             width: "100%",
                             padding: "16px",
-                            background: colors.usdt,
+                            background: "#0088cc",
                             color: "#fff",
                             border: "none",
                             borderRadius: "12px",
@@ -155,10 +175,10 @@ export default function CheckoutPage() {
                             transition: "all 0.2s",
                         }}
                     >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 3.816 1.177l.176.055c.289.09.577.161.864.218.47.093.842.203 1.129.637l.42 1.55c.08.303.16.607.245.908.19.673.385 1.36.634 1.956.326.78.868 1.488 1.642 1.733.923.292 1.71-.161 2.296-.688.58-.52 1.15-1.047 1.72-1.579a.747.747 0 0 0 .093-.1c.36-.312.723-.623 1.085-.935.597.545 1.203 1.08 1.83 1.597.356.294.72.576 1.11.815.753.46 1.636.568 2.46.22 1.17-.492 1.69-1.635 1.967-2.73 1.129-4.5 2.295-8.995 3.39-13.493.07-.282.128-.567.168-.853a2.212 2.212 0 0 0-.49-1.844 2.19 2.19 0 0 0-1.397-.534Z" />
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
                         </svg>
-                        {t("checkout.confirm_btn")}
+                        {t("checkout.confirm_btn")} @cryptologicarra7
                     </a>
                 </div>
 

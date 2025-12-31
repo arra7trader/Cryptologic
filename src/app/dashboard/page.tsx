@@ -54,6 +54,9 @@ const EVENTS_TODAY = [
   { type: "jupiter_saturn_conjunction", impact: "High" },
 ];
 
+// Top 5 coins available for Lite (free) users
+const TOP_5_COINS = ["bitcoin", "ethereum", "binancecoin", "solana", "ripple"];
+
 // ============================================
 // TRANSLATIONS
 // ============================================
@@ -72,7 +75,7 @@ function CoinCard({ coin, isPro, onAddWatchlist }: {
 }) {
   const { t } = useLanguage();
   const cosmicScore = generateCosmicScore(coin.id);
-  const isLocked = !isPro && coin.id !== "bitcoin";
+  const isLocked = !isPro && !TOP_5_COINS.includes(coin.id);
   const TrendIcon = cosmicScore.trend === "Bullish" ? TrendingUp : cosmicScore.trend === "Bearish" ? TrendingDown : Minus;
 
   return (
@@ -84,7 +87,8 @@ function CoinCard({ coin, isPro, onAddWatchlist }: {
         padding: "20px",
         position: "relative",
         overflow: "hidden",
-        opacity: isLocked ? 0.6 : 1,
+        filter: isLocked ? "blur(4px)" : "none",
+        opacity: isLocked ? 0.4 : 1,
         transition: "all 0.2s",
         cursor: isLocked ? "not-allowed" : "pointer",
       }}
@@ -100,7 +104,6 @@ function CoinCard({ coin, isPro, onAddWatchlist }: {
             alignItems: "center",
             justifyContent: "center",
             zIndex: 10,
-            backdropFilter: "blur(2px)",
           }}
         >
           <div style={{ textAlign: "center" }}>
@@ -597,23 +600,27 @@ export default function Home() {
         {/* Search Bar */}
         <div style={{ marginBottom: "32px" }}>
           <div
+            onClick={() => !isPro && setShowUpgradeModal(true)}
             style={{
               display: "flex",
               alignItems: "center",
               gap: "12px",
               padding: "12px 16px",
               background: colors.bgCard,
-              border: `1px solid ${colors.border}`,
+              border: `1px solid ${!isPro ? colors.amber : colors.border}`,
               borderRadius: "12px",
               maxWidth: "500px",
+              cursor: !isPro ? "pointer" : "default",
+              opacity: !isPro ? 0.7 : 1,
             }}
           >
-            <Search size={18} style={{ color: colors.textDim }} />
+            {!isPro ? <Lock size={18} style={{ color: colors.amber }} /> : <Search size={18} style={{ color: colors.textDim }} />}
             <input
               type="text"
-              placeholder={t("dashboard.search")}
+              placeholder={!isPro ? t("dashboard.search_locked") : t("dashboard.search")}
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => isPro && setSearchQuery(e.target.value)}
+              disabled={!isPro}
               style={{
                 flex: 1,
                 background: "transparent",
@@ -621,12 +628,13 @@ export default function Home() {
                 outline: "none",
                 fontSize: "14px",
                 color: colors.textPrimary,
+                cursor: !isPro ? "pointer" : "text",
               }}
             />
             {!isPro && (
-              <span style={{ fontSize: "11px", color: colors.amber, display: "flex", alignItems: "center", gap: "4px" }}>
-                <Lock size={12} />
-                {t("dashboard.free_tier_limit")}
+              <span style={{ fontSize: "11px", color: colors.amber, display: "flex", alignItems: "center", gap: "4px", whiteSpace: "nowrap" }}>
+                <Crown size={12} />
+                PRO
               </span>
             )}
           </div>
