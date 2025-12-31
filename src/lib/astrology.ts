@@ -244,3 +244,188 @@ export function getCoinCosmicScore(coinId: string, date: Date = new Date()): Ast
         trend,
     };
 }
+
+/**
+ * Get detailed score breakdown for display
+ */
+export function getScoreBreakdown(coinId: string, date: Date = new Date()): {
+    factors: Array<{ name: string; value: number; description: string }>;
+    total: number;
+    trend: string;
+} {
+    const time = Astronomy.MakeTime(date);
+    const moonData = getMoonPhase(date);
+    const mercuryRetro = isMercuryRetrograde(date);
+
+    const sunLon = Astronomy.EclipticLongitude(Astronomy.Body.Sun, time);
+    const moonLon = getPlanetLongitude(Astronomy.Body.Moon, date);
+    const jupiterLon = Astronomy.EclipticLongitude(Astronomy.Body.Jupiter, time);
+    const saturnLon = Astronomy.EclipticLongitude(Astronomy.Body.Saturn, time);
+    const marsLon = Astronomy.EclipticLongitude(Astronomy.Body.Mars, time);
+    const venusLon = Astronomy.EclipticLongitude(Astronomy.Body.Venus, time);
+
+    const jupiterSign = getZodiacSign(jupiterLon);
+    const saturnSign = getZodiacSign(saturnLon);
+    const marsSign = getZodiacSign(marsLon);
+    const venusSign = getZodiacSign(venusLon);
+
+    const factors: Array<{ name: string; value: number; description: string }> = [];
+    let score = 50;
+
+    // Moon Phase
+    const moonFactor = Math.abs(moonData.phase - 0.5) * 2;
+    const moonPoints = Math.round((moonFactor - 0.5) * 15);
+    factors.push({ name: "Moon Phase", value: moonPoints, description: moonData.name });
+    score += moonPoints;
+
+    // Mercury Retrograde
+    const mercuryPoints = mercuryRetro ? -10 : 0;
+    factors.push({ name: "Mercury", value: mercuryPoints, description: mercuryRetro ? "Retrograde ⚠️" : "Direct ✓" });
+    score += mercuryPoints;
+
+    // Jupiter
+    const jupiterBullish = BULLISH_ELEMENTS.includes(SIGN_ELEMENTS[jupiterSign]);
+    const jupiterPoints = jupiterBullish ? 10 : 0;
+    factors.push({ name: "Jupiter", value: jupiterPoints, description: `in ${jupiterSign} (${SIGN_ELEMENTS[jupiterSign]})` });
+    score += jupiterPoints;
+
+    // Saturn
+    const saturnRestrictive = ['Capricorn', 'Scorpio'].includes(saturnSign);
+    const saturnPoints = saturnRestrictive ? -5 : 0;
+    factors.push({ name: "Saturn", value: saturnPoints, description: `in ${saturnSign}` });
+    score += saturnPoints;
+
+    // Mars
+    const marsFireSign = SIGN_ELEMENTS[marsSign] === 'Fire';
+    const marsPoints = marsFireSign ? 8 : 0;
+    factors.push({ name: "Mars", value: marsPoints, description: `in ${marsSign} (${SIGN_ELEMENTS[marsSign]})` });
+    score += marsPoints;
+
+    // Venus
+    const venusEarthSign = SIGN_ELEMENTS[venusSign] === 'Earth';
+    const venusPoints = venusEarthSign ? 5 : 0;
+    factors.push({ name: "Venus", value: venusPoints, description: `in ${venusSign} (${SIGN_ELEMENTS[venusSign]})` });
+    score += venusPoints;
+
+    // Sun-Moon Aspect
+    const sunMoonDiff = Math.abs(sunLon - moonLon);
+    let aspectPoints = 0;
+    let aspectDesc = "No major aspect";
+    if (sunMoonDiff < 10 || sunMoonDiff > 350) {
+        aspectPoints = 3;
+        aspectDesc = "Conjunction ☌";
+    } else if (Math.abs(sunMoonDiff - 120) < 10 || Math.abs(sunMoonDiff - 240) < 10) {
+        aspectPoints = 7;
+        aspectDesc = "Trine △";
+    } else if (Math.abs(sunMoonDiff - 90) < 10 || Math.abs(sunMoonDiff - 270) < 10) {
+        aspectPoints = -5;
+        aspectDesc = "Square □";
+    }
+    factors.push({ name: "Sun-Moon", value: aspectPoints, description: aspectDesc });
+    score += aspectPoints;
+
+    // Coin modifier
+    let hash = 0;
+    for (let i = 0; i < coinId.length; i++) {
+        hash = ((hash << 5) - hash) + coinId.charCodeAt(i);
+        hash = hash & hash;
+    }
+    const modifier = (Math.abs(hash) % 11) - 5;
+    factors.push({ name: "Coin Energy", value: modifier, description: "Unique coin signature" });
+    score += modifier;
+
+    score = Math.max(0, Math.min(100, score));
+
+    let trend: string;
+    if (score >= 60) trend = "Bullish";
+    else if (score <= 40) trend = "Bearish";
+    else trend = "Neutral";
+
+    return { factors, total: score, trend };
+}
+
+/**
+ * Get human-readable astrological interpretation
+ */
+export function getInterpretation(coinId: string, lang: 'en' | 'id' | 'cn' = 'en'): string {
+    const breakdown = getScoreBreakdown(coinId);
+    const data = calculateAstrology();
+
+    const interpretations: Record<string, Record<'en' | 'id' | 'cn', string>> = {
+        bullish_jupiter: {
+            en: "Jupiter in a Fire/Air sign supports expansion and innovation in the crypto market.",
+            id: "Jupiter di tanda Api/Udara mendukung ekspansi dan inovasi di pasar crypto.",
+            cn: "木星位于火象/风象星座，支持加密市场的扩张和创新。"
+        },
+        mars_fire: {
+            en: "Mars in a Fire sign brings aggressive growth energy.",
+            id: "Mars di tanda Api membawa energi pertumbuhan yang agresif.",
+            cn: "火星位于火象星座，带来积极的增长能量。"
+        },
+        mercury_retro: {
+            en: "Mercury retrograde suggests caution with trading decisions.",
+            id: "Merkurius retrograde menyarankan kehati-hatian dalam keputusan trading.",
+            cn: "水星逆行建议谨慎做出交易决策。"
+        },
+        new_moon: {
+            en: "New Moon indicates fresh beginnings and new market cycles.",
+            id: "Bulan Baru mengindikasikan awal baru dan siklus pasar baru.",
+            cn: "新月象征着新的开始和新的市场周期。"
+        },
+        full_moon: {
+            en: "Full Moon brings heightened volatility and emotional trading.",
+            id: "Bulan Purnama membawa volatilitas tinggi dan trading emosional.",
+            cn: "满月带来更高的波动性和情绪化交易。"
+        },
+        overall_bullish: {
+            en: "Overall cosmic alignment favors upward momentum.",
+            id: "Keselarasan kosmis keseluruhan mendukung momentum naik.",
+            cn: "整体宇宙排列有利于上升势头。"
+        },
+        overall_bearish: {
+            en: "Cosmic indicators suggest downward pressure.",
+            id: "Indikator kosmis menunjukkan tekanan ke bawah.",
+            cn: "宇宙指标表明存在下行压力。"
+        },
+        overall_neutral: {
+            en: "Mixed cosmic signals suggest sideways movement.",
+            id: "Sinyal kosmis yang bercampur menunjukkan pergerakan menyamping.",
+            cn: "混合的宇宙信号表明横向移动。"
+        }
+    };
+
+    const parts: string[] = [];
+
+    // Add relevant interpretations based on current conditions
+    const jupiterFactor = breakdown.factors.find(f => f.name === "Jupiter");
+    if (jupiterFactor && jupiterFactor.value > 0) {
+        parts.push(interpretations.bullish_jupiter[lang]);
+    }
+
+    const marsFactor = breakdown.factors.find(f => f.name === "Mars");
+    if (marsFactor && marsFactor.value > 0) {
+        parts.push(interpretations.mars_fire[lang]);
+    }
+
+    if (data.mercuryRetrograde) {
+        parts.push(interpretations.mercury_retro[lang]);
+    }
+
+    if (data.moonPhaseName === "New Moon") {
+        parts.push(interpretations.new_moon[lang]);
+    } else if (data.moonPhaseName === "Full Moon") {
+        parts.push(interpretations.full_moon[lang]);
+    }
+
+    // Add overall trend
+    if (breakdown.trend === "Bullish") {
+        parts.push(interpretations.overall_bullish[lang]);
+    } else if (breakdown.trend === "Bearish") {
+        parts.push(interpretations.overall_bearish[lang]);
+    } else {
+        parts.push(interpretations.overall_neutral[lang]);
+    }
+
+    return parts.join(" ");
+}
+

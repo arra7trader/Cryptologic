@@ -23,6 +23,7 @@ import { formatCurrency, formatPercentage } from "@/lib/coingecko";
 import { generateCosmicScore, getScoreColor, getTrendColor, eventIcons, eventNames } from "@/lib/cosmic";
 import { useLanguage } from "@/lib/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import CoinDetailModal from "@/components/CoinDetailModal";
 import Link from "next/link";
 
 // ============================================
@@ -68,10 +69,11 @@ const TOP_5_COINS = ["bitcoin", "ethereum", "binancecoin", "solana", "ripple"];
 // COMPONENTS
 // ============================================
 
-function CoinCard({ coin, isPro, onAddWatchlist }: {
+function CoinCard({ coin, isPro, onAddWatchlist, onCoinClick }: {
   coin: Coin;
   isPro: boolean;
   onAddWatchlist?: (coinId: string) => void;
+  onCoinClick?: (coinId: string) => void;
 }) {
   const { t } = useLanguage();
   const cosmicScore = generateCosmicScore(coin.id);
@@ -92,6 +94,7 @@ function CoinCard({ coin, isPro, onAddWatchlist }: {
         transition: "all 0.2s",
         cursor: isLocked ? "not-allowed" : "pointer",
       }}
+      onClick={() => !isLocked && onCoinClick && onCoinClick(coin.id)}
     >
       {/* Lock Overlay */}
       {isLocked && (
@@ -288,6 +291,7 @@ export default function Home() {
   const [searching, setSearching] = useState(false);
   const [watchlist, setWatchlist] = useState<string[]>([]);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [selectedCoinId, setSelectedCoinId] = useState<string | null>(null);
 
   // Load data on mount
   useEffect(() => {
@@ -746,6 +750,7 @@ export default function Home() {
                 coin={coin}
                 isPro={isPro}
                 onAddWatchlist={handleAddWatchlist}
+                onCoinClick={(id) => setSelectedCoinId(id)}
               />
             ))}
           </div>
@@ -869,6 +874,14 @@ export default function Home() {
             </button>
           </div>
         </div>
+      )}
+
+      {/* Coin Detail Modal */}
+      {selectedCoinId && (
+        <CoinDetailModal
+          coinId={selectedCoinId}
+          onClose={() => setSelectedCoinId(null)}
+        />
       )}
     </div>
   );
