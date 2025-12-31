@@ -585,7 +585,7 @@ export default function LandingPage() {
                 <circle cx="12" cy="12" r="10" fill="#26A17B" />
                 <path d="M12.5 6.5h-1v3h-3v1h3v5.5h1v-5.5h3v-1h-3v-3z" fill="white" />
               </svg>
-              <span style={{ fontSize: "12px", color: colors.textSecondary }}>Pay with <strong style={{ color: "#26A17B" }}>USDT</strong> (TRC20/ERC20)</span>
+              <span style={{ fontSize: "12px", color: colors.textSecondary }}>Pay with <strong style={{ color: "#F0B90B" }}>USDT BEP20</strong> (BSC Network)</span>
             </div>
           </div>
 

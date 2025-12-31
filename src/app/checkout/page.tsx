@@ -14,20 +14,17 @@ const colors = {
     accent: "#10b981",
     purple: "#8b5cf6",
     usdt: "#26A17B",
+    bsc: "#F0B90B",
 };
 
-// USDT Wallet Addresses - UPDATE THESE WITH YOUR ACTUAL ADDRESSES
-const WALLET_ADDRESSES = {
-    TRC20: "TYourTRC20WalletAddressHere",  // TRON Network
-    ERC20: "0xYourERC20WalletAddressHere", // Ethereum Network
-};
+// USDT Wallet Address - BEP20 (BSC)
+const WALLET_ADDRESS = "0x84a06ffc26031b782c893252a769bd14b6ca8ad0";
 
 export default function CheckoutPage() {
-    const [network, setNetwork] = useState<"TRC20" | "ERC20">("TRC20");
     const [copied, setCopied] = useState(false);
 
     const copyAddress = () => {
-        navigator.clipboard.writeText(WALLET_ADDRESSES[network]);
+        navigator.clipboard.writeText(WALLET_ADDRESS);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
@@ -60,113 +57,83 @@ export default function CheckoutPage() {
                         <div style={{ color: colors.textSecondary }}>per month</div>
                     </div>
 
-                    {/* Network Selection */}
-                    <div style={{ marginBottom: "24px" }}>
-                        <label style={{ display: "block", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>
-                            Select Network
-                        </label>
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
-                            <button
-                                onClick={() => setNetwork("TRC20")}
-                                style={{
-                                    padding: "12px",
-                                    background: network === "TRC20" ? colors.usdt : colors.bg,
-                                    border: `1px solid ${network === "TRC20" ? colors.usdt : colors.border}`,
-                                    borderRadius: "8px",
-                                    color: colors.textPrimary,
-                                    fontWeight: 600,
-                                    cursor: "pointer",
-                                }}
-                            >
-                                TRC20 (TRON)
-                                <div style={{ fontSize: "11px", fontWeight: 400, color: network === "TRC20" ? "#fff" : colors.textDim, marginTop: "4px" }}>
-                                    Lower fees (~$1)
-                                </div>
-                            </button>
-                            <button
-                                onClick={() => setNetwork("ERC20")}
-                                style={{
-                                    padding: "12px",
-                                    background: network === "ERC20" ? colors.usdt : colors.bg,
-                                    border: `1px solid ${network === "ERC20" ? colors.usdt : colors.border}`,
-                                    borderRadius: "8px",
-                                    color: colors.textPrimary,
-                                    fontWeight: 600,
-                                    cursor: "pointer",
-                                }}
-                            >
-                                ERC20 (ETH)
-                                <div style={{ fontSize: "11px", fontWeight: 400, color: network === "ERC20" ? "#fff" : colors.textDim, marginTop: "4px" }}>
-                                    Higher fees (~$5-20)
-                                </div>
-                            </button>
+                    {/* Network Badge */}
+                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
+                        <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "10px 20px", background: `${colors.bsc}15`, border: `1px solid ${colors.bsc}40`, borderRadius: "100px" }}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill={colors.bsc}>
+                                <path d="M12 2L6 5.5V10L12 6.5L18 10V5.5L12 2ZM6 14.5L12 18L18 14.5V10L12 13.5L6 10V14.5ZM12 22L6 18.5V14L12 17.5L18 14V18.5L12 22Z" />
+                            </svg>
+                            <span style={{ fontWeight: 600, color: colors.bsc }}>BEP20 (BSC Network)</span>
                         </div>
                     </div>
 
                     {/* Wallet Address */}
                     <div style={{ marginBottom: "24px" }}>
                         <label style={{ display: "block", fontSize: "12px", color: colors.textSecondary, marginBottom: "8px" }}>
-                            Send exactly $14 USDT to:
+                            Send exactly <strong style={{ color: colors.usdt }}>14 USDT</strong> to this address:
                         </label>
                         <div style={{ display: "flex", gap: "8px" }}>
                             <input
                                 type="text"
                                 readOnly
-                                value={WALLET_ADDRESSES[network]}
+                                value={WALLET_ADDRESS}
                                 style={{
                                     flex: 1,
-                                    padding: "12px",
+                                    padding: "14px",
                                     background: colors.bg,
                                     border: `1px solid ${colors.border}`,
                                     borderRadius: "8px",
                                     color: colors.textPrimary,
-                                    fontSize: "12px",
+                                    fontSize: "11px",
                                     fontFamily: "monospace",
                                 }}
                             />
                             <button
                                 onClick={copyAddress}
                                 style={{
-                                    padding: "12px 20px",
-                                    background: copied ? colors.accent : colors.usdt,
+                                    padding: "14px 24px",
+                                    background: copied ? colors.accent : colors.bsc,
                                     border: "none",
                                     borderRadius: "8px",
-                                    color: "#fff",
+                                    color: "#000",
                                     fontWeight: 600,
                                     cursor: "pointer",
+                                    transition: "all 0.2s",
                                 }}
                             >
-                                {copied ? "Copied!" : "Copy"}
+                                {copied ? "✓ Copied!" : "Copy"}
                             </button>
                         </div>
                     </div>
 
-                    {/* Amount */}
-                    <div style={{ background: colors.bg, borderRadius: "12px", padding: "16px", marginBottom: "24px", textAlign: "center" }}>
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    {/* Amount Display */}
+                    <div style={{ background: colors.bg, borderRadius: "12px", padding: "20px", marginBottom: "24px", textAlign: "center" }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
                                 <circle cx="12" cy="12" r="10" fill={colors.usdt} />
                                 <path d="M12.5 6.5h-1v3h-3v1h3v5.5h1v-5.5h3v-1h-3v-3z" fill="white" />
                             </svg>
-                            <span style={{ fontSize: "24px", fontWeight: 700, color: colors.textPrimary }}>14.00 USDT</span>
+                            <span style={{ fontSize: "28px", fontWeight: 700, color: colors.textPrimary }}>14.00 USDT</span>
                         </div>
+                        <div style={{ fontSize: "12px", color: colors.textDim, marginTop: "8px" }}>on Binance Smart Chain (BEP20)</div>
                     </div>
 
                     {/* Instructions */}
-                    <div style={{ fontSize: "13px", color: colors.textSecondary, lineHeight: 1.7 }}>
-                        <p style={{ marginBottom: "12px" }}>
-                            <strong style={{ color: colors.textPrimary }}>Instructions:</strong>
+                    <div style={{ fontSize: "13px", color: colors.textSecondary, lineHeight: 1.8 }}>
+                        <p style={{ marginBottom: "12px", fontWeight: 600, color: colors.textPrimary }}>
+                            📋 Instructions:
                         </p>
                         <ol style={{ paddingLeft: "20px", margin: 0 }}>
                             <li>Copy the wallet address above</li>
-                            <li>Send exactly <strong style={{ color: colors.usdt }}>14 USDT</strong> using {network} network</li>
-                            <li>After payment, send screenshot to our Telegram</li>
-                            <li>Your account will be upgraded within 1-12 hours</li>
+                            <li>Open your crypto wallet (Trust Wallet, MetaMask, Binance, etc.)</li>
+                            <li>Send exactly <strong style={{ color: colors.usdt }}>14 USDT</strong> via <strong style={{ color: colors.bsc }}>BEP20</strong> network</li>
+                            <li>After payment, send transaction screenshot to our Telegram</li>
+                            <li>Your Pro account will be activated within 1-12 hours</li>
                         </ol>
                     </div>
                 </div>
 
-                {/* Contact */}
+                {/* Telegram Contact */}
                 <div style={{ background: colors.bgCard, border: `1px solid ${colors.border}`, borderRadius: "16px", padding: "24px", textAlign: "center" }}>
                     <p style={{ color: colors.textSecondary, fontSize: "14px", marginBottom: "16px" }}>
                         After payment, confirm via Telegram:
@@ -179,25 +146,26 @@ export default function CheckoutPage() {
                             display: "inline-flex",
                             alignItems: "center",
                             gap: "8px",
-                            padding: "12px 24px",
+                            padding: "14px 28px",
                             background: "#0088cc",
-                            borderRadius: "8px",
+                            borderRadius: "10px",
                             color: "#fff",
                             textDecoration: "none",
                             fontWeight: 600,
+                            fontSize: "15px",
                         }}
                     >
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
                         </svg>
-                        @cryptologic_support
+                        Contact Support
                     </a>
                 </div>
 
                 {/* Warning */}
-                <div style={{ marginTop: "24px", padding: "16px", background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.2)", borderRadius: "12px" }}>
-                    <p style={{ fontSize: "12px", color: "#f59e0b", margin: 0 }}>
-                        ⚠️ <strong>Important:</strong> Make sure to use the correct network ({network}). Sending to wrong network will result in loss of funds.
+                <div style={{ marginTop: "24px", padding: "16px", background: "rgba(240,185,11,0.1)", border: "1px solid rgba(240,185,11,0.3)", borderRadius: "12px" }}>
+                    <p style={{ fontSize: "12px", color: colors.bsc, margin: 0 }}>
+                        ⚠️ <strong>Important:</strong> Only send USDT via <strong>BEP20 (BSC)</strong> network. Sending via other networks (ERC20, TRC20) will result in loss of funds!
                     </p>
                 </div>
 
