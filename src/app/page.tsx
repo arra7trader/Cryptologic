@@ -511,7 +511,7 @@ export default function LandingPage() {
           {[
             { value: "15,000+", label: "Cryptocurrencies" },
             { value: "300M+", label: "Smart Money Signals" },
-            { value: "$150 → Rp99K", label: "Vs Nansen Pro Price" },
+            { value: "$150 → $14", label: "Vs Nansen Pro Price" },
             { value: "93%", label: "Cost Savings" },
           ].map((stat, i) => (
             <div key={i}>
@@ -578,8 +578,15 @@ export default function LandingPage() {
               Simple, Transparent Pricing
             </h2>
             <p style={{ fontSize: "16px", color: colors.textSecondary }}>
-              Pay <strong style={{ color: colors.accent }}>93% less</strong> than Nansen Pro. Get similar insights.
+              Pay <strong style={{ color: colors.accent }}>90% less</strong> than Nansen Pro. Get similar insights.
             </p>
+            <div style={{ marginTop: "16px", display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 16px", background: colors.bg, borderRadius: "100px", border: `1px solid ${colors.border}` }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" fill="#26A17B" />
+                <path d="M12.5 6.5h-1v3h-3v1h3v5.5h1v-5.5h3v-1h-3v-3z" fill="white" />
+              </svg>
+              <span style={{ fontSize: "12px", color: colors.textSecondary }}>Pay with <strong style={{ color: "#26A17B" }}>USDT</strong> (TRC20/ERC20)</span>
+            </div>
           </div>
 
           <div style={{ display: "flex", gap: "24px", justifyContent: "center", flexWrap: "wrap" }}>
@@ -591,8 +598,8 @@ export default function LandingPage() {
             />
             <PricingCard
               title="Pro"
-              price="Rp99K"
-              priceNote="vs Nansen $150/mo - Save 93%!"
+              price="$14"
+              priceNote="vs Nansen $150/mo - Save 90%!"
               features={[
                 "All 15,000+ Coins",
                 "Smart Money Alerts",
@@ -600,6 +607,7 @@ export default function LandingPage() {
                 "Telegram Alerts",
                 "Historical Data",
                 "Priority Support",
+                "Pay with USDT",
               ]}
               popular
               cta="Upgrade to Pro"
@@ -625,7 +633,7 @@ export default function LandingPage() {
             // Indonesian
             { name: "@cryptowhale_id", role: "DeFi Investor, Jakarta", content: "Finally, Nansen-level analytics without breaking the bank. Portfolio up 300%!", avatar: "🐋", flag: "🇮🇩" },
             { name: "@trader_pro", role: "Full-time Trader, Surabaya", content: "Cosmic Score helped me spot gems before they pumped. Worth every penny!", avatar: "📈", flag: "🇮🇩" },
-            { name: "Budi Santoso", role: "Swing Trader, Bandung", content: "Dari bayar Nansen $150/bln, sekarang cuma Rp99K. Gila sih value-nya!", avatar: "💰", flag: "🇮🇩" },
+            { name: "Budi Santoso", role: "Swing Trader, Bandung", content: "Dari bayar Nansen $150/bln, sekarang cuma $14. Gila sih value-nya!", avatar: "💰", flag: "🇮🇩" },
             { name: "@defi_hunter", role: "Crypto Analyst, Medan", content: "Smart Money tracking-nya akurat banget. Bisa tau whale mau beli apa.", avatar: "🎯", flag: "🇮🇩" },
             { name: "Dewi Lestari", role: "Investor, Bali", content: "Watchlist + Telegram alerts bikin ga pernah ketinggalan momentum.", avatar: "⚡", flag: "🇮🇩" },
             // Chinese
