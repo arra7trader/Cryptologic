@@ -308,20 +308,22 @@ export default function LandingPage() {
             height: "64px",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div
-              style={{
-                width: "8px",
-                height: "8px",
-                background: colors.accent,
-                borderRadius: "50%",
-                boxShadow: `0 0 12px ${colors.accent}`,
-              }}
-            />
-            <span style={{ fontSize: "15px", fontWeight: 600, letterSpacing: "0.1em", color: colors.textPrimary }}>
-              CRYPTOLOGIC
-            </span>
-          </div>
+          <Link href="/" style={{ textDecoration: "none" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <div
+                style={{
+                  width: "8px",
+                  height: "8px",
+                  background: colors.accent,
+                  borderRadius: "50%",
+                  boxShadow: `0 0 12px ${colors.accent}`,
+                }}
+              />
+              <span style={{ fontSize: "15px", fontWeight: 600, letterSpacing: "0.1em", color: colors.textPrimary }}>
+                CRYPTOLOGIC
+              </span>
+            </div>
+          </Link>
 
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <LanguageSwitcher />

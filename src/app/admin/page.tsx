@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import Link from "next/link";
 
 // ============================================
 // STYLES
@@ -333,10 +334,12 @@ export default function AdminPage() {
                     alignItems: "center",
                 }}
             >
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    <Shield size={24} style={{ color: colors.accent }} />
-                    <span style={{ fontSize: "16px", fontWeight: 600, color: colors.textPrimary }}>Cryptologic Admin</span>
-                </div>
+                <Link href="/" style={{ textDecoration: "none" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                        <Shield size={24} style={{ color: colors.accent }} />
+                        <span style={{ fontSize: "16px", fontWeight: 600, color: colors.textPrimary }}>Cryptologic Admin</span>
+                    </div>
+                </Link>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                     <LanguageSwitcher />
                     <button

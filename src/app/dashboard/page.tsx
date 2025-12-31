@@ -15,12 +15,15 @@ import {
   Crown,
   Plus,
   X,
+  LogOut,
+  User as UserIcon,
 } from "lucide-react";
-import { Coin } from "@/types";
+import { Coin, User } from "@/types";
 import { formatCurrency, formatPercentage } from "@/lib/coingecko";
 import { generateCosmicScore, getScoreColor, getTrendColor, eventIcons, eventNames } from "@/lib/cosmic";
 import { useLanguage } from "@/lib/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import Link from "next/link";
 
 // ============================================
 // STYLES
@@ -268,9 +271,7 @@ function EventBadge({ type, impact }: { type: string; impact: string }) {
     </div>
   );
 }
-import { User } from "@/types";
-import { LogOut, User as UserIcon } from "lucide-react";
-import Link from "next/link";
+
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
@@ -456,34 +457,36 @@ export default function Home() {
           }}
         >
           {/* Logo */}
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div
-              style={{
-                width: "8px",
-                height: "8px",
-                background: colors.accent,
-                borderRadius: "50%",
-                boxShadow: `0 0 12px ${colors.accent}`,
-              }}
-            />
-            <span style={{ fontSize: "14px", fontWeight: 600, letterSpacing: "0.1em", color: colors.textPrimary }}>
-              CRYPTOLOGIC
-            </span>
-            {isPro && (
-              <span
+          <Link href="/" style={{ textDecoration: "none" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <div
                 style={{
-                  fontSize: "10px",
-                  fontWeight: 600,
-                  padding: "2px 8px",
-                  background: colors.purpleDim,
-                  color: colors.purple,
-                  borderRadius: "4px",
+                  width: "8px",
+                  height: "8px",
+                  background: colors.accent,
+                  borderRadius: "50%",
+                  boxShadow: `0 0 12px ${colors.accent}`,
                 }}
-              >
-                PRO
+              />
+              <span style={{ fontSize: "14px", fontWeight: 600, letterSpacing: "0.1em", color: colors.textPrimary }}>
+                CRYPTOLOGIC
               </span>
-            )}
-          </div>
+              {isPro && (
+                <span
+                  style={{
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    padding: "2px 8px",
+                    background: colors.purpleDim,
+                    color: colors.purple,
+                    borderRadius: "4px",
+                  }}
+                >
+                  PRO
+                </span>
+              )}
+            </div>
+          </Link>
 
           {/* Controls */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
