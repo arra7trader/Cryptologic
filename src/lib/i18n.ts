@@ -7,10 +7,10 @@ export const translations = {
         "nav.logout": "Logout",
 
         // Landing Hero
-        "hero.badge": "Comparable to Glassnode Enterprise Analytics",
-        "hero.headline.1": "Surface the Signal.",
-        "hero.headline.2": "Create Winners.",
-        "hero.desc": "Enterprise-grade crypto analytics comparable to Glassnode (worth $1,999/mo) at a fraction of the price. Track Smart Money, discover hidden gems, and make data-driven decisions.",
+        "hero.badge": "🌐 Institutional-Grade Crypto Intelligence + Cosmic Astrology",
+        "hero.headline.1": "Celestial Signals.",
+        "hero.headline.2": "Cosmic Profits.",
+        "hero.desc": "The world's first Glassnode-level analytics powered by REAL astrological calculations. NASA JPL ephemeris data meets institutional crypto intelligence. $1,999/mo value — 99% cheaper.",
         "hero.cta.start": "Start Free Trial",
         "hero.cta.demo": "View Demo",
         "hero.cosmic_score": "Live Cosmic Score™",
@@ -205,10 +205,10 @@ export const translations = {
         "nav.logout": "Keluar",
 
         // Landing Hero
-        "hero.badge": "Setara dengan Glassnode Enterprise Analytics",
-        "hero.headline.1": "Temukan Sinyal.",
-        "hero.headline.2": "Ciptakan Profit.",
-        "hero.desc": "Analitik kripto tingkat Enterprise setara Glassnode (seharga $1,999/bln) dengan harga terjangkau. Lacak Smart Money, temukan permata tersembunyi, dan buat keputusan berbasis data.",
+        "hero.badge": "🌐 Kecerdasan Crypto Tingkat Institusi + Astrologi Kosmis",
+        "hero.headline.1": "Sinyal Surgawi.",
+        "hero.headline.2": "Profit Kosmis.",
+        "hero.desc": "Analitik pertama di dunia setara Glassnode yang didukung kalkulasi astrologi NYATA. Data ephemeris NASA JPL bertemu kecerdasan crypto institusional. Nilai $1,999/bln — hemat 99%.",
         "hero.cta.start": "Coba Gratis",
         "hero.cta.demo": "Lihat Demo",
         "hero.cosmic_score": "Live Cosmic Score™",
@@ -403,10 +403,10 @@ export const translations = {
         "nav.logout": "退出",
 
         // Landing Hero
-        "hero.badge": "堪比 Glassnode 企业级分析",
-        "hero.headline.1": "发现信号。",
-        "hero.headline.2": "创造赢家。",
-        "hero.desc": "企业级加密分析，堪比 Glassnode（价值 $1,999/月），价格仅为其零头。追踪聪明钱，发现隐藏宝石，做出数据驱动的决策。",
+        "hero.badge": "🌐 机构级加密情报 + 宇宙占星术",
+        "hero.headline.1": "天体信号。",
+        "hero.headline.2": "宇宙利润。",
+        "hero.desc": "全球首个由真实占星计算驱动的 Glassnode 级分析。NASA JPL 星历数据与机构加密情报相结合。价值 $1,999/月 — 便宜 99%。",
         "hero.cta.start": "免费试用",
         "hero.cta.demo": "观看演示",
         "hero.cosmic_score": "实时 Cosmic Score™",
