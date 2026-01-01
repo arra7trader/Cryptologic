@@ -94,16 +94,32 @@ const IconTarget = () => (
   </svg>
 );
 
-// 3D Solar System Background Component
-function SolarSystem() {
-  const planets = [
-    { name: "mercury", color: "#b5b5b5", size: 8, orbit: 60, duration: 8, delay: 0 },
-    { name: "venus", color: "#e6c87a", size: 14, orbit: 90, duration: 15, delay: 2 },
-    { name: "earth", color: "#4a90d9", size: 16, orbit: 130, duration: 25, delay: 5 },
-    { name: "mars", color: "#d9644a", size: 12, orbit: 170, duration: 40, delay: 8 },
-    { name: "jupiter", color: "#d4a574", size: 32, orbit: 230, duration: 80, delay: 12 },
-    { name: "saturn", color: "#f0d9a8", size: 28, orbit: 300, duration: 120, delay: 15, hasRing: true },
-  ];
+// Star Field Background Component
+function StarField() {
+  const [stars, setStars] = useState<{ id: number; x: number; y: number; size: number; delay: number; duration: number }[]>([]);
+  const [shootingStars, setShootingStars] = useState<{ id: number; x: number; y: number; delay: number }[]>([]);
+
+  useEffect(() => {
+    // Generate random stars
+    const generatedStars = Array.from({ length: 50 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 2 + 1,
+      delay: Math.random() * 5,
+      duration: Math.random() * 3 + 2,
+    }));
+    setStars(generatedStars);
+
+    // Generate shooting stars
+    const generatedShootingStars = Array.from({ length: 3 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 80 + 20,
+      y: Math.random() * 30,
+      delay: Math.random() * 10 + i * 5,
+    }));
+    setShootingStars(generatedShootingStars);
+  }, []);
 
   return (
     <div
@@ -113,169 +129,36 @@ function SolarSystem() {
         pointerEvents: "none",
         zIndex: 0,
         overflow: "hidden",
-        background: "radial-gradient(ellipse at center, #0d1117 0%, #010409 100%)",
       }}
     >
-      {/* Background Stars with depth */}
-      {Array.from({ length: 150 }).map((_, i) => (
+      {/* Twinkling Stars */}
+      {stars.map((star) => (
         <div
-          key={`star-${i}`}
+          key={star.id}
+          className="star-particle star-twinkle"
           style={{
-            position: "absolute",
-            width: `${Math.random() * 2 + 1}px`,
-            height: `${Math.random() * 2 + 1}px`,
-            background: `hsl(${Math.random() * 60 + 200}, 50%, ${Math.random() * 50 + 50}%)`,
-            borderRadius: "50%",
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            opacity: Math.random() * 0.8 + 0.2,
-            animation: `twinkle ${Math.random() * 3 + 2}s ease-in-out infinite`,
-            animationDelay: `${Math.random() * 5}s`,
+            left: `${star.x}%`,
+            top: `${star.y}%`,
+            width: `${star.size}px`,
+            height: `${star.size}px`,
+            animationDelay: `${star.delay}s`,
+            animationDuration: `${star.duration}s`,
+            opacity: 0.5,
           }}
         />
       ))}
-
-      {/* 3D Solar System Container */}
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          perspective: "1000px",
-          perspectiveOrigin: "center center",
-        }}
-      >
-        {/* 3D Tilted Plane */}
+      {/* Shooting Stars */}
+      {shootingStars.map((star) => (
         <div
+          key={`shooting-${star.id}`}
+          className="shooting-star"
           style={{
-            position: "relative",
-            width: "700px",
-            height: "700px",
-            transform: "rotateX(60deg)",
-            transformStyle: "preserve-3d",
+            left: `${star.x}%`,
+            top: `${star.y}%`,
+            animationDelay: `${star.delay}s`,
           }}
-        >
-          {/* Sun with glow */}
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%) rotateX(-60deg)",
-              width: "60px",
-              height: "60px",
-              background: "radial-gradient(circle, #fff9e6 0%, #ffdd44 30%, #ffaa00 60%, #ff6600 100%)",
-              borderRadius: "50%",
-              boxShadow: `
-                0 0 30px 10px rgba(255, 220, 100, 0.8),
-                0 0 60px 30px rgba(255, 180, 50, 0.5),
-                0 0 100px 50px rgba(255, 150, 0, 0.3),
-                0 0 150px 80px rgba(255, 100, 0, 0.15)
-              `,
-              animation: "sunPulse 4s ease-in-out infinite",
-            }}
-          />
-
-          {/* Orbit rings (3D ellipses) */}
-          {planets.map((planet) => (
-            <div
-              key={`orbit-${planet.name}`}
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                width: `${planet.orbit * 2}px`,
-                height: `${planet.orbit * 2}px`,
-                marginLeft: `-${planet.orbit}px`,
-                marginTop: `-${planet.orbit}px`,
-                border: "1px solid rgba(255, 255, 255, 0.08)",
-                borderRadius: "50%",
-                boxShadow: "0 0 5px rgba(100, 150, 255, 0.05)",
-              }}
-            />
-          ))}
-
-          {/* Orbiting Planets */}
-          {planets.map((planet) => (
-            <div
-              key={planet.name}
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                width: `${planet.orbit * 2}px`,
-                height: `${planet.orbit * 2}px`,
-                marginLeft: `-${planet.orbit}px`,
-                marginTop: `-${planet.orbit}px`,
-                animation: `orbitRotate ${planet.duration}s linear infinite`,
-                animationDelay: `${planet.delay}s`,
-                transformStyle: "preserve-3d",
-              }}
-            >
-              {/* Planet sphere with 3D correction */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: "0",
-                  left: "50%",
-                  transform: "translateX(-50%) rotateX(-60deg)",
-                  width: `${planet.size}px`,
-                  height: `${planet.size}px`,
-                  background: `radial-gradient(circle at 30% 30%, 
-                    ${planet.color}ff 0%, 
-                    ${planet.color}cc 40%, 
-                    ${planet.color}66 80%, 
-                    ${planet.color}22 100%)`,
-                  borderRadius: "50%",
-                  boxShadow: `
-                    inset -${planet.size / 4}px -${planet.size / 4}px ${planet.size / 2}px rgba(0,0,0,0.5),
-                    0 0 ${planet.size}px ${planet.color}44,
-                    0 0 ${planet.size * 2}px ${planet.color}22
-                  `,
-                }}
-              >
-                {/* Saturn's Ring */}
-                {planet.hasRing && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%) rotateX(75deg)",
-                      width: `${planet.size * 2}px`,
-                      height: `${planet.size * 2}px`,
-                      background: `radial-gradient(ellipse, 
-                        transparent 35%, 
-                        rgba(210, 180, 140, 0.4) 40%, 
-                        rgba(240, 217, 168, 0.6) 50%, 
-                        rgba(210, 180, 140, 0.4) 60%, 
-                        transparent 65%)`,
-                      borderRadius: "50%",
-                    }}
-                  />
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* CSS Animations */}
-      <style jsx global>{`
-        @keyframes orbitRotate {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes sunPulse {
-          0%, 100% { transform: translate(-50%, -50%) rotateX(-60deg) scale(1); }
-          50% { transform: translate(-50%, -50%) rotateX(-60deg) scale(1.05); }
-        }
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 1; }
-        }
-      `}</style>
+        />
+      ))}
     </div>
   );
 }
@@ -575,8 +458,8 @@ export default function LandingPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: colors.bg, fontFamily: "'Inter', -apple-system, sans-serif", position: "relative" }}>
-      {/* Animated Solar System Background */}
-      <SolarSystem />
+      {/* Animated Star Background */}
+      <StarField />
       {/* NAVBAR */}
       <nav
         style={{
@@ -1190,113 +1073,6 @@ export default function LandingPage() {
             </>
           );
         })()}
-      </section>
-
-      {/* FAQ SECTION */}
-      <section style={{ padding: "80px 24px", background: colors.bg }}>
-        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: "60px" }}>
-            <div style={{ fontSize: "13px", color: colors.accent, fontWeight: 600, marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-              FAQ
-            </div>
-            <h2 style={{ fontSize: "32px", fontWeight: 700, color: colors.textPrimary, marginBottom: "16px" }}>
-              Frequently Asked Questions
-            </h2>
-            <p style={{ fontSize: "16px", color: colors.textSecondary }}>
-              Everything you need to know about Cryptologic
-            </p>
-          </div>
-
-          {/* FAQ Items */}
-          {(() => {
-            const faqs = [
-              {
-                q: "What is Cosmic Score™ and how does it work?",
-                a: "Cosmic Score™ is our proprietary algorithm that combines real astrological calculations (Moon phases, planetary positions from NASA JPL ephemeris) with market analysis. It generates a 0-100 score indicating the cosmic alignment for each cryptocurrency."
-              },
-              {
-                q: "Is this real astrology or just random numbers?",
-                a: "100% real astrology! We use the astronomy-engine library with NASA JPL ephemeris data to calculate actual planetary positions. Our Moon phase, Mercury retrograde, and planetary aspect calculations are astronomically accurate to the second."
-              },
-              {
-                q: "How do I pay for Pro subscription?",
-                a: "We accept USDT (BEP20) on BSC Network. Simply go to Checkout, send $14 USDT to our wallet address, then contact us on Telegram with your transaction hash. We'll activate your Pro account within minutes!"
-              },
-              {
-                q: "What's the difference between Lite and Pro?",
-                a: "Lite users can view data for top 5 cryptocurrencies (BTC, ETH, BNB, SOL, XRP). Pro users get access to 15,000+ coins, advanced search, personal watchlist, detailed astrology breakdowns, and priority support."
-              },
-              {
-                q: "Is this financial advice?",
-                a: "No. Cryptologic is for educational and entertainment purposes only. Our Cosmic Score™ and signals should not be considered financial advice. Always do your own research and consult with a financial advisor before making investment decisions."
-              },
-              {
-                q: "Can I cancel my subscription anytime?",
-                a: "Yes! Pro subscription is monthly with no lock-in contract. Simply don't renew next month if you wish to cancel. No hidden fees or cancellation penalties."
-              },
-            ];
-
-            const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-            return (
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                {faqs.map((faq, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      background: colors.bgCard,
-                      border: `1px solid ${openIndex === index ? colors.accent : colors.border}`,
-                      borderRadius: "12px",
-                      overflow: "hidden",
-                      transition: "all 0.2s",
-                    }}
-                  >
-                    <button
-                      onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                      style={{
-                        width: "100%",
-                        padding: "20px 24px",
-                        background: "transparent",
-                        border: "none",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        cursor: "pointer",
-                        textAlign: "left",
-                      }}
-                    >
-                      <span style={{ fontSize: "15px", fontWeight: 500, color: colors.textPrimary }}>
-                        {faq.q}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: "20px",
-                          color: colors.accent,
-                          transform: openIndex === index ? "rotate(45deg)" : "rotate(0deg)",
-                          transition: "transform 0.2s",
-                        }}
-                      >
-                        +
-                      </span>
-                    </button>
-                    {openIndex === index && (
-                      <div
-                        style={{
-                          padding: "0 24px 20px 24px",
-                          fontSize: "14px",
-                          color: colors.textSecondary,
-                          lineHeight: 1.7,
-                        }}
-                      >
-                        {faq.a}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            );
-          })()}
-        </div>
       </section>
 
       {/* FINAL CTA */}
