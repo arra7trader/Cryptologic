@@ -76,7 +76,7 @@ export default function WhaleActivityView({ coinName }: { coinName?: string }) {
                 )}
             </div>
             <p style={{ marginTop: "16px", fontSize: "11px", color: colors.textDim, textAlign: "center" }}>
-                Showing transactions > $100k value
+                Showing transactions &gt; $100k value
             </p>
         </div>
     );
