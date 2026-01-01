@@ -94,15 +94,15 @@ const IconTarget = () => (
   </svg>
 );
 
-// Solar System Background Component
+// 3D Solar System Background Component
 function SolarSystem() {
   const planets = [
-    { name: "mercury", color: "#b5b5b5", size: 6, orbit: 80, duration: 8, delay: 0 },
-    { name: "venus", color: "#e6c87a", size: 10, orbit: 120, duration: 15, delay: 2 },
-    { name: "earth", color: "#4a90d9", size: 12, orbit: 170, duration: 25, delay: 5 },
-    { name: "mars", color: "#d9644a", size: 8, orbit: 220, duration: 40, delay: 8 },
-    { name: "jupiter", color: "#d4a574", size: 24, orbit: 300, duration: 80, delay: 12 },
-    { name: "saturn", color: "#f0d9a8", size: 20, orbit: 380, duration: 120, delay: 15, hasRing: true },
+    { name: "mercury", color: "#b5b5b5", size: 8, orbit: 60, duration: 8, delay: 0 },
+    { name: "venus", color: "#e6c87a", size: 14, orbit: 90, duration: 15, delay: 2 },
+    { name: "earth", color: "#4a90d9", size: 16, orbit: 130, duration: 25, delay: 5 },
+    { name: "mars", color: "#d9644a", size: 12, orbit: 170, duration: 40, delay: 8 },
+    { name: "jupiter", color: "#d4a574", size: 32, orbit: 230, duration: 80, delay: 12 },
+    { name: "saturn", color: "#f0d9a8", size: 28, orbit: 300, duration: 120, delay: 15, hasRing: true },
   ];
 
   return (
@@ -113,127 +113,167 @@ function SolarSystem() {
         pointerEvents: "none",
         zIndex: 0,
         overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        background: "radial-gradient(ellipse at center, #0d1117 0%, #010409 100%)",
       }}
     >
-      {/* Background Stars */}
-      {Array.from({ length: 100 }).map((_, i) => (
+      {/* Background Stars with depth */}
+      {Array.from({ length: 150 }).map((_, i) => (
         <div
           key={`star-${i}`}
           style={{
             position: "absolute",
             width: `${Math.random() * 2 + 1}px`,
             height: `${Math.random() * 2 + 1}px`,
-            background: "white",
+            background: `hsl(${Math.random() * 60 + 200}, 50%, ${Math.random() * 50 + 50}%)`,
             borderRadius: "50%",
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            opacity: Math.random() * 0.5 + 0.2,
+            opacity: Math.random() * 0.8 + 0.2,
+            animation: `twinkle ${Math.random() * 3 + 2}s ease-in-out infinite`,
+            animationDelay: `${Math.random() * 5}s`,
           }}
         />
       ))}
 
-      {/* Solar System Container - Centered */}
+      {/* 3D Solar System Container */}
       <div
         style={{
           position: "absolute",
-          width: "800px",
-          height: "800px",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
+          perspective: "1000px",
+          perspectiveOrigin: "center center",
         }}
       >
-        {/* Sun */}
+        {/* 3D Tilted Plane */}
         <div
           style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "50px",
-            height: "50px",
-            background: "radial-gradient(circle, #fff7b2 0%, #ffcc00 40%, #ff9500 80%, #ff6600 100%)",
-            borderRadius: "50%",
-            boxShadow: "0 0 60px 20px rgba(255, 200, 0, 0.4), 0 0 100px 40px rgba(255, 150, 0, 0.2)",
+            position: "relative",
+            width: "700px",
+            height: "700px",
+            transform: "rotateX(60deg)",
+            transformStyle: "preserve-3d",
           }}
-        />
-
-        {/* Orbits */}
-        {planets.map((planet) => (
+        >
+          {/* Sun with glow */}
           <div
-            key={`orbit-${planet.name}`}
             style={{
               position: "absolute",
               top: "50%",
               left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: `${planet.orbit * 2}px`,
-              height: `${planet.orbit * 2}px`,
-              border: "1px solid rgba(255, 255, 255, 0.05)",
+              transform: "translate(-50%, -50%) rotateX(-60deg)",
+              width: "60px",
+              height: "60px",
+              background: "radial-gradient(circle, #fff9e6 0%, #ffdd44 30%, #ffaa00 60%, #ff6600 100%)",
               borderRadius: "50%",
+              boxShadow: `
+                0 0 30px 10px rgba(255, 220, 100, 0.8),
+                0 0 60px 30px rgba(255, 180, 50, 0.5),
+                0 0 100px 50px rgba(255, 150, 0, 0.3),
+                0 0 150px 80px rgba(255, 100, 0, 0.15)
+              `,
+              animation: "sunPulse 4s ease-in-out infinite",
             }}
           />
-        ))}
 
-        {/* Planets */}
-        {planets.map((planet) => (
-          <div
-            key={planet.name}
-            className="planet-orbit"
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              width: `${planet.orbit * 2}px`,
-              height: `${planet.orbit * 2}px`,
-              marginLeft: `-${planet.orbit}px`,
-              marginTop: `-${planet.orbit}px`,
-              animation: `orbitRotate ${planet.duration}s linear infinite`,
-              animationDelay: `${planet.delay}s`,
-            }}
-          >
-            {/* Planet */}
+          {/* Orbit rings (3D ellipses) */}
+          {planets.map((planet) => (
             <div
+              key={`orbit-${planet.name}`}
               style={{
                 position: "absolute",
-                top: "0",
+                top: "50%",
                 left: "50%",
-                transform: "translateX(-50%)",
-                width: `${planet.size}px`,
-                height: `${planet.size}px`,
-                background: `radial-gradient(circle at 30% 30%, ${planet.color}, ${planet.color}88)`,
+                width: `${planet.orbit * 2}px`,
+                height: `${planet.orbit * 2}px`,
+                marginLeft: `-${planet.orbit}px`,
+                marginTop: `-${planet.orbit}px`,
+                border: "1px solid rgba(255, 255, 255, 0.08)",
                 borderRadius: "50%",
-                boxShadow: `0 0 ${planet.size / 2}px ${planet.color}44`,
+                boxShadow: "0 0 5px rgba(100, 150, 255, 0.05)",
+              }}
+            />
+          ))}
+
+          {/* Orbiting Planets */}
+          {planets.map((planet) => (
+            <div
+              key={planet.name}
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                width: `${planet.orbit * 2}px`,
+                height: `${planet.orbit * 2}px`,
+                marginLeft: `-${planet.orbit}px`,
+                marginTop: `-${planet.orbit}px`,
+                animation: `orbitRotate ${planet.duration}s linear infinite`,
+                animationDelay: `${planet.delay}s`,
+                transformStyle: "preserve-3d",
               }}
             >
-              {/* Saturn Ring */}
-              {planet.hasRing && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%) rotateX(70deg)",
-                    width: `${planet.size * 1.8}px`,
-                    height: `${planet.size * 1.8}px`,
-                    border: "2px solid rgba(240, 217, 168, 0.5)",
-                    borderRadius: "50%",
-                  }}
-                />
-              )}
+              {/* Planet sphere with 3D correction */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "0",
+                  left: "50%",
+                  transform: "translateX(-50%) rotateX(-60deg)",
+                  width: `${planet.size}px`,
+                  height: `${planet.size}px`,
+                  background: `radial-gradient(circle at 30% 30%, 
+                    ${planet.color}ff 0%, 
+                    ${planet.color}cc 40%, 
+                    ${planet.color}66 80%, 
+                    ${planet.color}22 100%)`,
+                  borderRadius: "50%",
+                  boxShadow: `
+                    inset -${planet.size / 4}px -${planet.size / 4}px ${planet.size / 2}px rgba(0,0,0,0.5),
+                    0 0 ${planet.size}px ${planet.color}44,
+                    0 0 ${planet.size * 2}px ${planet.color}22
+                  `,
+                }}
+              >
+                {/* Saturn's Ring */}
+                {planet.hasRing && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%) rotateX(75deg)",
+                      width: `${planet.size * 2}px`,
+                      height: `${planet.size * 2}px`,
+                      background: `radial-gradient(ellipse, 
+                        transparent 35%, 
+                        rgba(210, 180, 140, 0.4) 40%, 
+                        rgba(240, 217, 168, 0.6) 50%, 
+                        rgba(210, 180, 140, 0.4) 60%, 
+                        transparent 65%)`,
+                      borderRadius: "50%",
+                    }}
+                  />
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {/* CSS Animation */}
+      {/* CSS Animations */}
       <style jsx global>{`
         @keyframes orbitRotate {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
+        }
+        @keyframes sunPulse {
+          0%, 100% { transform: translate(-50%, -50%) rotateX(-60deg) scale(1); }
+          50% { transform: translate(-50%, -50%) rotateX(-60deg) scale(1.05); }
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 1; }
         }
       `}</style>
     </div>
