@@ -25,7 +25,7 @@ interface NewsArticle {
     published_on: number;
 }
 
-export default function AIInsightView({ coinName, priceChange24h }: { coinName: string, priceChange24h: number }) {
+export default function AIInsightView({ coinName, priceChange24h, high24h, low24h }: { coinName: string, priceChange24h: number, high24h: number, low24h: number }) {
     const [loading, setLoading] = useState(true);
     const [analysis, setAnalysis] = useState<AIAnalysis | null>(null);
     const [articles, setArticles] = useState<NewsArticle[]>([]);
@@ -63,9 +63,8 @@ export default function AIInsightView({ coinName, priceChange24h }: { coinName: 
                         confidence,
                         summary: `Recent news indicates a ${sentiment.toLowerCase()} trend. Key drivers include recent headlines from ${data.Data[0].source_info.name} and market movements.`,
                         keyLevels: {
-                            // Mocked for now as we don't have technical analysis API
-                            support: 0,
-                            resistance: 0
+                            support: low24h,
+                            resistance: high24h
                         },
                         signals: [
                             `News Sentiment: ${sentiment}`,
@@ -81,7 +80,7 @@ export default function AIInsightView({ coinName, priceChange24h }: { coinName: 
         };
 
         fetchIntelligence();
-    }, [coinName, priceChange24h]);
+    }, [coinName, priceChange24h, high24h, low24h]);
 
     if (loading) return <div style={{ color: colors.textDim, fontSize: "13px", padding: "20px" }}>Analyzing market data...</div>;
     if (!analysis) return <div style={{ color: colors.textDim, fontSize: "13px", padding: "20px" }}>Analysis unavailable.</div>;
@@ -128,19 +127,38 @@ export default function AIInsightView({ coinName, priceChange24h }: { coinName: 
             </div>
 
             {/* Key Signals Grid */}
-            <div style={{
-                padding: "16px",
-                background: colors.bg,
-                borderRadius: "12px",
-                border: `1px solid ${colors.border}`
-            }}>
-                <div style={{ fontSize: "12px", color: colors.textDim, marginBottom: "8px" }}>Detected Signals</div>
-                {analysis.signals.map((signal, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px", fontSize: "13px", color: colors.textPrimary }}>
-                        <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: colors.accent }}></div>
-                        {signal}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                <div style={{
+                    padding: "16px",
+                    background: colors.bg,
+                    borderRadius: "12px",
+                    border: `1px solid ${colors.border}`
+                }}>
+                    <div style={{ fontSize: "12px", color: colors.textDim, marginBottom: "8px" }}>Detected Signals</div>
+                    {analysis.signals.map((signal, i) => (
+                        <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px", fontSize: "13px", color: colors.textPrimary }}>
+                            <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: colors.accent }}></div>
+                            {signal}
+                        </div>
+                    ))}
+                </div>
+
+                <div style={{
+                    padding: "16px",
+                    background: colors.bg,
+                    borderRadius: "12px",
+                    border: `1px solid ${colors.border}`
+                }}>
+                    <div style={{ fontSize: "12px", color: colors.textDim, marginBottom: "8px" }}>Key Levels (24h)</div>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+                        <span style={{ fontSize: "13px", color: colors.textSecondary }}>Resistance</span>
+                        <span style={{ fontSize: "13px", fontWeight: 600, color: colors.red }}>${analysis.keyLevels.resistance.toLocaleString()}</span>
                     </div>
-                ))}
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <span style={{ fontSize: "13px", color: colors.textSecondary }}>Support</span>
+                        <span style={{ fontSize: "13px", fontWeight: 600, color: colors.accent }}>${analysis.keyLevels.support.toLocaleString()}</span>
+                    </div>
+                </div>
             </div>
         </div>
     );

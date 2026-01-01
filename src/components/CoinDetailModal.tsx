@@ -380,6 +380,8 @@ export default function CoinDetailModal({ coinId, onClose, isPro }: CoinDetailMo
                                     <AIInsightView
                                         coinName={coin.name}
                                         priceChange24h={coin.market_data.price_change_24h}
+                                        high24h={coin.market_data.high_24h}
+                                        low24h={coin.market_data.low_24h}
                                     />
                                 ) : (
                                     <ProLockOverlay featureName="AI Market Analyst" />
