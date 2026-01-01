@@ -26,6 +26,7 @@ interface CoinDetail {
         low_24h: number;
     };
     sparkline_7d: number[];
+    platforms?: Record<string, string>;
 }
 
 interface AstrologyInfo {
@@ -390,7 +391,7 @@ export default function CoinDetailModal({ coinId, onClose, isPro }: CoinDetailMo
 
                             {activeTab === "whale" && (
                                 isPro ? (
-                                    <WhaleActivityView coinName={coin.name} />
+                                    <WhaleActivityView coinName={coin.name} coinId={coin.id} platforms={coin.platforms} />
                                 ) : (
                                     <ProLockOverlay featureName="Whale Watch Radar" />
                                 )

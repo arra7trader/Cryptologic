@@ -4,7 +4,7 @@ import { colors } from "@/lib/constants";
 import { ArrowLeftRight, TrendingUp, Wallet, ArrowUpRight, ArrowDownLeft } from "lucide-react";
 import { useState, useEffect } from "react";
 
-export default function WhaleActivityView({ coinName }: { coinName?: string }) {
+export default function WhaleActivityView({ coinName, coinId, platforms }: { coinName?: string, coinId?: string, platforms?: Record<string, string> }) {
     const [transactions, setTransactions] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -12,7 +12,10 @@ export default function WhaleActivityView({ coinName }: { coinName?: string }) {
         const fetchWhales = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`/api/intelligence/whales?coin=${coinName || "bitcoin"}`);
+                // Prioritize Ethereum contract address if available (for ERC20 support)
+                const ethAddress = platforms?.ethereum || "";
+
+                const res = await fetch(`/api/intelligence/whales?coin=${coinId || "bitcoin"}&address=${ethAddress}`);
                 const data = await res.json();
                 if (data.transactions) {
                     setTransactions(data.transactions);

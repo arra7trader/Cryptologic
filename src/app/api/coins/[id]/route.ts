@@ -91,6 +91,7 @@ export async function GET(
             sparkline_7d: data.market_data?.sparkline_7d?.price || [],
             genesis_date: data.genesis_date,
             market_cap_rank: data.market_cap_rank,
+            platforms: data.platforms || {},
         };
 
         return NextResponse.json({ coin: coinDetail });
