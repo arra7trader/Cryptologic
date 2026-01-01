@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import { verifyToken } from "@/lib/auth";
 
 const COINGECKO_API = "https://api.coingecko.com/api/v3";
+const FREE_COINS = ["bitcoin", "ethereum", "binancecoin", "solana", "ripple"];
 
 export async function GET(
     req: Request,
@@ -8,6 +10,42 @@ export async function GET(
 ) {
     try {
         const { id } = await params;
+
+        // SERVER-SIDE ACCESS CONTROL
+        // 1. Check if token exists
+        const token = req.headers.get("cookie")?.split("; ").find(c => c.startsWith("token="))?.split("=")[1];
+
+        let isPro = false;
+        if (token) {
+            const payload = await verifyToken(token);
+            // Payload from jose is generic, cast to any to access custom fields
+            const userData = payload as any;
+            if (userData && userData.userId) {
+                // We'd ideally fetch the FRESH user tier from DB here, but for JWT statelessness we rely on payload or DB check.
+                // For stricter security, we'll verify against the DB in a real app.
+                // Here we'll trust the verifyToken payload or do a quick check if needed.
+                // Assuming verifyToken returns the payload we signed:
+                // IMPORTANT: verifyToken in @/lib/auth checks the signature. 
+                // If you need real-time tier status (in case admin changed it 1 second ago), query DB.
+                // For performance/caching, we might skip DB. 
+                // Let's Import db to be sure.
+                const { db } = await import("@/lib/db");
+                const result = await db.execute({ sql: "SELECT tier FROM users WHERE id = ?", args: [userData.userId] });
+                if (result.rows.length > 0 && result.rows[0].tier === 'pro') {
+                    isPro = true;
+                }
+            }
+        }
+
+        // 2. Gatekeeper Logic
+        const isFreeCoin = FREE_COINS.includes(id);
+
+        if (!isPro && !isFreeCoin) {
+            return NextResponse.json(
+                { error: "Access denied. Pro tier required for this coin." },
+                { status: 403 }
+            );
+        }
 
         // Fetch coin details with market data and sparkline
         const response = await fetch(

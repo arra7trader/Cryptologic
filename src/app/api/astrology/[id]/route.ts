@@ -45,6 +45,36 @@ export async function GET(
         const url = new URL(req.url);
         const lang = url.searchParams.get("lang") || "en";
 
+        // SERVER-SIDE ACCESS CONTROL
+        // 1. Check if token exists
+        const token = req.headers.get("cookie")?.split("; ").find(c => c.startsWith("token="))?.split("=")[1];
+
+        let isPro = false;
+        if (token) {
+            // Need to dynamically import verifyToken to avoid top-level await issues if any
+            const { verifyToken } = await import("@/lib/auth");
+            const payload = await verifyToken(token);
+            // Payload from jose is generic, cast to any to access custom fields
+            const userData = payload as any;
+            if (userData && userData.userId) {
+                const { db } = await import("@/lib/db");
+                const result = await db.execute({ sql: "SELECT tier FROM users WHERE id = ?", args: [userData.userId] });
+                if (result.rows.length > 0 && result.rows[0].tier === 'pro') {
+                    isPro = true;
+                }
+            }
+        }
+
+        const FREE_COINS = ["bitcoin", "ethereum", "binancecoin", "solana", "ripple"];
+        const isFreeCoin = FREE_COINS.includes(id);
+
+        if (!isPro && !isFreeCoin) {
+            return NextResponse.json(
+                { error: "Access denied. Pro tier required for this coin." },
+                { status: 403 }
+            );
+        }
+
         // Try to use real astrology calculations
         try {
             const { getScoreBreakdown, getInterpretation, calculateAstrology } = await import("@/lib/astrology");
