@@ -11,4 +11,6 @@ export const colors = {
     purple: "#8b5cf6",
     purpleDim: "rgba(139,92,246,0.15)",
     gold: "#f59e0b",
+    red: "#ef4444",
+    green: "#10b981",
 };
