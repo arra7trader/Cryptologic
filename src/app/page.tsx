@@ -94,6 +94,75 @@ const IconTarget = () => (
   </svg>
 );
 
+// Star Field Background Component
+function StarField() {
+  const [stars, setStars] = useState<{ id: number; x: number; y: number; size: number; delay: number; duration: number }[]>([]);
+  const [shootingStars, setShootingStars] = useState<{ id: number; x: number; y: number; delay: number }[]>([]);
+
+  useEffect(() => {
+    // Generate random stars
+    const generatedStars = Array.from({ length: 50 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 2 + 1,
+      delay: Math.random() * 5,
+      duration: Math.random() * 3 + 2,
+    }));
+    setStars(generatedStars);
+
+    // Generate shooting stars
+    const generatedShootingStars = Array.from({ length: 3 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 80 + 20,
+      y: Math.random() * 30,
+      delay: Math.random() * 10 + i * 5,
+    }));
+    setShootingStars(generatedShootingStars);
+  }, []);
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        pointerEvents: "none",
+        zIndex: 0,
+        overflow: "hidden",
+      }}
+    >
+      {/* Twinkling Stars */}
+      {stars.map((star) => (
+        <div
+          key={star.id}
+          className="star-particle star-twinkle"
+          style={{
+            left: `${star.x}%`,
+            top: `${star.y}%`,
+            width: `${star.size}px`,
+            height: `${star.size}px`,
+            animationDelay: `${star.delay}s`,
+            animationDuration: `${star.duration}s`,
+            opacity: 0.5,
+          }}
+        />
+      ))}
+      {/* Shooting Stars */}
+      {shootingStars.map((star) => (
+        <div
+          key={`shooting-${star.id}`}
+          className="shooting-star"
+          style={{
+            left: `${star.x}%`,
+            top: `${star.y}%`,
+            animationDelay: `${star.delay}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 // Animated Moon Phase Component
 function AnimatedMoonPhase() {
   const [phase, setPhase] = useState(0);
@@ -388,7 +457,9 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div style={{ minHeight: "100vh", background: colors.bg, fontFamily: "'Inter', -apple-system, sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: colors.bg, fontFamily: "'Inter', -apple-system, sans-serif", position: "relative" }}>
+      {/* Animated Star Background */}
+      <StarField />
       {/* NAVBAR */}
       <nav
         style={{

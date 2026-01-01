@@ -635,6 +635,103 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Top Movers Widget */}
+        <div style={{ marginBottom: "40px" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              marginBottom: "16px",
+              fontSize: "11px",
+              fontWeight: 600,
+              color: colors.textDim,
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+            }}
+          >
+            <TrendingUp size={14} />
+            Top Movers (24h)
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px" }}>
+            {/* Top Gainers */}
+            <div
+              style={{
+                background: colors.bgCard,
+                border: `1px solid ${colors.border}`,
+                borderRadius: "12px",
+                padding: "16px",
+              }}
+            >
+              <div style={{ fontSize: "11px", color: colors.accent, fontWeight: 600, marginBottom: "12px", display: "flex", alignItems: "center", gap: "4px" }}>
+                <TrendingUp size={12} /> TOP GAINERS
+              </div>
+              {coins
+                .slice()
+                .sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h)
+                .slice(0, 3)
+                .map((coin) => (
+                  <div
+                    key={coin.id}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "8px 0",
+                      borderBottom: `1px solid ${colors.border}`,
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <img src={coin.image} alt={coin.name} style={{ width: "20px", height: "20px", borderRadius: "50%" }} />
+                      <span style={{ fontSize: "13px", color: colors.textPrimary }}>{coin.symbol.toUpperCase()}</span>
+                    </div>
+                    <span style={{ fontSize: "13px", fontWeight: 600, color: colors.accent }}>
+                      +{coin.price_change_percentage_24h.toFixed(1)}%
+                    </span>
+                  </div>
+                ))}
+            </div>
+
+            {/* Top Losers */}
+            <div
+              style={{
+                background: colors.bgCard,
+                border: `1px solid ${colors.border}`,
+                borderRadius: "12px",
+                padding: "16px",
+              }}
+            >
+              <div style={{ fontSize: "11px", color: colors.red, fontWeight: 600, marginBottom: "12px", display: "flex", alignItems: "center", gap: "4px" }}>
+                <TrendingDown size={12} /> TOP LOSERS
+              </div>
+              {coins
+                .slice()
+                .sort((a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h)
+                .slice(0, 3)
+                .map((coin) => (
+                  <div
+                    key={coin.id}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "8px 0",
+                      borderBottom: `1px solid ${colors.border}`,
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <img src={coin.image} alt={coin.name} style={{ width: "20px", height: "20px", borderRadius: "50%" }} />
+                      <span style={{ fontSize: "13px", color: colors.textPrimary }}>{coin.symbol.toUpperCase()}</span>
+                    </div>
+                    <span style={{ fontSize: "13px", fontWeight: 600, color: colors.red }}>
+                      {coin.price_change_percentage_24h.toFixed(1)}%
+                    </span>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+
         {/* Watchlist (Pro only) */}
         {isPro && (
           <div style={{ marginBottom: "40px" }}>
