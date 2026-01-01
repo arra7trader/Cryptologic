@@ -94,32 +94,16 @@ const IconTarget = () => (
   </svg>
 );
 
-// Star Field Background Component
-function StarField() {
-  const [stars, setStars] = useState<{ id: number; x: number; y: number; size: number; delay: number; duration: number }[]>([]);
-  const [shootingStars, setShootingStars] = useState<{ id: number; x: number; y: number; delay: number }[]>([]);
-
-  useEffect(() => {
-    // Generate random stars
-    const generatedStars = Array.from({ length: 50 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 2 + 1,
-      delay: Math.random() * 5,
-      duration: Math.random() * 3 + 2,
-    }));
-    setStars(generatedStars);
-
-    // Generate shooting stars
-    const generatedShootingStars = Array.from({ length: 3 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 80 + 20,
-      y: Math.random() * 30,
-      delay: Math.random() * 10 + i * 5,
-    }));
-    setShootingStars(generatedShootingStars);
-  }, []);
+// Solar System Background Component
+function SolarSystem() {
+  const planets = [
+    { name: "mercury", color: "#b5b5b5", size: 6, orbit: 80, duration: 8, delay: 0 },
+    { name: "venus", color: "#e6c87a", size: 10, orbit: 120, duration: 15, delay: 2 },
+    { name: "earth", color: "#4a90d9", size: 12, orbit: 170, duration: 25, delay: 5 },
+    { name: "mars", color: "#d9644a", size: 8, orbit: 220, duration: 40, delay: 8 },
+    { name: "jupiter", color: "#d4a574", size: 24, orbit: 300, duration: 80, delay: 12 },
+    { name: "saturn", color: "#f0d9a8", size: 20, orbit: 380, duration: 120, delay: 15, hasRing: true },
+  ];
 
   return (
     <div
@@ -129,36 +113,129 @@ function StarField() {
         pointerEvents: "none",
         zIndex: 0,
         overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      {/* Twinkling Stars */}
-      {stars.map((star) => (
+      {/* Background Stars */}
+      {Array.from({ length: 100 }).map((_, i) => (
         <div
-          key={star.id}
-          className="star-particle star-twinkle"
+          key={`star-${i}`}
           style={{
-            left: `${star.x}%`,
-            top: `${star.y}%`,
-            width: `${star.size}px`,
-            height: `${star.size}px`,
-            animationDelay: `${star.delay}s`,
-            animationDuration: `${star.duration}s`,
-            opacity: 0.5,
+            position: "absolute",
+            width: `${Math.random() * 2 + 1}px`,
+            height: `${Math.random() * 2 + 1}px`,
+            background: "white",
+            borderRadius: "50%",
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            opacity: Math.random() * 0.5 + 0.2,
           }}
         />
       ))}
-      {/* Shooting Stars */}
-      {shootingStars.map((star) => (
+
+      {/* Solar System Container - Centered */}
+      <div
+        style={{
+          position: "absolute",
+          width: "800px",
+          height: "800px",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        {/* Sun */}
         <div
-          key={`shooting-${star.id}`}
-          className="shooting-star"
           style={{
-            left: `${star.x}%`,
-            top: `${star.y}%`,
-            animationDelay: `${star.delay}s`,
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "50px",
+            height: "50px",
+            background: "radial-gradient(circle, #fff7b2 0%, #ffcc00 40%, #ff9500 80%, #ff6600 100%)",
+            borderRadius: "50%",
+            boxShadow: "0 0 60px 20px rgba(255, 200, 0, 0.4), 0 0 100px 40px rgba(255, 150, 0, 0.2)",
           }}
         />
-      ))}
+
+        {/* Orbits */}
+        {planets.map((planet) => (
+          <div
+            key={`orbit-${planet.name}`}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: `${planet.orbit * 2}px`,
+              height: `${planet.orbit * 2}px`,
+              border: "1px solid rgba(255, 255, 255, 0.05)",
+              borderRadius: "50%",
+            }}
+          />
+        ))}
+
+        {/* Planets */}
+        {planets.map((planet) => (
+          <div
+            key={planet.name}
+            className="planet-orbit"
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              width: `${planet.orbit * 2}px`,
+              height: `${planet.orbit * 2}px`,
+              marginLeft: `-${planet.orbit}px`,
+              marginTop: `-${planet.orbit}px`,
+              animation: `orbitRotate ${planet.duration}s linear infinite`,
+              animationDelay: `${planet.delay}s`,
+            }}
+          >
+            {/* Planet */}
+            <div
+              style={{
+                position: "absolute",
+                top: "0",
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: `${planet.size}px`,
+                height: `${planet.size}px`,
+                background: `radial-gradient(circle at 30% 30%, ${planet.color}, ${planet.color}88)`,
+                borderRadius: "50%",
+                boxShadow: `0 0 ${planet.size / 2}px ${planet.color}44`,
+              }}
+            >
+              {/* Saturn Ring */}
+              {planet.hasRing && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%) rotateX(70deg)",
+                    width: `${planet.size * 1.8}px`,
+                    height: `${planet.size * 1.8}px`,
+                    border: "2px solid rgba(240, 217, 168, 0.5)",
+                    borderRadius: "50%",
+                  }}
+                />
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* CSS Animation */}
+      <style jsx global>{`
+        @keyframes orbitRotate {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }
@@ -458,8 +535,8 @@ export default function LandingPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: colors.bg, fontFamily: "'Inter', -apple-system, sans-serif", position: "relative" }}>
-      {/* Animated Star Background */}
-      <StarField />
+      {/* Animated Solar System Background */}
+      <SolarSystem />
       {/* NAVBAR */}
       <nav
         style={{
