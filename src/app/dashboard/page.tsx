@@ -378,17 +378,7 @@ export default function Home() {
     window.location.reload();
   };
 
-  const handleUpgrade = async () => {
-    if (!user) {
-      window.location.href = "/login";
-      return;
-    }
-    const res = await fetch("/api/auth/upgrade", { method: "POST" });
-    if (res.ok) {
-      await checkAuth();
-      setShowUpgradeModal(false);
-    }
-  };
+
 
   const togglePro = (value: boolean) => {
     if (value && (!user || user.tier !== "pro")) {
@@ -776,7 +766,7 @@ export default function Home() {
               {t("dashboard.upgrade_desc")}
             </p>
             <button
-              onClick={() => setIsPro(true)}
+              onClick={() => setShowUpgradeModal(true)}
               style={{
                 padding: "12px 32px",
                 background: colors.purple,
