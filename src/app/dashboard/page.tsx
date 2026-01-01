@@ -968,6 +968,7 @@ export default function Home() {
         <CoinDetailModal
           coinId={selectedCoinId}
           onClose={() => setSelectedCoinId(null)}
+          isPro={isPro}
         />
       )}
     </div>
