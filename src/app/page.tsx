@@ -1075,6 +1075,113 @@ export default function LandingPage() {
         })()}
       </section>
 
+      {/* FAQ SECTION */}
+      <section style={{ padding: "80px 24px", background: colors.bg }}>
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "60px" }}>
+            <div style={{ fontSize: "13px", color: colors.accent, fontWeight: 600, marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+              FAQ
+            </div>
+            <h2 style={{ fontSize: "32px", fontWeight: 700, color: colors.textPrimary, marginBottom: "16px" }}>
+              Frequently Asked Questions
+            </h2>
+            <p style={{ fontSize: "16px", color: colors.textSecondary }}>
+              Everything you need to know about Cryptologic
+            </p>
+          </div>
+
+          {/* FAQ Items */}
+          {(() => {
+            const faqs = [
+              {
+                q: "What is Cosmic Score™ and how does it work?",
+                a: "Cosmic Score™ is our proprietary algorithm that combines real astrological calculations (Moon phases, planetary positions from NASA JPL ephemeris) with market analysis. It generates a 0-100 score indicating the cosmic alignment for each cryptocurrency."
+              },
+              {
+                q: "Is this real astrology or just random numbers?",
+                a: "100% real astrology! We use the astronomy-engine library with NASA JPL ephemeris data to calculate actual planetary positions. Our Moon phase, Mercury retrograde, and planetary aspect calculations are astronomically accurate to the second."
+              },
+              {
+                q: "How do I pay for Pro subscription?",
+                a: "We accept USDT (BEP20) on BSC Network. Simply go to Checkout, send $14 USDT to our wallet address, then contact us on Telegram with your transaction hash. We'll activate your Pro account within minutes!"
+              },
+              {
+                q: "What's the difference between Lite and Pro?",
+                a: "Lite users can view data for top 5 cryptocurrencies (BTC, ETH, BNB, SOL, XRP). Pro users get access to 15,000+ coins, advanced search, personal watchlist, detailed astrology breakdowns, and priority support."
+              },
+              {
+                q: "Is this financial advice?",
+                a: "No. Cryptologic is for educational and entertainment purposes only. Our Cosmic Score™ and signals should not be considered financial advice. Always do your own research and consult with a financial advisor before making investment decisions."
+              },
+              {
+                q: "Can I cancel my subscription anytime?",
+                a: "Yes! Pro subscription is monthly with no lock-in contract. Simply don't renew next month if you wish to cancel. No hidden fees or cancellation penalties."
+              },
+            ];
+
+            const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+            return (
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                {faqs.map((faq, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      background: colors.bgCard,
+                      border: `1px solid ${openIndex === index ? colors.accent : colors.border}`,
+                      borderRadius: "12px",
+                      overflow: "hidden",
+                      transition: "all 0.2s",
+                    }}
+                  >
+                    <button
+                      onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                      style={{
+                        width: "100%",
+                        padding: "20px 24px",
+                        background: "transparent",
+                        border: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        cursor: "pointer",
+                        textAlign: "left",
+                      }}
+                    >
+                      <span style={{ fontSize: "15px", fontWeight: 500, color: colors.textPrimary }}>
+                        {faq.q}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          color: colors.accent,
+                          transform: openIndex === index ? "rotate(45deg)" : "rotate(0deg)",
+                          transition: "transform 0.2s",
+                        }}
+                      >
+                        +
+                      </span>
+                    </button>
+                    {openIndex === index && (
+                      <div
+                        style={{
+                          padding: "0 24px 20px 24px",
+                          fontSize: "14px",
+                          color: colors.textSecondary,
+                          lineHeight: 1.7,
+                        }}
+                      >
+                        {faq.a}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+        </div>
+      </section>
+
       {/* FINAL CTA */}
       <section
         style={{
