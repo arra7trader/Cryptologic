@@ -1,46 +1,48 @@
 "use client";
 
 import { colors } from "@/lib/constants";
-import { ArrowLeftRight, TrendingUp, Wallet } from "lucide-react";
+import { ArrowLeftRight, TrendingUp, Wallet, ArrowUpRight, ArrowDownLeft } from "lucide-react";
+import { useState, useEffect } from "react";
 
-export default function WhaleActivityView() {
+export default function WhaleActivityView({ coinName }: { coinName?: string }) {
+    const [transactions, setTransactions] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchWhales = async () => {
+            setLoading(true);
+            try {
+                const res = await fetch(`/api/intelligence/whales?coin=${coinName || "bitcoin"}`);
+                const data = await res.json();
+                if (data.transactions) {
+                    setTransactions(data.transactions);
+                }
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchWhales();
+    }, [coinName]);
+
+    if (loading) return <div style={{ color: colors.textDim, fontSize: "13px", padding: "20px" }}>Tracking large movements...</div>;
+
     return (
         <div style={{ marginTop: "16px" }}>
-            {/* Net Flow Chart (Mock Visual) */}
-            <div style={{ marginBottom: "24px" }}>
-                <div style={{ fontSize: "13px", fontWeight: 600, color: colors.textPrimary, marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-                    <ArrowLeftRight size={16} />
-                    Exchange Net Flow (24h)
-                </div>
-                <div style={{ display: "flex", gap: "4px", height: "60px", alignItems: "flex-end" }}>
-                    {[40, -20, 60, -10, 80, 30, -50, 20, 90, -30, 40, 50].map((val, i) => (
-                        <div key={i} style={{
-                            flex: 1,
-                            background: val > 0 ? colors.accent : colors.red,
-                            height: `${Math.abs(val)}%`,
-                            borderRadius: "2px",
-                            opacity: 0.7
-                        }} />
-                    ))}
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px", fontSize: "11px", color: colors.textDim }}>
-                    <span>Inflow (Sell Pressure)</span>
-                    <span>Outflow (HODL)</span>
-                </div>
+            {/* Header */}
+            <div style={{ fontSize: "13px", fontWeight: 600, color: colors.textPrimary, marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
+                <Wallet size={16} />
+                Real-Time Whale Transactions
             </div>
 
-            {/* Large Transactions */}
-            <div>
-                <div style={{ fontSize: "13px", fontWeight: 600, color: colors.textPrimary, marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-                    <Wallet size={16} />
-                    Recent Whale Transactions
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                    {[
-                        { time: "2m ago", amount: "500 BTC", type: "Outflow", from: "Coinbase", to: "Wallet (Unknown)" },
-                        { time: "15m ago", amount: "1,200 BTC", type: "Inflow", from: "Wallet (Whale)", to: "Binance" },
-                        { time: "42m ago", amount: "350 BTC", type: "Outflow", from: "Kraken", to: "Wallet (Cold Storage)" },
-                    ].map((tx, i) => (
+            {/* List */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                {transactions.length === 0 ? (
+                    <div style={{ color: colors.textDim, fontSize: "13px", fontStyle: "italic" }}>No recent whale movements detected.</div>
+                ) : (
+                    transactions.map((tx, i) => (
                         <div key={i} style={{
                             padding: "12px",
                             background: colors.bg,
@@ -53,24 +55,29 @@ export default function WhaleActivityView() {
                             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                                 <div style={{
                                     width: "32px", height: "32px", borderRadius: "50%",
-                                    background: tx.type === "Outflow" ? colors.accentDim : "rgba(239, 68, 68, 0.15)",
+                                    background: colors.bgHover,
                                     display: "flex", alignItems: "center", justifyContent: "center",
-                                    color: tx.type === "Outflow" ? colors.accent : colors.red
+                                    color: colors.textDim
                                 }}>
-                                    {tx.type === "Outflow" ? "OUT" : "IN"}
+                                    {tx.symbol === "BTC" ? "₿" : "Ξ"}
                                 </div>
                                 <div style={{ fontSize: "13px", color: colors.textPrimary }}>
-                                    <div>{tx.amount}</div>
-                                    <div style={{ fontSize: "11px", color: colors.textDim }}>{tx.type} • {tx.time}</div>
+                                    <div style={{ fontWeight: 600 }}>{tx.value} {tx.symbol}</div>
+                                    <div style={{ fontSize: "11px", color: colors.textDim }}>{tx.time}</div>
                                 </div>
                             </div>
-                            <div style={{ textAlign: "right", fontSize: "11px", color: colors.textSecondary }}>
-                                <div>Alert: {tx.type === "Inflow" ? "Dump Risk" : "Accumulation"}</div>
+                            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                                <a href={tx.symbol === "ETH" ? `https://etherscan.io/tx/${tx.hash}` : `https://www.blockchain.com/btc/tx/${tx.hash}`} target="_blank" rel="noopener noreferrer" style={{ color: colors.purple, fontSize: "11px", textDecoration: "none" }}>
+                                    View
+                                </a>
                             </div>
                         </div>
-                    ))}
-                </div>
+                    ))
+                )}
             </div>
+            <p style={{ marginTop: "16px", fontSize: "11px", color: colors.textDim, textAlign: "center" }}>
+                Showing transactions > $100k value
+            </p>
         </div>
     );
 }

@@ -388,7 +388,7 @@ export default function CoinDetailModal({ coinId, onClose, isPro }: CoinDetailMo
 
                             {activeTab === "whale" && (
                                 isPro ? (
-                                    <WhaleActivityView />
+                                    <WhaleActivityView coinName={coin.name} />
                                 ) : (
                                     <ProLockOverlay featureName="Whale Watch Radar" />
                                 )
