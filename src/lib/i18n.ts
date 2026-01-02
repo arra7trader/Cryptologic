@@ -8,8 +8,8 @@ export const translations = {
 
         // Landing Hero
         "hero.badge": "🌐 Institutional-Grade Crypto Intelligence + Cosmic Astrology",
-        "hero.headline.1": "Celestial Signals.",
-        "hero.headline.2": "Cosmic Profits.",
+        "hero.headline.1": "CRYPTOLOGIC",
+        "hero.headline.2": "BY ARRA7",
         "hero.desc": "The world's first Glassnode-level analytics powered by REAL astrological calculations. NASA JPL ephemeris data meets institutional crypto intelligence. $1,999/mo value — 99% cheaper.",
         "hero.cta.start": "Start Free Trial",
         "hero.cta.demo": "View Demo",
@@ -206,8 +206,8 @@ export const translations = {
 
         // Landing Hero
         "hero.badge": "🌐 Kecerdasan Crypto Tingkat Institusi + Astrologi Kosmis",
-        "hero.headline.1": "Sinyal Surgawi.",
-        "hero.headline.2": "Profit Kosmis.",
+        "hero.headline.1": "CRYPTOLOGIC",
+        "hero.headline.2": "BY ARRA7",
         "hero.desc": "Analitik pertama di dunia setara Glassnode yang didukung kalkulasi astrologi NYATA. Data ephemeris NASA JPL bertemu kecerdasan crypto institusional. Nilai $1,999/bln — hemat 99%.",
         "hero.cta.start": "Coba Gratis",
         "hero.cta.demo": "Lihat Demo",
@@ -404,8 +404,8 @@ export const translations = {
 
         // Landing Hero
         "hero.badge": "🌐 机构级加密情报 + 宇宙占星术",
-        "hero.headline.1": "天体信号。",
-        "hero.headline.2": "宇宙利润。",
+        "hero.headline.1": "CRYPTOLOGIC",
+        "hero.headline.2": "BY ARRA7",
         "hero.desc": "全球首个由真实占星计算驱动的 Glassnode 级分析。NASA JPL 星历数据与机构加密情报相结合。价值 $1,999/月 — 便宜 99%。",
         "hero.cta.start": "免费试用",
         "hero.cta.demo": "观看演示",
