@@ -5,56 +5,57 @@ import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { MouseEvent } from "react";
 import { colors } from "@/lib/constants";
 
-// Icons
-const IconBrain = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
-        <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" />
-        <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" />
-        <path d="M17.599 6.5a3 3 0 0 0 .399-1.375" />
-        <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" />
-        <path d="M3.477 10.896a4 4 0 0 1 .585-.396" />
-        <path d="M19.938 10.5a4 4 0 0 1 .585.396" />
-        <path d="M6 18a4 4 0 0 1-1.967-.516" />
-        <path d="M19.967 17.484A4 4 0 0 1 18 18" />
+// Premium SVG Icons
+const IconCosmic = () => (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
+        <path d="M12 2v2M12 20v2M2 12h2M20 12h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 3" />
     </svg>
 );
 
-const IconBarChart = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="12" x2="12" y1="20" y2="10" />
-        <line x1="18" x2="18" y1="20" y2="4" />
-        <line x1="6" x2="6" y1="20" y2="16" />
+const IconChart = () => (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 3v18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M7 14l4-4 4 4 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="7" cy="14" r="1.5" fill="currentColor" />
+        <circle cx="11" cy="10" r="1.5" fill="currentColor" />
+        <circle cx="15" cy="14" r="1.5" fill="currentColor" />
+        <circle cx="20" cy="8" r="1.5" fill="currentColor" />
     </svg>
 );
 
-const IconStar = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+const IconWatchlist = () => (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6L12 2z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
     </svg>
 );
 
-const IconBell = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-        <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+const IconNasa = () => (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="2" fill="currentColor" />
+        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="currentColor" strokeWidth="1.5" />
+        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="currentColor" strokeWidth="1.5" transform="rotate(60 12 12)" />
+        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="currentColor" strokeWidth="1.5" transform="rotate(120 12 12)" />
     </svg>
 );
 
-const IconShield = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-        <path d="m9 12 2 2 4-4" />
+const IconHistory = () => (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+        <path d="M12 7v5l3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3 12h2M19 12h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
 );
 
-const IconZap = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />
+const IconLive = () => (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );
 
-function FeatureCard({ icon: Icon, title, description }: { icon: any; title: string; description: string }) {
+function FeatureCard({ icon: Icon, title, description, index }: { icon: any; title: string; description: string; index: number }) {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -65,108 +66,160 @@ function FeatureCard({ icon: Icon, title, description }: { icon: any; title: str
     }
 
     return (
-        <div
-            className="group relative border border-white/10 overflow-hidden rounded-xl bg-neutral-900"
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="group relative overflow-hidden"
             onMouseMove={handleMouseMove}
             style={{
-                background: colors.bgCard,
+                background: `linear-gradient(135deg, ${colors.bgCard} 0%, rgba(20,20,25,1) 100%)`,
                 border: `1px solid ${colors.border}`,
+                borderRadius: "20px",
+                padding: "32px",
+                cursor: "default",
             }}
         >
+            {/* Spotlight Effect */}
             <motion.div
-                className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+                className="pointer-events-none absolute -inset-px rounded-[20px] opacity-0 transition duration-500 group-hover:opacity-100"
                 style={{
                     background: useMotionTemplate`
-            radial-gradient(
-              650px circle at ${mouseX}px ${mouseY}px,
-              rgba(16, 185, 129, 0.15),
-              transparent 80%
-            )
-          `,
+                        radial-gradient(
+                            400px circle at ${mouseX}px ${mouseY}px,
+                            rgba(16, 185, 129, 0.12),
+                            transparent 60%
+                        )
+                    `,
                 }}
             />
 
-            <div className="relative p-8">
+            {/* Glow Border on Hover */}
+            <div className="absolute inset-0 rounded-[20px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                    background: `linear-gradient(135deg, ${colors.accent}22 0%, transparent 50%)`,
+                }}
+            />
+
+            {/* Content */}
+            <div className="relative z-10">
+                {/* Icon Container */}
                 <div
                     style={{
-                        width: "48px",
-                        height: "48px",
-                        background: colors.accentDim,
-                        borderRadius: "12px",
+                        width: "56px",
+                        height: "56px",
+                        background: `linear-gradient(135deg, ${colors.accent}20 0%, ${colors.accent}08 100%)`,
+                        border: `1px solid ${colors.accent}30`,
+                        borderRadius: "16px",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        marginBottom: "20px",
+                        marginBottom: "24px",
                         color: colors.accent,
+                        transition: "all 0.3s ease",
                     }}
+                    className="group-hover:scale-110 group-hover:shadow-lg"
                 >
                     <Icon />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-neutral-200" style={{ color: colors.textPrimary }}>
+
+                {/* Title */}
+                <h3 style={{
+                    fontSize: "18px",
+                    fontWeight: 700,
+                    color: colors.textPrimary,
+                    marginBottom: "12px",
+                    letterSpacing: "-0.02em",
+                }}>
                     {title}
                 </h3>
-                <p className="text-sm leading-relaxed text-neutral-400" style={{ color: colors.textSecondary }}>
+
+                {/* Description */}
+                <p style={{
+                    fontSize: "14px",
+                    lineHeight: "1.7",
+                    color: colors.textSecondary,
+                    margin: 0,
+                }}>
                     {description}
                 </p>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
 export default function Features() {
     const { t } = useLanguage();
 
+    const features = [
+        { icon: IconCosmic, titleKey: "features.card.1.title", descKey: "features.card.1.desc" },
+        { icon: IconChart, titleKey: "features.card.2.title", descKey: "features.card.2.desc" },
+        { icon: IconWatchlist, titleKey: "features.card.3.title", descKey: "features.card.3.desc" },
+        { icon: IconNasa, titleKey: "features.card.4.title", descKey: "features.card.4.desc" },
+        { icon: IconHistory, titleKey: "features.card.5.title", descKey: "features.card.5.desc" },
+        { icon: IconLive, titleKey: "features.card.6.title", descKey: "features.card.6.desc" },
+    ];
+
     return (
-        <section style={{ padding: "80px 24px", maxWidth: "1200px", margin: "0 auto" }}>
+        <section style={{ padding: "100px 24px", maxWidth: "1200px", margin: "0 auto" }}>
+            {/* Section Header */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                style={{ textAlign: "center", marginBottom: "60px" }}
+                style={{ textAlign: "center", marginBottom: "64px" }}
             >
-                <div style={{ fontSize: "13px", color: colors.accent, fontWeight: 600, marginBottom: "12px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                <div style={{
+                    display: "inline-block",
+                    padding: "8px 16px",
+                    background: colors.accentDim,
+                    borderRadius: "100px",
+                    fontSize: "12px",
+                    color: colors.accent,
+                    fontWeight: 600,
+                    marginBottom: "20px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                }}>
                     {t("features.title.1")}
                 </div>
-                <h2 style={{ fontSize: "32px", fontWeight: 700, color: colors.textPrimary, marginBottom: "16px" }}>
+                <h2 style={{
+                    fontSize: "clamp(28px, 5vw, 40px)",
+                    fontWeight: 800,
+                    color: colors.textPrimary,
+                    marginBottom: "16px",
+                    letterSpacing: "-0.03em",
+                }}>
                     {t("features.title.2")}
                 </h2>
-                <p style={{ fontSize: "16px", color: colors.textSecondary, maxWidth: "500px", margin: "0 auto" }}>
+                <p style={{
+                    fontSize: "17px",
+                    color: colors.textSecondary,
+                    maxWidth: "550px",
+                    margin: "0 auto",
+                    lineHeight: "1.6",
+                }}>
                     {t("features.desc")}
                 </p>
             </motion.div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
-                <FeatureCard
-                    icon={IconBrain}
-                    title={t("features.card.1.title")}
-                    description={t("features.card.1.desc")}
-                />
-                <FeatureCard
-                    icon={IconBarChart}
-                    title={t("features.card.2.title")}
-                    description={t("features.card.2.desc")}
-                />
-                <FeatureCard
-                    icon={IconStar}
-                    title={t("features.card.3.title")}
-                    description={t("features.card.3.desc")}
-                />
-                <FeatureCard
-                    icon={IconBell}
-                    title={t("features.card.4.title")}
-                    description={t("features.card.4.desc")}
-                />
-                <FeatureCard
-                    icon={IconShield}
-                    title={t("features.card.5.title")}
-                    description={t("features.card.5.desc")}
-                />
-                <FeatureCard
-                    icon={IconZap}
-                    title={t("features.card.6.title")}
-                    description={t("features.card.6.desc")}
-                />
+            {/* Feature Cards Grid */}
+            <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                gap: "24px",
+            }}>
+                {features.map((feature, index) => (
+                    <FeatureCard
+                        key={index}
+                        icon={feature.icon}
+                        title={t(feature.titleKey)}
+                        description={t(feature.descKey)}
+                        index={index}
+                    />
+                ))}
             </div>
         </section>
     );
