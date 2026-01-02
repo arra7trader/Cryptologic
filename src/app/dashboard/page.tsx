@@ -290,6 +290,7 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<Coin[]>([]);
   const [searching, setSearching] = useState(false);
   const [watchlist, setWatchlist] = useState<string[]>([]);
+  const [watchlistCoinsData, setWatchlistCoinsData] = useState<Coin[]>([]);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [selectedCoinId, setSelectedCoinId] = useState<string | null>(null);
 
@@ -362,8 +363,16 @@ export default function Home() {
     try {
       const res = await fetch("/api/watchlist");
       const data = await res.json();
-      if (data.watchlist) {
+      if (data.watchlist && data.watchlist.length > 0) {
         setWatchlist(data.watchlist);
+
+        // Fetch coin data for watchlist items
+        const watchlistIds = data.watchlist.join(",");
+        const coinsRes = await fetch(`/api/coins?ids=${watchlistIds}`);
+        const coinsData = await coinsRes.json();
+        if (coinsData.coins) {
+          setWatchlistCoinsData(coinsData.coins);
+        }
       }
     } catch (error) {
       console.error("Failed to fetch watchlist:", error);
@@ -401,7 +410,8 @@ export default function Home() {
       )
       : coins;
 
-  const watchlistCoins = coins.filter((c) => watchlist.includes(c.id));
+  // Use the separately fetched watchlist data
+  const watchlistCoins = watchlistCoinsData;
 
   const handleAddWatchlist = async (coinId: string) => {
     if (!user || user.tier !== "pro") {
@@ -410,6 +420,18 @@ export default function Home() {
     }
     if (!watchlist.includes(coinId)) {
       setWatchlist([...watchlist, coinId]);
+
+      // Fetch coin data for the newly added coin
+      try {
+        const res = await fetch(`/api/coins?ids=${coinId}`);
+        const data = await res.json();
+        if (data.coins && data.coins.length > 0) {
+          setWatchlistCoinsData(prev => [...prev, ...data.coins]);
+        }
+      } catch (e) {
+        console.error("Failed to fetch coin data:", e);
+      }
+
       await fetch("/api/watchlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -420,6 +442,7 @@ export default function Home() {
 
   const handleRemoveWatchlist = async (coinId: string) => {
     setWatchlist(watchlist.filter((id) => id !== coinId));
+    setWatchlistCoinsData(watchlistCoinsData.filter((c) => c.id !== coinId));
     await fetch("/api/watchlist", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
